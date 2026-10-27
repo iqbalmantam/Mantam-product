@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mantam Product · Toolkit Gudang & Logistik</title>
+<meta name="description" content="12 program siap pakai dalam 3 kategori: Logistics &amp; Gudang, Psikologi &amp; SDM, Pendidikan &amp; Produktivitas. Jalan 100% di browser dengan data simulasi.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#0f1b2d;--mute:#5b6b82;--line:#e3e8f1;--brand:#0ea5a4;--brand2:#2563eb;--navy:#0b1a30;--warn:#f59e0b;--bad:#ef4444;--ok:#16a34a;--r:16px;--sh:0 8px 30px rgba(15,27,45,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--brand2);text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:50;background:rgba(11,26,48,.92);backdrop-filter:blur(10px)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{color:#fff;font-weight:800;letter-spacing:.3px;display:flex;gap:10px;align-items:center}
+.logo i{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:inline-block}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+nav ul a{color:#c9d6ea;font-size:14px;font-weight:500}nav ul a:hover{color:#fff}
+.btn{display:inline-block;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,.35)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{background:#fff;box-shadow:none}
+.btn.sm{padding:7px 12px;font-size:13px}
+.hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(14,165,164,.35),transparent),radial-gradient(900px 500px at 0% 0%,rgba(37,99,235,.35),transparent),var(--navy);color:#fff;padding:84px 0 96px}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.1;margin:0 0 16px;max-width:760px}
+.hero h1 span{background:linear-gradient(90deg,#5eead4,#93c5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#b9c7dd;font-size:18px;max-width:640px;margin:0 0 28px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btn.ghost{color:#fff;border-color:rgba(255,255,255,.3)}
+.stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:44px}
+.stats b{display:block;font-size:28px}.stats small{color:#9fb1cc}
+section{padding:72px 0}
+.eyebrow{color:var(--brand);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase}
+h2{font-size:clamp(26px,3.4vw,36px);margin:6px 0 10px}
+.lead{color:var(--mute);max-width:680px;margin:0 0 34px}
+.grid{display:grid;gap:18px}
+.g5{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--sh)}
+.pcard{cursor:pointer;transition:.2s}.pcard:hover{transform:translateY(-4px)}
+.pcard .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,#ccfbf1,#dbeafe);margin-bottom:12px}
+.pcard h3{margin:0 0 6px;font-size:17px}.pcard p{margin:0;color:var(--mute);font-size:14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:14px;color:var(--mute)}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.panel{display:none}.panel.on{display:block}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+label{font-size:12.5px;font-weight:600;color:var(--mute);display:block;margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(14,165,164,.35);border-color:var(--brand)}
+textarea{min-height:130px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.kpi{background:#f8fafd;border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi small{color:var(--mute);font-size:12px;font-weight:600;display:block}
+.kpi b{font-size:22px}.kpi em{font-style:normal;font-size:12px;font-weight:700}
+.up{color:var(--ok)}.down{color:var(--bad)}
+.tbl{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:#eef2f9;text-align:left;padding:9px 10px;font-size:12px;color:var(--mute)}
+td{padding:8px 10px;border-top:1px solid var(--line);white-space:nowrap}
+.pill{padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700}
+.A{background:#dcfce7;color:#166534}.B{background:#fef3c7;color:#92400e}.C{background:#fee2e2;color:#991b1b}
+.chartbox{position:relative;height:300px;margin-top:14px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+details{margin-top:18px;border:1px dashed #b8c6dc;border-radius:12px;padding:12px 16px;background:#fbfdff}
+summary{cursor:pointer;font-weight:700}
+details ol,details ul{margin:10px 0 0;padding-left:20px;color:#33445c;font-size:14px}
+.note{font-size:12.5px;color:var(--mute);margin-top:10px}
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:3px;margin-top:12px}
+.cells i{height:14px;border-radius:3px;background:#e6ecf5}.cells i.f{background:linear-gradient(135deg,var(--brand),var(--brand2))}
+.price{position:relative}
+.price h3{margin:0}.price .amt{font-size:34px;font-weight:800;margin:10px 0}
+.price .amt small{font-size:14px;color:var(--mute);font-weight:500}
+.price ul{list-style:none;padding:0;margin:0 0 18px;color:#33445c;font-size:14px}
+.price li{padding:6px 0 6px 24px;position:relative}.price li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+.price.hot{border:2px solid var(--brand)}.price.hot:before{content:"Terlaris";position:absolute;top:-12px;right:18px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:3px 12px;border-radius:999px}
+.faq details{background:#fff}
+footer{background:var(--navy);color:#9fb1cc;padding:36px 0;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media(max-width:760px){nav ul{display:none}.hero{padding:56px 0 64px}section{padding:52px 0}}
+.cathead{margin:30px 0 12px;font-size:18px}.cathead small{color:var(--mute);font-weight:500;font-size:13px;margin-left:6px}
+.catlabel{flex-basis:100%;font-weight:700;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);margin:10px 0 2px}
+.q{padding:10px 0;border-top:1px solid var(--line)}.q p{margin:0 0 6px;font-size:14px}
+.lik label{display:inline-flex;gap:5px;align-items:center;margin:0 14px 0 0;font-weight:500;color:var(--ink);font-size:13.5px}.lik input{width:auto}
+.hb{display:grid;grid-template-columns:150px 1fr 120px;gap:10px;align-items:center;margin:8px 0;font-size:13.5px}.hb div{background:#e6ecf5;border-radius:8px;height:12px;overflow:hidden}.hb b{font-size:13.5px;white-space:nowrap}.hb i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2))}
+.qopt{display:block;width:100%;text-align:left;margin:6px 0;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font:inherit;color:var(--ink)}.qopt:hover{border-color:var(--brand);background:#f0fdfa}
+.prog{height:8px;background:#e6ecf5;border-radius:6px;overflow:hidden}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2))}
+.fc{border:1px solid var(--line);border-radius:16px;padding:30px 20px;text-align:center;font-size:22px;font-weight:700;min-height:140px;display:grid;place-items:center;background:linear-gradient(135deg,#f0fdfa,#eff6ff);margin-bottom:12px}
+button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:600px){.hb{grid-template-columns:96px 1fr 96px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <div class="logo"><i></i> Mantam Product</div>
+  <ul><li><a href="#produk">Produk</a></li><li><a href="#demo">Coba Langsung</a></li><li><a href="#harga">Harga</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a class="btn sm" id="navWA" href="#harga">Pesan</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow" style="color:#5eead4">Toolkit Gudang &amp; Logistik</div>
+  <h1>Keputusan gudang lebih cepat, <span>tanpa software mahal.</span></h1>
+  <p>12 program siap pakai di 3 kategori: logistik &amp; gudang, psikologi &amp; SDM, serta pendidikan &amp; produktivitas. Buka di browser, tanpa instalasi, tanpa akun, dan data kamu tidak pernah meninggalkan perangkat.</p>
+  <div class="cta"><a class="btn" href="#demo">Coba Sekarang</a><a class="btn ghost" href="#harga">Lihat Paket</a></div>
+  <div class="stats">
+    <div><b>12</b><small>program siap pakai</small></div><div><b>3</b><small>kategori</small></div>
+    <div><b>0</b><small>instalasi &amp; server</small></div>
+    <div><b>100%</b><small>diproses lokal di browser</small></div>
+  </div>
+</div></header>
+
+<section id="produk"><div class="wrap">
+  <div class="eyebrow">Produk</div><h2>Satu halaman, dua belas alat kerja</h2>
+  <p class="lead">Setiap program dilengkapi data simulasi dan petunjuk penggunaan. Klik kartu untuk langsung mencoba.</p>
+  <div id="cats"></div>
+</div></section>
+
+<section id="demo" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap">
+  <div class="eyebrow">Coba Langsung</div><h2>Semua program berjalan di halaman ini</h2>
+  <p class="lead">Data di bawah adalah simulasi acak, bukan data nyata.</p>
+  <div class="tabs" id="tabs"></div>
+
+  <!-- ABC -->
+  <div class="panel on card" id="p-abc">
+    <div class="bar" style="margin:0 0 12px">
+      <button class="btn sm" id="abcGen">Buat Data Simulasi Baru</button>
+      <label class="btn sm ghost" style="margin:0;cursor:pointer">Unggah CSV<input type="file" id="abcFile" accept=".csv,.txt" hidden></label>
+      <button class="btn sm ghost" id="abcDl">Unduh Hasil CSV</button>
+      <button class="btn sm ghost" id="abcTpl">Unduh Template</button>
+    </div>
+    <div class="row">
+      <div><label>Batas Kelas A (% nilai kumulatif)</label><input type="number" id="abcA" value="80" min="50" max="95"></div>
+      <div><label>Batas Kelas B (% nilai kumulatif)</label><input type="number" id="abcB" value="95" min="60" max="99"></div>
+    </div>
+    <div class="kpis" id="abcK"></div>
+    <div class="chartbox"><canvas id="abcC"></canvas></div>
+    <div class="tbl"><table id="abcT"></table></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Klik <b>Buat Data Simulasi Baru</b> untuk melihat contoh, atau <b>Unggah CSV</b> berisi kolom <code>sku, nama, permintaan, harga</code>.</li>
+      <li>Atur batas kelas A dan B (standar 80% dan 95%).</li>
+      <li>Baca ringkasan: biasanya sekitar 20% SKU menyumbang 80% nilai pemakaian.</li>
+      <li>Fokuskan cycle count, pengamanan, dan penempatan dekat area outbound untuk kelas A.</li>
+      <li>Unduh hasil sebagai CSV untuk dibuka di Excel.</li></ol></details>
+  </div>
+
+  <!-- EOQ -->
+  <div class="panel card" id="p-eoq">
+    <div class="row">
+      <div><label>Permintaan per tahun (unit)</label><input type="number" id="eD" value="12000"></div>
+      <div><label>Biaya pesan per order (Rp)</label><input type="number" id="eS" value="250000"></div>
+      <div><label>Harga per unit (Rp)</label><input type="number" id="eC" value="45000"></div>
+      <div><label>Biaya simpan (% per tahun)</label><input type="number" id="eH" value="22"></div>
+      <div><label>Lead time (hari)</label><input type="number" id="eL" value="7"></div>
+      <div><label>Std deviasi permintaan harian (unit)</label><input type="number" id="eSd" value="9"></div>
+      <div><label>Tingkat layanan</label><select id="eZ"><option value="1.28">90%</option><option value="1.65" selected>95%</option><option value="1.96">97,5%</option><option value="2.33">99%</option></select></div>
+      <div><label>Hari operasi per tahun</label><input type="number" id="eDays" value="300"></div>
+    </div>
+    <div class="kpis" id="eK"></div>
+    <div class="chartbox"><canvas id="eC2"></canvas></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Isi permintaan tahunan, biaya pesan, harga, dan persentase biaya simpan (umumnya 15–30%).</li>
+      <li>Isi lead time pemasok dan variasi permintaan harian untuk menghitung safety stock.</li>
+      <li><b>EOQ</b> = jumlah pesan yang meminimalkan total biaya. <b>ROP</b> = saat stok menyentuh angka ini, buat PO.</li>
+      <li>Grafik menunjukkan total biaya turun mendekati EOQ, lalu naik lagi.</li></ol></details>
+  </div>
+
+  <!-- RACK -->
+  <div class="panel card" id="p-rack">
+    <div class="row">
+      <div><label>Pallet yang harus disimpan</label><input type="number" id="rP" value="1800"></div>
+      <div><label>Pallet per level per bay</label><input type="number" id="rW" value="2"></div>
+      <div><label>Jumlah level</label><input type="number" id="rL" value="5"></div>
+      <div><label>Target okupansi (%)</label><input type="number" id="rU" value="85"></div>
+      <div><label>Bay per baris</label><input type="number" id="rB" value="20"></div>
+      <div><label>Lebar bay (m)</label><input type="number" id="rBW" value="2.7" step="0.1"></div>
+      <div><label>Kedalaman rak (m)</label><input type="number" id="rD" value="1.1" step="0.1"></div>
+      <div><label>Lebar lorong (m)</label><input type="number" id="rA" value="3.2" step="0.1"></div>
+    </div>
+    <div class="kpis" id="rK"></div>
+    <div class="note">Visual: kotak berwarna = posisi terisi pada target okupansi (maksimal 400 posisi ditampilkan).</div>
+    <div class="cells" id="rC"></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Masukkan jumlah pallet yang ingin disimpan dan konfigurasi rak (level, pallet per level).</li>
+      <li>Target okupansi 80–90% disarankan agar ada ruang gerak dan fleksibilitas.</li>
+      <li>Hasil menampilkan jumlah bay, baris, dan estimasi luas area rak + lorong (belum termasuk dock dan kantor).</li>
+      <li>Coba ubah jumlah level untuk membandingkan: rak lebih tinggi = area lebih kecil, tetapi butuh alat angkat lebih tinggi.</li></ol></details>
+  </div>
+
+  <!-- KPI -->
+  <div class="panel card" id="p-kpi">
+    <div class="bar" style="margin:0 0 6px">
+      <button class="btn sm" id="kGen">Simulasi Baru</button>
+      <select id="kSel" style="width:auto"></select>
+      <button class="btn sm ghost" id="kDl">Unduh CSV</button>
+    </div>
+    <div class="kpis" id="kK"></div>
+    <div class="chartbox"><canvas id="kC"></canvas></div>
+    <div class="tbl"><table id="kT"></table></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Klik <b>Simulasi Baru</b> untuk membuat 12 bulan data contoh.</li>
+      <li>Pilih KPI pada dropdown untuk melihat tren. Panah hijau = membaik, merah = memburuk.</li>
+      <li>Ganti data simulasi dengan data sendiri: unduh CSV, isi di Excel, lalu tempel angkanya pada versi kustom (tersedia di paket Pro).</li></ol></details>
+  </div>
+
+  <!-- CSV -->
+  <div class="panel card" id="p-csv">
+    <div class="bar" style="margin:0 0 12px">
+      <button class="btn sm" id="cSample">Muat Contoh Data Kotor</button>
+      <label class="btn sm ghost" style="margin:0;cursor:pointer">Unggah CSV<input type="file" id="cFile" accept=".csv,.txt" hidden></label>
+    </div>
+    <label>Tempel data CSV di sini</label>
+    <textarea id="cIn" placeholder="sku;nama;qty;harga&#10;..."></textarea>
+    <div class="row" style="margin-top:12px">
+      <label><input type="checkbox" id="oTrim" checked style="width:auto"> Hapus spasi berlebih</label>
+      <label><input type="checkbox" id="oEmpty" checked style="width:auto"> Hapus baris kosong</label>
+      <label><input type="checkbox" id="oDup" checked style="width:auto"> Hapus baris duplikat</label>
+      <label><input type="checkbox" id="oCase" checked style="width:auto"> Rapikan huruf (Title Case, kecuali kolom pertama jadi KAPITAL)</label>
+      <label><input type="checkbox" id="oNum" checked style="width:auto"> Normalkan angka (1.250,50 → 1250.50)</label>
+    </div>
+    <div class="bar"><button class="btn sm" id="cRun">Bersihkan</button><button class="btn sm ghost" id="cDl">Unduh Hasil</button><span class="note" id="cInfo"></span></div>
+    <div class="tbl"><table id="cT"></table></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Tempel isi CSV atau unggah file. Pemisah koma, titik koma, dan tab terdeteksi otomatis.</li>
+      <li>Pilih aturan pembersihan lalu klik <b>Bersihkan</b>.</li>
+      <li>Periksa pratinjau dan ringkasan di sebelah tombol, lalu <b>Unduh Hasil</b> (UTF-8 dengan BOM agar rapi di Excel).</li></ol></details>
+  </div>
+
+  <!-- FORKLIFT -->
+  <div class="panel card" id="p-forklift">
+    <div class="row">
+      <div><label>Unit forklift</label><select id="fkUnit"></select></div>
+      <div><label>Pemeriksa</label><input id="fkOp" value="Operator Simulasi"></div>
+      <div><label>Jam meter (HM)</label><input type="number" id="fkHM" value="4820"></div>
+      <div><label>Tanggal inspeksi</label><input type="date" id="fkDate"></div>
+    </div>
+    <div class="bar"><button class="btn sm" id="fkRand">Isi Hasil Acak (simulasi)</button><button class="btn sm ghost" id="fkAllOk">Semua OK</button><button class="btn sm ghost" id="fkDl">Unduh Laporan CSV</button></div>
+    <div class="kpis" id="fkK"></div>
+    <div class="tbl" style="max-height:none"><table id="fkT"></table></div>
+    <div class="note" id="fkNote"></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Pilih unit dan isi data pemeriksa, lalu nilai setiap item: <b>OK</b>, <b>Perlu perhatian</b>, atau <b>Rusak</b>.</li>
+      <li>Item bertanda <b>kritis</b> (rem, sabuk, garpu, dll.) yang rusak otomatis membuat status <b>Tidak Layak Operasi</b>.</li>
+      <li>Skor = OK bernilai 1, perlu perhatian 0,5, rusak 0. Status Layak jika skor &ge; 90% dan tidak ada item rusak.</li>
+      <li>Versi lengkap: 16 item pemeriksaan dan unduh laporan CSV untuk arsip atau audit.</li></ol></details>
+  </div>
+
+  <!-- KEPRIBADIAN -->
+  <div class="panel card" id="p-kepribadian">
+    <div class="note" style="margin:0 0 8px">Skala: 1 = sangat tidak setuju &middot; 3 = netral &middot; 5 = sangat setuju. Alat refleksi diri, <b>bukan</b> alat diagnosis psikologis.</div>
+    <div class="bar" style="margin:0 0 6px"><button class="btn sm" id="pqCalc">Lihat Hasil</button><button class="btn sm ghost" id="pqRand">Isi Acak (simulasi)</button><button class="btn sm ghost" id="pqReset">Ulangi</button><button class="btn sm ghost" id="pqDl">Unduh Hasil CSV</button></div>
+    <div id="pqR"></div>
+    <div id="pqQ"></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Jawab setiap pernyataan sesuai kebiasaan kamu sehari-hari, bukan yang diinginkan.</li>
+      <li>Klik <b>Lihat Hasil</b> setelah semua terjawab. Skor 0-100% per dimensi: rendah (&lt;40), sedang, tinggi (&ge;65).</li>
+      <li>Pernyataan bertanda negatif dibalik otomatis saat dihitung.</li>
+      <li>Versi lengkap: 30 pernyataan (6 per dimensi), interpretasi tiap dimensi, dan ekspor hasil.</li></ol></details>
+  </div>
+
+  <!-- IRT -->
+  <div class="panel card" id="p-irt">
+    <div class="bar" style="margin:0 0 10px"><button class="btn sm" id="irtStart">Mulai / Ulangi Tes</button><button class="btn sm ghost" id="irtDl">Unduh Hasil CSV</button><span class="note" id="irtInfo"></span></div>
+    <div class="prog"><i id="irtP" style="width:0"></i></div>
+    <div id="irtBox" style="margin-top:14px"></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Klik <b>Mulai</b>, lalu jawab setiap soal pilihan ganda. Tidak ada pengurangan nilai untuk jawaban salah.</li>
+      <li>Versi lengkap memakai model Rasch (IRT 1-parameter): soal berikutnya dipilih yang tingkat kesulitannya paling dekat dengan kemampuan kamu saat itu.</li>
+      <li>Hasil: estimasi kemampuan (&theta;), galat baku, dan persentil terhadap norma simulasi. Nilai bank soal bersifat contoh, bukan tes baku.</li></ol></details>
+  </div>
+
+  <!-- CV -->
+  <div class="panel card" id="p-cv">
+    <div class="bar" style="margin:0 0 6px"><button class="btn sm" id="cvGen">Buat Kandidat Simulasi Baru</button><button class="btn sm ghost" id="cvDl">Unduh Peringkat CSV</button></div>
+    <label style="margin-top:6px">Bobot skill (0-5)</label>
+    <div class="row" id="cvW"></div>
+    <div class="row" style="margin-top:10px"><div><label>Target pengalaman (tahun)</label><input type="number" id="cvExp" value="3" min="1" max="15"></div><div><label>Batas Shortlist (skor &ge;)</label><input type="number" id="cvCut" value="70" min="40" max="95"></div></div>
+    <div class="kpis" id="cvK"></div>
+    <div class="tbl"><table id="cvT"></table></div>
+    <div id="cvPasteBox" style="margin-top:12px"><label>Tempel data kandidat (CSV: nama, skill dipisah titik koma, pengalaman, pendidikan)</label><textarea id="cvIn" placeholder="Budi S.,Excel;SQL;WMS,4,S1"></textarea><div class="bar"><button class="btn sm" id="cvUse">Gunakan Data Ini</button></div></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Atur bobot tiap skill sesuai kebutuhan posisi. Skor = skill (60) + pengalaman (25) + pendidikan (15).</li>
+      <li>Status: <b>Shortlist</b> bila skor &ge; batas, <b>Pertimbangkan</b> bila &ge; 50, selebihnya <b>Tolak</b>.</li>
+      <li>Versi lengkap: 40 kandidat, tempel data kandidat sendiri, dan ekspor peringkat.</li>
+      <li>Gunakan hanya sebagai penyaring awal; keputusan akhir tetap oleh tim rekrutmen.</li></ol></details>
+  </div>
+
+  <!-- LEMBUR -->
+  <div class="panel card" id="p-lembur">
+    <div class="row">
+      <div><label>Upah bulanan tetap (pokok + tunjangan tetap, Rp)</label><input type="number" id="lbW" value="5500000"></div>
+      <div><label>Hari kerja per minggu</label><select id="lbD"><option value="5">5 hari</option><option value="6">6 hari</option></select></div>
+      <div><label>Jenis hari</label><select id="lbT"><option value="kerja">Hari kerja biasa</option><option value="libur">Hari libur (mingguan / nasional)</option></select></div>
+      <div><label>Jam lembur</label><input type="number" id="lbH" value="2" min="0.5" max="12" step="0.5"></div>
+    </div>
+    <div class="bar"><button class="btn sm" id="lbAdd">Tambah ke Daftar</button><button class="btn sm ghost" id="lbClr">Kosongkan</button><button class="btn sm ghost" id="lbDl">Unduh CSV</button></div>
+    <div class="kpis" id="lbK"></div>
+    <div class="tbl"><table id="lbTb"></table></div>
+    <div class="note" id="lbWarn"></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Isi upah bulanan tetap. Upah per jam = upah bulanan &divide; 173.</li>
+      <li>Hari kerja biasa: jam pertama 1,5&times;, jam berikutnya 2&times;. Hari libur: 2&times; untuk 8 jam pertama (7 jam bila 6 hari kerja), 3&times; jam berikutnya, lalu 4&times;.</li>
+      <li>Tambahkan beberapa entri untuk menghitung total sebulan. Versi lengkap menghitung hari libur dan banyak entri, serta ekspor CSV.</li>
+      <li>Estimasi mengikuti ketentuan umum lembur di Indonesia (Kepmenakertrans 102/2004 dan PP 35/2021). Cocokkan dengan perjanjian kerja dan aturan terbaru.</li></ol></details>
+  </div>
+
+  <!-- BACA -->
+  <div class="panel card" id="p-baca">
+    <div class="row">
+      <div><label>Judul buku</label><input id="bcT" placeholder="Judul buku"></div>
+      <div><label>Jumlah halaman</label><input type="number" id="bcP" value="250" min="10"></div>
+      <div style="align-self:end"><button class="btn sm" id="bcAdd">Tambah Buku</button> <button class="btn sm ghost" id="bcDl">Unduh CSV</button></div>
+    </div>
+    <div class="kpis" id="bcK"></div>
+    <div class="chartbox" style="height:220px"><canvas id="bcC"></canvas></div>
+    <div class="tbl"><table id="bcTb"></table></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Tambahkan buku dengan judul dan jumlah halaman, lalu catat halaman yang dibaca hari ini pada kolom tiap buku.</li>
+      <li>Estimasi selesai dihitung dari rata-rata halaman per hari 14 hari terakhir (data awal adalah simulasi).</li>
+      <li>Versi lengkap: jumlah buku tidak dibatasi dan ada ekspor CSV.</li></ol></details>
+  </div>
+
+  <!-- FLASH -->
+  <div class="panel card" id="p-flash">
+    <div class="kpis" id="flK"></div>
+    <div class="fc" id="flCard"></div>
+    <div class="bar" style="justify-content:center"><button class="btn sm ghost" id="flShow">Tampilkan Jawaban</button><button class="btn sm" id="flYes">Tahu</button><button class="btn sm ghost" id="flNo">Belum</button><button class="btn sm ghost" id="flReset">Reset</button><button class="btn sm ghost" id="flDl">Unduh CSV</button></div>
+    <div id="flAddBox" style="margin-top:12px"><div class="row"><div><label>Sisi depan</label><input id="flF" placeholder="Istilah"></div><div><label>Sisi belakang</label><input id="flB" placeholder="Penjelasan"></div><div style="align-self:end"><button class="btn sm" id="flAdd">Tambah Kartu</button></div></div></div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Baca sisi depan, ingat jawabannya, lalu klik <b>Tampilkan Jawaban</b>.</li>
+      <li>Klik <b>Tahu</b> untuk naik satu kotak (maks. 5) atau <b>Belum</b> untuk kembali ke kotak 1. Kartu di kotak rendah muncul lebih sering.</li>
+      <li>Versi lengkap: 24 kartu istilah logistik, tambah kartu sendiri, dan ekspor.</li></ol></details>
+  </div>
+</div></section>
+
+<section id="harga"><div class="wrap">
+  <div class="eyebrow">Harga</div><h2>Pilih paket yang sesuai</h2>
+  <p class="lead">Pembayaran sekali, tanpa langganan. Hubungi lewat WhatsApp untuk pemesanan. File lengkap dikirim setelah pembayaran terkonfirmasi.</p>
+  <div class="grid g3">
+    <div class="card price"><h3>Single</h3><div class="amt" id="pr1"></div><ul><li>1 program pilihan</li><li>File HTML mandiri</li><li>Panduan penggunaan</li><li>Update 3 bulan</li></ul><a class="btn ghost wa" href="#">Pesan Single</a></div>
+    <div class="card price hot"><h3>Bundle Lengkap</h3><div class="amt" id="pr2"></div><ul><li>Semua 12 program</li><li>Template CSV &amp; data contoh</li><li>Panduan tiap program</li><li>Update 12 bulan</li><li>Dukungan WhatsApp</li></ul><a class="btn wa" href="#">Pesan Bundle</a></div>
+    <div class="card price"><h3>Custom Pro</h3><div class="amt" id="pr3"></div><ul><li>Branding perusahaan kamu</li><li>Hubungkan ke data sendiri</li><li>Penyesuaian rumus &amp; laporan</li><li>Pelatihan tim</li></ul><a class="btn ghost wa" href="#">Konsultasi</a></div>
+  </div>
+</div></section>
+
+<section id="faq" style="background:#fff;border-top:1px solid var(--line)"><div class="wrap faq">
+  <div class="eyebrow">FAQ</div><h2>Pertanyaan umum</h2>
+  <details><summary>Apakah data saya aman?</summary><p>Semua perhitungan berjalan di browser kamu. Tidak ada data yang dikirim ke server mana pun.</p></details>
+  <details><summary>Apakah perlu internet?</summary><p>Semua perhitungan berjalan di browser. Internet dipakai hanya untuk memuat pustaka grafik saat halaman dibuka.</p></details>
+  <details><summary>Bisa dipakai di Excel / Google Sheets?</summary><p>Ya. Semua hasil bisa diunduh sebagai CSV dan dibuka di Excel atau Google Sheets.</p></details>
+  <details><summary>Apa yang saya terima setelah membayar?</summary><p>File HTML lengkap (tanpa batasan demo, unggah &amp; unduh CSV aktif), panduan penggunaan, dan lisensi. File dikirim lewat WhatsApp atau email setelah pembayaran terkonfirmasi.</p></details>
+  <details><summary>Apakah data di demo ini asli?</summary><p>Bukan. Seluruh data dibuat acak oleh generator simulasi untuk keperluan demonstrasi.</p></details>
+</div></section>
+
+<footer><div class="wrap"><div>© <span id="yr"></span> Mantam Product. Semua hak dilindungi.</div><div>Dibuat dengan HTML, CSS &amp; JavaScript murni.</div></div></footer>
+
+<script>
+const EDITION="demo"; /* diatur otomatis oleh build: demo | full | abc | eoq | rack | kpi | csv */
+const DEMO=EDITION==='demo';
+/* ============ KONFIGURASI (ubah di sini) ============ */
+const CONFIG={
+  whatsapp:"6289623291732",           // nomor WhatsApp pemesanan (format 62...)
+  pesan:"Halo, saya tertarik dengan Mantam Product",
+  harga:{single:"Rp 99.000",bundle:"Rp 299.000",custom:"Mulai Rp 1.500.000"}
+};
+/* ===================================================== */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>new Intl.NumberFormat('id-ID').format(Math.round(n));
+const idr=n=>'Rp '+fmt(n);
+const pct=n=>(n).toFixed(1).replace('.',',')+'%';
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function dl(name,text){const b=new Blob(['\ufeff'+text],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function toCSV(rows){return rows.map(r=>r.map(v=>{v=String(v??'');return /[",;\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(',')).join('\n')}
+function parseCSV(text){
+  text=text.replace(/^\ufeff/,'');
+  const first=text.split(/\r?\n/)[0]||'';
+  const d=[',',';','\t'].map(c=>[c,first.split(c).length]).sort((a,b)=>b[1]-a[1])[0][0];
+  const rows=[];let row=[],cur='',q=false;
+  for(let i=0;i<text.length;i++){const ch=text[i];
+    if(q){if(ch==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=ch}
+    else if(ch==='"')q=true;
+    else if(ch===d){row.push(cur);cur=''}
+    else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cur);rows.push(row);row=[];cur=''}
+    else cur+=ch}
+  if(cur!==''||row.length){row.push(cur);rows.push(row)}
+  return rows;
+}
+function renderTable(el,rows,head=true){
+  if(!rows.length){el.innerHTML='';return}
+  const h=head?'<thead><tr>'+rows[0].map(c=>`<th>${esc(c)}</th>`).join('')+'</tr></thead>':'';
+  const b=rows.slice(head?1:0,201).map(r=>'<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>').join('');
+  el.innerHTML=h+'<tbody>'+b+'</tbody>';
+}
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const charts={};
+function chart(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id),cfg)}
+const Z={responsive:true,maintainAspectRatio:false};
+
+/* ---------- Navigasi & tab ---------- */
+const META={
+ abc:{ic:'📊',t:'Analisis ABC',d:'Klasifikasi SKU berdasarkan nilai pemakaian, lengkap dengan grafik Pareto.'},
+ eoq:{ic:'🧮',t:'EOQ & Reorder Point',tab:'EOQ & ROP',d:'Hitung jumlah pesan ekonomis, safety stock, dan titik pesan ulang.'},
+ rack:{ic:'🏗️',t:'Kapasitas Rak',d:'Rencanakan posisi pallet, jumlah bay, dan estimasi luas area.'},
+ kpi:{ic:'📈',t:'Dashboard KPI',d:'Pantau OTIF, akurasi stok, produktivitas picking, dan biaya per order.'},
+ csv:{ic:'🧹',t:'Pembersih CSV',d:'Rapikan data mentah: trim, hapus duplikat, standarkan huruf dan angka.'},
+ forklift:{ic:'🚜',t:'Inspeksi Forklift',d:'Checklist harian dengan skor kelayakan dan status operasi otomatis.'},
+ kepribadian:{ic:'🧩',t:'Tes Kepribadian',d:'Inventori Big Five dengan skor per dimensi dan interpretasi.'},
+ irt:{ic:'🎯',t:'Tes Kemampuan Adaptif',tab:'Tes Adaptif',d:'Soal menyesuaikan tingkat kesulitan dengan model IRT (Rasch).'},
+ cv:{ic:'🗂️',t:'Pemilah CV',d:'Skor dan peringkat kandidat berdasarkan kriteria berbobot.'},
+ lembur:{ic:'⏱️',t:'Kalkulator Lembur',d:'Hitung upah lembur hari kerja dan hari libur sesuai ketentuan umum.'},
+ baca:{ic:'📖',t:'Pelacak Bacaan',d:'Pantau progres buku, kecepatan baca, dan estimasi selesai.'},
+ flash:{ic:'🃏',t:'Flashcard Leitner',d:'Hafalkan istilah dengan sistem kotak Leitner.'}};
+const CATS=[['📦','Logistics & Gudang',['abc','eoq','rack','kpi','csv','forklift']],['🧠','Psikologi & SDM',['kepribadian','irt','cv','lembur']],['📚','Pendidikan & Produktivitas',['baca','flash']]];
+$('#cats').innerHTML=CATS.map(([ic,n,ks])=>`<h3 class="cathead">${ic} ${n} <small>${ks.length} program</small></h3><div class="grid g5">${ks.map(k=>`<div class="card pcard" data-go="${k}"><div class="ic">${META[k].ic}</div><h3>${META[k].t.replace(/&/g,'&amp;')}</h3><p>${META[k].d}</p></div>`).join('')}</div>`).join('');
+$('#tabs').innerHTML=CATS.map(([ic,n,ks])=>`<div class="catlabel">${ic} ${n.replace(/&/g,'&amp;')}</div>`+ks.map(k=>`<button class="tab${k==='abc'?' on':''}" data-t="${k}">${(META[k].tab||META[k].t).replace(/&/g,'&amp;')}</button>`).join('')).join('');
+function openTab(t){$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));
+  ({abc:abcRun,eoq:eoqRun,rack:rackRun,kpi:kpiRender,csv:()=>{},forklift:fkInit,kepribadian:pqInit,irt:irtInit,cv:cvInit,lembur:lbInit,baca:bcInit,flash:flInit})[t]()}
+$$('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.t));
+$$('.pcard').forEach(c=>c.onclick=()=>{openTab(c.dataset.go);document.getElementById('demo').scrollIntoView()});
+$('#yr').textContent=new Date().getFullYear();
+const wa=t=>`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
+$('#navWA').href=wa(CONFIG.pesan);
+function lock(e){if(e){e.preventDefault();e.stopPropagation()}alert('Fitur ini hanya ada di versi lengkap. Anda akan diarahkan ke WhatsApp untuk pemesanan.');window.open(wa(CONFIG.pesan+' - versi lengkap'),'_blank')}
+$$('.wa').forEach(a=>a.href=wa(CONFIG.pesan+' - '+a.textContent));
+$('#pr1').innerHTML=CONFIG.harga.single+' <small>sekali bayar</small>';
+$('#pr2').innerHTML=CONFIG.harga.bundle+' <small>sekali bayar</small>';
+$('#pr3').innerHTML=CONFIG.harga.custom;
+
+/* ---------- 1. ABC ---------- */
+let abcData=[],abcRes=[];
+const NAMA=["Kardus Master","Lakban Bening","Plastik Wrap","Label Barcode","Pallet Kayu","Kantong Plastik","Tali Pengikat","Sarung Tangan","Karton Divider","Bubble Wrap","Selotip Kertas","Kotak Display","Stiker Peringatan","Pengisi Kemasan","Rak Mini","Segel Pengaman","Amplop Dokumen","Pita Printer","Kertas Thermal","Box File","Cable Tie","Kantong Zip","Pembatas Rak","Ban Pembungkus","Wadah Plastik","Tutup Botol","Botol PET","Jerigen","Kemasan Sachet","Sak Karung","Roller Kemasan","Isi Ulang Tinta","Masker Kain","Rompi Safety","Helm Proyek","Sepatu Safety","Kunci Pas","Baut Set","Lampu LED","Kabel Ekstensi"];
+function abcGen(){
+  const r=rng(Date.now()%100000);
+  abcData=NAMA.map((n,i)=>{const u=r();return{sku:'SKU-'+String(i+1).padStart(3,'0'),nama:n+' '+['S','M','L','XL'][Math.floor(r()*4)],demand:Math.floor(80+Math.pow(u,3)*9000),price:Math.round((4000+r()*r()*260000)/500)*500}});
+  abcRun();
+}
+function abcRun(){
+  if(!abcData.length)return abcGen();
+  const A=+$('#abcA').value,B=+$('#abcB').value;
+  const rows=abcData.map(x=>({...x,val:x.demand*x.price})).sort((a,b)=>b.val-a.val);
+  const tot=rows.reduce((s,x)=>s+x.val,0);let cum=0;
+  abcRes=rows.map(x=>{const before=cum/tot*100;cum+=x.val;const cp=cum/tot*100;return{...x,share:x.val/tot*100,cum:cp,cls:before<A?'A':before<B?'B':'C'}});
+  const stat=c=>{const s=abcRes.filter(x=>x.cls===c);return{n:s.length,v:s.reduce((a,x)=>a+x.val,0)/tot*100}};
+  $('#abcK').innerHTML=['A','B','C'].map(c=>{const s=stat(c);return `<div class="kpi"><small>Kelas ${c}</small><b>${s.n} SKU</b><br><em>${pct(s.n/abcRes.length*100)} SKU · ${pct(s.v)} nilai</em></div>`}).join('')+`<div class="kpi"><small>Total nilai pemakaian</small><b>${idr(tot)}</b></div>`;
+  chart('abcC',{data:{labels:abcRes.map(x=>x.sku),datasets:[{type:'bar',label:'Nilai (Rp)',data:abcRes.map(x=>x.val),backgroundColor:abcRes.map(x=>x.cls==='A'?'#14b8a6':x.cls==='B'?'#f59e0b':'#ef4444'),yAxisID:'y'},{type:'line',label:'Kumulatif %',data:abcRes.map(x=>x.cum),borderColor:'#2563eb',pointRadius:0,tension:.3,yAxisID:'y1'}]},options:{...Z,scales:{y:{ticks:{callback:v=>fmt(v/1e6)+' jt'}},y1:{position:'right',min:0,max:100,grid:{display:false}},x:{ticks:{display:false}}}}});
+  renderTable($('#abcT'),[['#','SKU','Nama','Permintaan','Harga','Nilai','% Nilai','Kumulatif','Kelas'],...abcRes.slice(0,DEMO?10:abcRes.length).map((x,i)=>[i+1,x.sku,esc(x.nama),fmt(x.demand),idr(x.price),idr(x.val),pct(x.share),pct(x.cum),`<span class="pill ${x.cls}">${x.cls}</span>`])]);
+}
+$('#abcGen').onclick=abcGen;$('#abcA').oninput=$('#abcB').oninput=abcRun;
+/* ---------- 2. EOQ ---------- */
+function eoqRun(){
+  const g=id=>+$('#'+id).value;
+  const D=g('eD'),S=g('eS'),C=g('eC'),h=g('eH')/100,L=g('eL'),sd=g('eSd'),z=+$('#eZ').value,days=g('eDays')||300;
+  const H=C*h;if(!(D>0&&S>0&&H>0))return;
+  const Q=Math.sqrt(2*D*S/H),ss=z*sd*Math.sqrt(L),dd=D/days,rop=dd*L+ss,tc=D/Q*S+Q/2*H+D*C;
+  $('#eK').innerHTML=[['EOQ',fmt(Q)+' unit'],['Safety Stock',fmt(ss)+' unit'],['Reorder Point',fmt(rop)+' unit'],['Order per tahun',(D/Q).toFixed(1).replace('.',',')+'×'],['Interval order',fmt(days/(D/Q))+' hari'],['Total biaya/tahun',idr(tc)]].map(([a,b])=>[a,DEMO&&['Safety Stock','Reorder Point','Total biaya/tahun'].includes(a)?'🔒 Versi lengkap':b]).map(([a,b])=>`<div class="kpi"><small>${a}</small><b>${b}</b></div>`).join('');
+  const qs=[],ord=[],hold=[],tot=[];for(let q=Math.max(1,Q*.2);q<=Q*2.6;q+=Q*.1){qs.push(Math.round(q));ord.push(D/q*S);hold.push(q/2*H);tot.push(D/q*S+q/2*H)}
+  chart('eC2',{type:'line',data:{labels:qs,datasets:[{label:'Biaya pesan',data:ord,borderColor:'#f59e0b',pointRadius:0},{label:'Biaya simpan',data:hold,borderColor:'#14b8a6',pointRadius:0},{label:'Total',data:tot,borderColor:'#2563eb',borderWidth:3,pointRadius:0}]},options:{...Z,scales:{y:{ticks:{callback:v=>fmt(v/1e6)+' jt'}},x:{title:{display:true,text:'Jumlah per order (unit)'}}}}});
+}
+$$('#p-eoq input,#p-eoq select').forEach(e=>e.oninput=eoqRun);
+
+/* ---------- 3. Rak ---------- */
+function rackRun(){
+  const g=id=>+$('#'+id).value;
+  const P=g('rP'),w=g('rW'),L=g('rL'),U=g('rU')/100,B=g('rB'),bw=g('rBW'),dp=g('rD'),A=g('rA');
+  if(!(P>0&&w>0&&L>0&&U>0&&B>0))return;
+  const perBay=w*L,bays=Math.ceil(P/(perBay*U)),positions=bays*perBay,rows=Math.ceil(bays/B),blocks=Math.ceil(rows/2);
+  const area=blocks*B*bw*(2*dp+A),occ=P/positions*100;
+  $('#rK').innerHTML=[['Posisi per bay',perBay],['Total bay',bays],['Total posisi pallet',fmt(positions)],['Baris rak',rows],['Okupansi aktual',pct(occ)],['Estimasi area rak + lorong',fmt(area)+' m²']].map(([a,b])=>[a,DEMO&&a.startsWith('Estimasi')?'🔒 Versi lengkap':b]).map(([a,b])=>`<div class="kpi"><small>${a}</small><b>${b}</b></div>`).join('');
+  const show=Math.min(positions,400),filled=Math.round(show*Math.min(1,P/positions));
+  $('#rC').innerHTML=Array.from({length:show},(_,i)=>`<i class="${i<filled?'f':''}"></i>`).join('');
+}
+$$('#p-rack input').forEach(e=>e.oninput=rackRun);
+
+/* ---------- 4. KPI ---------- */
+const KPIS={otif:{n:'OTIF (%)',u:'%',good:'up',min:88,max:98.5},acc:{n:'Akurasi Stok (%)',u:'%',good:'up',min:94,max:99.7},prod:{n:'Produktivitas Picking (line/jam)',u:'',good:'up',min:55,max:95},cyc:{n:'Order Cycle Time (jam)',u:' jam',good:'down',min:5,max:14},cost:{n:'Biaya per Order (Rp)',u:'',good:'down',min:9000,max:19000,money:1}};
+let kData=null;
+function kpiGen(){
+  const r=rng(Date.now()%99991),now=new Date(),M=[];
+  for(let i=11;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);M.push(d.toLocaleDateString('id-ID',{month:'short',year:'2-digit'}))}
+  kData={months:M};
+  for(const k in KPIS){const c=KPIS[k];let v=c.min+(c.max-c.min)*(.35+r()*.3);const dir=c.good==='up'?1:-1,trend=(r()-.35)*.04*(c.max-c.min);
+    kData[k]=M.map(()=>{v+=trend*dir*.6+(r()-.5)*(c.max-c.min)*.08;v=Math.min(c.max,Math.max(c.min,v));return +(c.money?Math.round(v/50)*50:v.toFixed(1))})}
+  kpiRender();
+}
+function kpiRender(){
+  if(!kData)return kpiGen();
+  if(!$('#kSel').options.length)$('#kSel').innerHTML=Object.entries(KPIS).map(([k,c])=>`<option value="${k}">${c.n}</option>`).join('');
+  const show=(k,v)=>KPIS[k].money?idr(v):String(v).replace('.',',')+KPIS[k].u;
+  $('#kK').innerHTML=Object.keys(KPIS).map(k=>{const a=kData[k],l=a[11],p=a[10],dlt=l-p,better=KPIS[k].good==='up'?dlt>=0:dlt<=0;
+    return `<div class="kpi"><small>${KPIS[k].n.replace(/ \(.*\)/,'')}</small><b>${show(k,l)}</b><br><em class="${better?'up':'down'}">${dlt>=0?'▲':'▼'} ${Math.abs(dlt).toFixed(KPIS[k].money?0:1).replace('.',',')} vs bulan lalu</em></div>`}).join('');
+  const k=$('#kSel').value||'otif';
+  chart('kC',{type:'line',data:{labels:kData.months,datasets:[{label:KPIS[k].n,data:kData[k],borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.12)',fill:true,tension:.35,pointRadius:4}]},options:{...Z}});
+  renderTable($('#kT'),[['Bulan',...Object.values(KPIS).map(c=>c.n)],...kData.months.map((m,i)=>[m,...Object.keys(KPIS).map(k=>show(k,kData[k][i]))])]);
+}
+$('#kGen').onclick=kpiGen;$('#kSel').onchange=kpiRender;
+
+/* ---------- 5. CSV Cleaner ---------- */
+let cOut=[];
+$('#cSample').onclick=()=>{$('#cIn').value='sku;nama;qty;harga\n  sku-101 ; kardus   MASTER ;1.250;12.500,50\nsku-102;lakban bening  ;300;8.900\n\nsku-101 ;kardus master;1.250;12.500,50\nsku-103;PLASTIK wrap;75;45.000,00\n  ;;;\nsku-104;label  barcode;2.000;1.250,75';cRun()};
+function cRun(){
+  let rows=parseCSV($('#cIn').value);if(!rows.length)return;const n0=rows.length;if(DEMO&&rows.length>26)rows=rows.slice(0,26);
+  const o=id=>$('#'+id).checked;
+  if(o('oTrim'))rows=rows.map(r=>r.map(c=>c.replace(/\s+/g,' ').trim()));
+  if(o('oEmpty'))rows=rows.filter(r=>r.some(c=>c.trim()!==''));
+  const head=rows[0],body=rows.slice(1);let b=body;
+  if(o('oNum'))b=b.map(r=>r.map(c=>/^-?\d{1,3}(\.\d{3})*(,\d+)?$/.test(c)?c.replace(/\./g,'').replace(',','.'):c));
+  if(o('oCase'))b=b.map(r=>r.map((c,i)=>i===0?c.toUpperCase():/^[\d.,-]+$/.test(c)?c:c.toLowerCase().replace(/(^|\s)\S/g,m=>m.toUpperCase())));
+  let dup=0;if(o('oDup')){const s=new Set();b=b.filter(r=>{const k=r.join('\u0001');if(s.has(k)){dup++;return false}s.add(k);return true})}
+  cOut=[head,...b];
+  renderTable($('#cT'),cOut.map((r,i)=>i?r.map(esc):r));
+  $('#cInfo').textContent=`${n0} baris awal → ${cOut.length} baris (${dup} duplikat dihapus).`+(DEMO&&n0>26?' Demo dibatasi 25 baris data.':'');
+}
+$('#cRun').onclick=cRun;
+
+
+/* ================= Program tambahan: Logistics, Psikologi & SDM, Pendidikan ================= */
+function lockBtn(id){const b=$('#'+id);if(b&&DEMO){b.textContent='🔒 '+b.textContent;b.onclick=lock}}
+const uPick=a=>a[Math.floor(Math.random()*a.length)];
+const lockNote=(id,t)=>{const e=$('#'+id);if(e&&DEMO)e.innerHTML='<div class="note">🔒 '+t+' tersedia di versi lengkap.</div>'};
+
+/* ---------- 6. Inspeksi Forklift ---------- */
+const FK_UNITS=['FL-01 · Counterbalance 2,5 ton','FL-02 · Reach Truck 1,5 ton','FL-03 · Counterbalance 3 ton','FL-04 · Pallet Stacker'];
+const FK_ITEMS=[['Rem utama & rem parkir berfungsi',1],['Klakson berbunyi jelas',1],['Sabuk pengaman & kursi operator',1],['Garpu (fork) tidak retak atau bengkok',1],['Rantai & mast tidak aus atau bocor',1],['Ban/roda tidak terkelupas',0],['Lampu utama & lampu sein',0],['Tidak ada kebocoran oli hidrolik',0]];
+
+let fkBuilt=false,fkSum={};
+function fkInit(){
+  if(!fkBuilt){fkBuilt=true;
+    $('#fkUnit').innerHTML=FK_UNITS.map(u=>`<option>${u}</option>`).join('');
+    $('#fkDate').value=new Date().toISOString().slice(0,10);
+    $('#fkT').innerHTML='<thead><tr><th>#</th><th>Item pemeriksaan</th><th>Hasil</th><th>Catatan</th></tr></thead><tbody>'+FK_ITEMS.map((x,i)=>`<tr><td>${i+1}</td><td style="white-space:normal">${x[0]}${x[1]?' <span class="pill C">kritis</span>':''}</td><td><select style="min-width:160px"><option value="1">✅ OK</option><option value=".5">⚠️ Perlu perhatian</option><option value="0">❌ Rusak</option></select></td><td><input class="fkN" placeholder="Catatan" style="min-width:170px"></td></tr>`).join('')+'</tbody>';
+    $$('#fkT select').forEach(s=>s.onchange=fkCalc);
+    $('#fkRand').onclick=()=>{$$('#fkT select').forEach(s=>{const r=Math.random();s.value=r<.78?'1':r<.93?'.5':'0'});fkCalc()};
+    $('#fkAllOk').onclick=()=>{$$('#fkT select').forEach(s=>s.value='1');fkCalc()};
+    $('#fkNote').textContent=DEMO?'🔒 Demo: 8 item. Versi lengkap memuat 16 item pemeriksaan dan laporan CSV.':'';
+    lockBtn('fkDl');
+    
+  }
+  fkCalc();
+}
+function fkCalc(){
+  const sel=$$('#fkT select');let sum=0,bad=0,warn=0,crit=0;
+  sel.forEach((s,i)=>{const v=+s.value;sum+=v;if(v===0){bad++;if(FK_ITEMS[i][1])crit++}else if(v===.5)warn++});
+  const sc=sum/sel.length*100;
+  const st=crit?['TIDAK LAYAK OPERASI','C']:(bad||sc<90)?['PERLU PERBAIKAN','B']:['LAYAK OPERASI','A'];
+  fkSum={sc,st};
+  $('#fkK').innerHTML=`<div class="kpi"><small>Status</small><b><span class="pill ${st[1]}" style="font-size:14px">${st[0]}</span></b></div><div class="kpi"><small>Skor kelayakan</small><b>${pct(sc)}</b></div><div class="kpi"><small>OK / Perhatian / Rusak</small><b>${sel.length-bad-warn} / ${warn} / ${bad}</b></div><div class="kpi"><small>Item kritis rusak</small><b>${crit}</b></div>`;
+}
+
+/* ---------- 7. Tes Kepribadian (Big Five) ---------- */
+const PQ_T={O:'Keterbukaan',C:'Ketelitian',E:'Ekstraversi',A:'Keramahan',N:'Sensitivitas Emosi'};
+const PQ={
+ O:[['Saya senang mencoba cara baru yang belum pernah saya pakai.',0],['Saya lebih suka rutinitas yang sama setiap hari.',1]],
+ C:[['Saya menyelesaikan tugas sebelum tenggat.',0],['Saya sering menunda pekerjaan.',1]],
+ E:[['Saya nyaman memulai percakapan dengan orang baru.',0],['Saya jarang bicara saat rapat atau diskusi kelompok.',1]],
+ A:[['Saya peduli pada perasaan orang lain.',0],['Saya sulit memaafkan kesalahan orang lain.',1]],
+ N:[['Saya mudah merasa cemas.',0],['Saya tetap tenang saat berada di bawah tekanan.',1]]};
+
+let PQ_I=null;
+
+let pqList=[],pqBuilt=false,pqRes=null;
+function pqInit(){
+  if(pqBuilt)return;pqBuilt=true;
+  const max=Math.max(...Object.values(PQ).map(a=>a.length));
+  for(let i=0;i<max;i++)for(const k in PQ)if(PQ[k][i])pqList.push({k,t:PQ[k][i][0],rev:PQ[k][i][1]});
+  $('#pqQ').innerHTML=pqList.map((q,i)=>`<div class="q"><p>${i+1}. ${q.t}</p><div class="lik">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="pq${i}" value="${v}">${v}</label>`).join('')}</div></div>`).join('');
+  $('#pqCalc').onclick=pqCalc;
+  $('#pqRand').onclick=()=>{pqList.forEach((_,i)=>{const r=$$(`input[name="pq${i}"]`);r[Math.floor(Math.random()*5)].checked=true})};
+  $('#pqReset').onclick=()=>{$$('#pqQ input').forEach(x=>x.checked=false);$('#pqR').innerHTML='';pqRes=null};
+  lockBtn('pqDl');
+  
+}
+function pqCalc(){
+  const sums={};let miss=0;
+  pqList.forEach((q,i)=>{const c=document.querySelector(`input[name="pq${i}"]:checked`);if(!c){miss++;return}const v=q.rev?6-+c.value:+c.value;(sums[q.k]=sums[q.k]||[]).push(v)});
+  if(miss)return $('#pqR').innerHTML=`<div class="note" style="color:var(--bad)">Masih ada ${miss} pernyataan yang belum dijawab.</div>`;
+  pqRes=Object.keys(PQ).map(k=>{const m=sums[k].reduce((a,b)=>a+b,0)/sums[k].length,p=(m-1)/4*100;return{k,p,lv:p<40?'Rendah':p<65?'Sedang':'Tinggi',li:p<40?0:p<65?1:2}});
+  $('#pqR').innerHTML='<div class="kpi" style="margin-bottom:10px">'+pqRes.map(r=>`<div class="hb"><span>${PQ_T[r.k]}</span><div><i style="width:${r.p}%"></i></div><b>${pct(r.p)} · ${r.lv}</b></div>${PQ_I?`<div class="note" style="margin:0 0 8px">${PQ_I[r.k][r.li]}</div>`:''}`).join('')+(PQ_I?'':'<div class="note">🔒 Interpretasi tiap dimensi tersedia di versi lengkap (30 pernyataan).</div>')+'</div>';
+}
+
+/* ---------- 8. Tes Kemampuan Adaptif (IRT/Rasch) ---------- */
+const IQ=[
+['Berapa hasil 7 × 8?',['54','56','64','48'],1,-2],
+['Lawan kata "hemat" adalah ...',['boros','murah','irit','rajin'],0,-1.5],
+['Kecepatan 60 km/jam. Berapa waktu tempuh untuk jarak 150 km?',['2 jam','2,5 jam','3 jam','2 jam 15 menit'],1,-0.8],
+['Peluang muncul angka genap pada satu lemparan dadu adalah ...',['1/6','1/3','1/2','2/3'],2,-0.7],
+['Jika x + 2x + 3x = 54, maka x = ...',['6','9','12','18'],1,-0.2]];
+
+let irt={asked:[],resp:[],cur:-1},irtLen=DEMO?5:10;
+let irtNextIdx=()=>irt.asked.length;
+
+
+function irtInit(){
+  if($('#irtStart').dataset.b)return;$('#irtStart').dataset.b=1;
+  $('#irtStart').onclick=irtStart;lockBtn('irtDl');
+  
+  $('#irtInfo').textContent=DEMO?'🔒 Demo: 5 soal tetap, tanpa estimasi kemampuan.':'';
+  $('#irtBox').innerHTML='<div class="note">Klik <b>Mulai</b> untuk memulai tes.</div>';
+}
+function irtStart(){irt={asked:[],resp:[],cur:-1};irtShow()}
+function irtShow(){
+  const n=irt.asked.length;$('#irtP').style.width=(n/irtLen*100)+'%';
+  if(n>=irtLen)return irtDone();
+  const i=irtNextIdx();irt.cur=i;const q=IQ[i];
+  $('#irtBox').innerHTML=`<div style="font-weight:700;margin-bottom:8px">Soal ${n+1} dari ${irtLen}</div><p style="font-size:17px;margin:0 0 10px">${q[0]}</p>`+q[1].map((o,j)=>`<button class="qopt" data-j="${j}">${String.fromCharCode(65+j)}. ${o}</button>`).join('');
+  $$('#irtBox .qopt').forEach(b=>b.onclick=()=>{irt.asked.push(i);irt.resp.push(+b.dataset.j===q[2]?1:0);irtShow()});
+}
+function irtDone(){
+  const ok=irt.resp.reduce((a,b)=>a+b,0);let h=`<div class="kpis"><div class="kpi"><small>Skor mentah</small><b>${ok} / ${irtLen}</b></div>`;
+  
+  h+='</div>';if(DEMO)h+='<div class="note">🔒 Estimasi kemampuan (θ), persentil, dan soal adaptif tersedia di versi lengkap.</div>';
+  $('#irtBox').innerHTML=h;
+}
+
+/* ---------- 9. Pemilah CV ---------- */
+const CV_SK=['Excel','SQL','WMS','Python','Inventory','Komunikasi','Leadership','Forklift'];
+const CV_W0=[2,2,3,1,3,2,1,0];
+const CV_NM=['Andi','Bima','Citra','Dewi','Eka','Fajar','Gita','Hadi','Indah','Joko','Kirana','Lintang','Maya','Nanda','Oki','Putri','Rangga','Sari','Tito','Utami','Vina','Wahyu','Yuni','Zaki'];
+const CV_ED=[['SMA/SMK',.4],['D3',.6],['S1',.85],['S2',1]];
+let cvData=[],cvRank=[];
+function cvInit(){
+  if($('#cvW').dataset.b){return}$('#cvW').dataset.b=1;
+  $('#cvW').innerHTML=CV_SK.map((s,i)=>`<div><label>${s}</label><input type="number" min="0" max="5" value="${CV_W0[i]}" class="cvw"></div>`).join('');
+  $$('.cvw,#cvExp,#cvCut').forEach(e=>e.oninput=cvRun);
+  $('#cvGen').onclick=cvGen;lockBtn('cvDl');
+  lockNote('cvPasteBox','Tempel data kandidat sendiri');
+  
+  cvGen();
+}
+function cvGen(){const n=DEMO?10:40;cvData=Array.from({length:n},(_,i)=>({id:'C-'+String(i+1).padStart(2,'0'),nama:uPick(CV_NM)+' '+String.fromCharCode(65+Math.floor(Math.random()*26))+'.',skills:CV_SK.filter(()=>Math.random()<.42),exp:Math.floor(Math.random()*11),edu:uPick(CV_ED)[0]}));cvRun()}
+function cvRun(){
+  const w=$$('.cvw').map(e=>Math.max(0,+e.value||0)),tw=w.reduce((a,b)=>a+b,0)||1,te=+$('#cvExp').value||3,cut=+$('#cvCut').value||70;
+  cvRank=cvData.map(c=>{const ms=CV_SK.reduce((a,s,i)=>a+(c.skills.includes(s)?w[i]:0),0),sc=ms/tw*60+Math.min(c.exp/te,1)*25+(CV_ED.find(e=>e[0]===c.edu)||[0,.85])[1]*15;return{...c,sc,st:sc>=cut?'Shortlist':sc>=50?'Pertimbangkan':'Tolak'}}).sort((a,b)=>b.sc-a.sc);
+  const cls={Shortlist:'A',Pertimbangkan:'B',Tolak:'C'},sl=cvRank.filter(c=>c.st==='Shortlist').length;
+  $('#cvK').innerHTML=`<div class="kpi"><small>Kandidat</small><b>${cvRank.length}</b></div><div class="kpi"><small>Shortlist</small><b>${sl}</b></div><div class="kpi"><small>Rata-rata skor</small><b>${(cvRank.reduce((a,c)=>a+c.sc,0)/(cvRank.length||1)).toFixed(1).replace('.',',')}</b></div>`;
+  renderTable($('#cvT'),[['#','ID','Nama','Skill','Pengalaman','Pendidikan','Skor','Status'],...cvRank.map((c,i)=>[i+1,c.id,esc(c.nama),esc(c.skills.join(', ')||'-'),c.exp+' th',esc(c.edu),c.sc.toFixed(1).replace('.',','),`<span class="pill ${cls[c.st]}">${c.st}</span>`])]);
+}
+
+/* ---------- 10. Kalkulator Lembur ---------- */
+let lbRows=[];
+function lbPay(type,six,h,rate){
+  let m=0;
+  if(type==='kerja')m=Math.min(h,1)*1.5+Math.max(h-1,0)*2;
+  
+  return m*rate;
+}
+function lbInit(){
+  if($('#lbAdd').dataset.b)return;$('#lbAdd').dataset.b=1;
+  if(DEMO){const o=$('#lbT').options[1];o.textContent='🔒 Hari libur (versi lengkap)';o.disabled=true}
+  $$('#p-lembur input,#p-lembur select').forEach(e=>e.oninput=lbRender);
+  $('#lbAdd').onclick=()=>{if(DEMO&&lbRows.length>=1)return lock();lbRows.push({t:$('#lbT').value,six:$('#lbD').value==='6',h:+$('#lbH').value||0});lbRender()};
+  $('#lbClr').onclick=()=>{lbRows=[];lbRender()};
+  $('#lbTb').onclick=e=>{const b=e.target.closest('[data-del]');if(b){lbRows.splice(+b.dataset.del,1);lbRender()}};
+  lockBtn('lbDl');
+  
+  lbRender();
+}
+function lbRender(){
+  const w=+$('#lbW').value||0,r=w/173,cur=lbPay($('#lbT').value,$('#lbD').value==='6',+$('#lbH').value||0,r);
+  const tot=lbRows.reduce((a,x)=>a+lbPay(x.t,x.six,x.h,r),0),th=lbRows.reduce((a,x)=>a+x.h,0);
+  $('#lbK').innerHTML=`<div class="kpi"><small>Upah per jam (÷173)</small><b>${idr(r)}</b></div><div class="kpi"><small>Estimasi entri ini</small><b>${idr(cur)}</b></div><div class="kpi"><small>Total jam (daftar)</small><b>${th}</b></div><div class="kpi"><small>Total upah lembur</small><b>${idr(tot)}</b></div>`;
+  renderTable($('#lbTb'),[['#','Jenis hari','Hari kerja/mgg','Jam','Upah lembur',''],...lbRows.map((x,i)=>[i+1,x.t==='kerja'?'Hari kerja':'Hari libur',x.six?6:5,x.h,idr(lbPay(x.t,x.six,x.h,r)),`<button class="btn sm ghost" data-del="${i}">Hapus</button>`])]);
+  const kh=lbRows.filter(x=>x.t==='kerja').reduce((a,x)=>a+x.h,0),wn=[];
+  if(lbRows.some(x=>x.t==='kerja'&&x.h>4))wn.push('Ada entri hari kerja lebih dari 4 jam (batas umum lembur 4 jam/hari).');
+  if(kh>18)wn.push('Total lembur hari kerja melebihi 18 jam; batas umum 18 jam per minggu, pastikan daftar ini untuk satu minggu atau satu bulan sesuai kebutuhan.');
+  $('#lbWarn').textContent=(wn.join(' ')+(DEMO?' 🔒 Demo: 1 entri dan hari kerja biasa saja.':'')).trim();
+}
+
+/* ---------- 11. Pelacak Bacaan ---------- */
+let bcBooks=[],bcLog=[];
+const BC_T=['Seni Mengelola Gudang','Dasar-dasar Rantai Pasok','Psikologi Kerja Tim','Statistik untuk Pemula','Kepemimpinan Lapangan'];
+function bcInit(){
+  if($('#bcAdd').dataset.b)return;$('#bcAdd').dataset.b=1;
+  bcBooks=BC_T.slice(0,DEMO?3:5).map(t=>{const p=Math.round((120+Math.random()*380)/10)*10;return{t,p,r:Math.floor(Math.random()*p*.9)}});
+  bcLog=Array.from({length:14},()=>Math.random()<.2?0:Math.floor(8+Math.random()*30));
+  $('#bcAdd').onclick=()=>{const t=$('#bcT').value.trim(),p=+$('#bcP').value;if(!t||!(p>0))return alert('Isi judul dan jumlah halaman.');if(DEMO&&bcBooks.length>=3)return lock();bcBooks.push({t,p,r:0});$('#bcT').value='';bcRender()};
+  $('#bcTb').onclick=e=>{const b=e.target.closest('[data-log]');if(!b)return;const i=+b.dataset.log,v=+$('#bcIn'+i).value;if(!(v>0))return;const bk=bcBooks[i];const add=Math.min(v,bk.p-bk.r);bk.r+=add;bcLog[13]+=add;bcRender()};
+  lockBtn('bcDl');
+  
+  bcRender();
+}
+function bcRender(){
+  const tp=bcBooks.reduce((a,b)=>a+b.p,0),tr=bcBooks.reduce((a,b)=>a+b.r,0),avg=bcLog.reduce((a,b)=>a+b,0)/14,done=bcBooks.filter(b=>b.r>=b.p).length;
+  $('#bcK').innerHTML=`<div class="kpi"><small>Buku (selesai)</small><b>${bcBooks.length} (${done})</b></div><div class="kpi"><small>Halaman dibaca</small><b>${fmt(tr)} / ${fmt(tp)}</b></div><div class="kpi"><small>Rata-rata / hari</small><b>${avg.toFixed(1).replace('.',',')} hal</b></div><div class="kpi"><small>Estimasi selesai semua</small><b>${avg>0?Math.ceil((tp-tr)/avg)+' hari':'-'}</b></div>`;
+  const lbl=Array.from({length:14},(_,i)=>{const d=new Date();d.setDate(d.getDate()-13+i);return d.toLocaleDateString('id-ID',{day:'numeric',month:'short'})});
+  chart('bcC',{type:'bar',data:{labels:lbl,datasets:[{label:'Halaman per hari',data:bcLog,backgroundColor:'#14b8a6'}]},options:{...Z,plugins:{legend:{display:false}}}});
+  renderTable($('#bcTb'),[['Judul','Progres','Dibaca','Catat hari ini',''],...bcBooks.map((b,i)=>[esc(b.t),`<div class="prog" style="width:140px"><i style="width:${b.r/b.p*100}%"></i></div>`,`${b.r}/${b.p}`,`<input type="number" id="bcIn${i}" min="1" value="10" style="width:80px">`,`<button class="btn sm" data-log="${i}">Catat</button>`])]);
+}
+
+/* ---------- 12. Flashcard Leitner ---------- */
+const FL_C=[['Lead time','Waktu dari pemesanan sampai barang diterima.'],['Safety stock','Stok cadangan untuk menahan ketidakpastian permintaan atau pasokan.'],['FIFO','First In First Out: barang yang masuk lebih dulu dikeluarkan lebih dulu.'],['FEFO','First Expired First Out: barang dengan tanggal kedaluwarsa terdekat dikeluarkan lebih dulu.'],['Putaway','Proses memindahkan barang yang diterima ke lokasi penyimpanan.'],['Cycle count','Penghitungan stok berkala pada sebagian item tanpa menghentikan operasi.'],['Cross docking','Barang dari penerimaan langsung dialihkan ke pengiriman tanpa disimpan lama.'],['SKU','Stock Keeping Unit: kode unik untuk setiap varian barang.']];
+
+let fl={cards:[],box:[],cur:-1,shown:false};
+function flInit(){
+  if($('#flShow').dataset.b)return;$('#flShow').dataset.b=1;
+  fl.cards=FL_C.map(c=>c.slice());fl.box=fl.cards.map(()=>1);
+  $('#flShow').onclick=()=>{fl.shown=true;flDraw()};
+  $('#flYes').onclick=()=>flAns(true);$('#flNo').onclick=()=>flAns(false);
+  $('#flReset').onclick=()=>{fl.box=fl.cards.map(()=>1);flNext()};
+  lockBtn('flDl');lockNote('flAddBox','Tambah kartu sendiri');
+  
+  flNext();
+}
+function flNext(){
+  const c=fl.cards.map((_,i)=>i).filter(i=>fl.box[i]<5);fl.shown=false;
+  if(!c.length)fl.cur=-1;else{const w=c.map(i=>Math.pow(6-fl.box[i],2)),tot=w.reduce((a,b)=>a+b,0);let r=Math.random()*tot,k=0;while(k<c.length-1&&r>=w[k]){r-=w[k];k++}fl.cur=c[k]}
+  flDraw();
+}
+function flAns(ok){if(fl.cur<0)return;fl.box[fl.cur]=ok?Math.min(5,fl.box[fl.cur]+1):1;flNext()}
+function flDraw(){
+  const cnt=[1,2,3,4,5].map(b=>fl.box.filter(x=>x===b).length);
+  $('#flK').innerHTML=cnt.map((n,i)=>`<div class="kpi"><small>Kotak ${i+1}${i===4?' (dikuasai)':''}</small><b>${n}</b></div>`).join('');
+  $('#flCard').innerHTML=fl.cur<0?'🎉 Semua kartu sudah dikuasai':`<div>${fl.shown?`<div style="font-size:14px;color:var(--mute);margin-bottom:6px">${fl.cards[fl.cur][0]}</div><div style="font-size:18px;font-weight:600">${fl.cards[fl.cur][1]}</div>`:fl.cards[fl.cur][0]}</div>`;
+  $('#flShow').disabled=fl.cur<0||fl.shown;$('#flYes').disabled=$('#flNo').disabled=fl.cur<0||!fl.shown;
+}
+
+const TITLES=Object.fromEntries(Object.entries(META).map(([k,v])=>[k,v.t]));
+if(DEMO){
+  ['abcFile','cFile'].forEach(id=>$('#'+id).addEventListener('click',lock));
+  ['abcDl','abcTpl','kDl','cDl'].forEach(id=>{const b=$('#'+id);b.textContent='🔒 '+b.textContent;b.onclick=lock});
+  $$('label.btn').forEach(l=>l.firstChild.textContent='🔒 '+l.firstChild.textContent.trim());
+  $('#demo .lead').insertAdjacentHTML('afterend','<div class="note" style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:10px 14px;margin:-10px 0 18px;color:#92400e"><b>Mode demo:</b> tabel dibatasi, unggah &amp; unduh data serta beberapa hasil hitungan (🔒) hanya ada di versi lengkap. <a href="#harga">Lihat paket</a></div>');
+}else{
+  const h=document.getElementById('harga');h&&h.remove();
+  $$('nav ul a[href="#harga"]').forEach(a=>a.parentElement.remove());
+  $$('.hero a[href="#harga"]').forEach(a=>a.remove());
+  $('#navWA').textContent='Bantuan';$('#navWA').href=wa('Halo, saya butuh bantuan untuk Mantam Product');
+  $('#yr').parentElement.insertAdjacentHTML('beforeend',' · Lisensi untuk satu pengguna / satu perusahaan. Dilarang dijual ulang atau dibagikan.');
+}
+if(!['full','demo'].includes(EDITION)){
+  $$('.tab,.pcard,.panel').forEach(e=>{const k=e.dataset.t||e.dataset.go||e.id.replace('p-','');if(k!==EDITION)e.remove()});
+  ['produk','faq'].forEach(id=>{const s=document.getElementById(id);s&&s.remove()});
+  ['.hero .cta','.hero .stats','nav ul','#tabs'].forEach(q=>{const e=$(q);e&&e.remove()});
+  document.title='Mantam Product · '+TITLES[EDITION];
+  $('.hero p').textContent='Program siap pakai untuk gudang dan logistik. Buka di browser, tanpa instalasi, dan data kamu tidak pernah meninggalkan perangkat.';
+  $('#demo .eyebrow').textContent=TITLES[EDITION];$('#demo h2').textContent='Siap dipakai';$('#demo .lead').textContent='Isi data sendiri atau unggah CSV. Data bawaan hanyalah simulasi.';
+  openTab(EDITION);
+}else abcGen();
+</script>
+</body>
+</html>
