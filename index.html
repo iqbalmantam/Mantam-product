@@ -91,6 +91,28 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 button:disabled{opacity:.45;cursor:not-allowed}
 @media(max-width:600px){.hb{grid-template-columns:96px 1fr 96px}}
 .xl ul{margin:8px 0;padding-left:20px;color:#33445c;font-size:14px}.xl .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:12px 0}.xl .col{border:1px solid var(--line);border-radius:12px;padding:14px;background:#f8fafd}.xl .col h4{margin:0 0 6px;font-size:14px}.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#dbeafe;color:#1e40af;margin-left:6px;vertical-align:middle}.tag.x{background:#dcfce7;color:#166534}.tag.p{background:#fef3c7;color:#92400e}
+
+:root{--r:14px}
+.phead{display:flex;gap:14px;align-items:center;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.phead h3{margin:0;font-size:19px;letter-spacing:-.2px}.phead p{margin:3px 0 0;color:var(--mute);font-size:13.5px}
+.pi{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#0b1a30,#1e3a5f);color:#5eead4}.pi svg{width:22px;height:22px}
+.ic svg{width:24px;height:24px;color:#0b6b73}.cathead svg{width:19px;height:19px;vertical-align:-4px;margin-right:8px;color:var(--brand)}
+.kpi b{font-size:clamp(16px,1.7vw,21px);white-space:nowrap;letter-spacing:-.3px}.kpis{grid-template-columns:repeat(auto-fit,minmax(172px,1fr))}
+.kpi{background:linear-gradient(180deg,#fff,#f6f9fd)}
+input[type=number]{font-variant-numeric:tabular-nums}
+.btn.lk::before{content:"";display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px;background:currentColor;opacity:.75;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z'/%3E%3C/svg%3E") center/contain no-repeat}
+figure.prev{margin:0 0 14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+figure.prev img{display:block;width:100%;height:auto}figure.prev figcaption{font-size:12px;color:var(--mute);padding:8px 14px;border-top:1px solid var(--line);background:#f8fafd}
+.q{padding:14px 0}.q p{font-size:15px;font-weight:500}
+.lik{display:flex;flex-wrap:wrap;gap:8px}.lik label{position:relative;margin:0;padding:7px 18px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:#fff;transition:.15s}
+.lik label:hover{border-color:var(--brand)}.lik input{position:absolute;opacity:0;width:0}.lik label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+.pager{margin-top:14px}.pager .pgrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
+.hero{padding:96px 0 104px}.hero .stats b{font-size:30px;letter-spacing:-.5px}
+.card{box-shadow:0 1px 2px rgba(15,27,45,.04),0 10px 30px rgba(15,27,45,.06)}
+.pcard:hover{box-shadow:0 14px 40px rgba(15,27,45,.12)}
+
+.fv{margin:3px 0 0;font-weight:600;color:var(--brand2);min-height:0}.fv:empty{display:none}
+
 </style>
 </head>
 <body>
@@ -106,8 +128,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <p>Workbook Excel untuk Finance &amp; Accounting dan Sales &amp; Marketing, tes dan skrining untuk Psikologi &amp; SDM, serta alat analitik untuk Media Sosial. Tanpa instalasi, tanpa langganan; data demo sepenuhnya simulasi.</p>
   <div class="cta"><a class="btn" href="#demo">Coba Sekarang</a><a class="btn ghost" href="#harga">Lihat Paket</a></div>
   <div class="stats">
-    <div><b>24</b><small>program</small></div><div><b>4</b><small>kategori</small></div>
-    <div><b>8</b><small>workbook Excel</small></div>
+    <div><b>21</b><small>program</small></div><div><b>4</b><small>kategori</small></div>
+    <div><b>10</b><small>workbook Excel</small></div>
     <div><b>Demo + Full</b><small>coba dulu sebelum beli</small></div>
   </div>
 </div></header>
@@ -145,29 +167,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Hasil berupa kode 3 huruf teratas dari enam tipe: Realistis, Investigatif, Artistik, Sosial, Enterprising, Konvensional (model minat Holland).</li>
       <li>Versi lengkap: 36 pernyataan (6 per tipe), contoh bidang pekerjaan per tipe, dan ekspor hasil.</li></ol></details>
   </div>
-
-  <!-- SEJAHTERA -->
-  <div class="panel card" id="p-sejahtera">
-    <div class="note" style="margin:0 0 8px">Skala: 1 = tidak pernah &middot; 3 = kadang-kadang &middot; 5 = selalu. Alat refleksi diri, <b>bukan</b> diagnosis atau pengganti konsultasi profesional.</div>
-    <div class="bar" style="margin:0 0 6px"><button class="btn sm" id="swCalc">Lihat Hasil</button><button class="btn sm ghost" id="swRand">Isi Acak (simulasi)</button><button class="btn sm ghost" id="swReset">Ulangi</button><button class="btn sm ghost" id="swDl">Unduh Hasil CSV</button></div>
-    <div id="swR"></div>
-    <div id="swQ"></div>
-    <details><summary>Petunjuk penggunaan</summary><ol>
-      <li>Jawab berdasarkan pengalaman kerja dalam sebulan terakhir.</li>
-      <li>Tiga dimensi: kelelahan kerja, keterlibatan, dan keseimbangan kerja-hidup. Untuk kelelahan, skor tinggi berarti perlu perhatian; untuk dua lainnya, skor tinggi berarti baik.</li>
-      <li>Versi lengkap: 12 pernyataan, saran tindak lanjut per dimensi, dan ekspor hasil untuk HR (data agregat tanpa identitas).</li>
-      <li>Bila kelelahan terus mengganggu keseharian, bicarakan dengan atasan, HRD, atau tenaga profesional.</li></ol></details>
-  </div>
-  <!-- IRT -->
-  <div class="panel card" id="p-irt">
-    <div class="bar" style="margin:0 0 10px"><button class="btn sm" id="irtStart">Mulai / Ulangi Tes</button><button class="btn sm ghost" id="irtDl">Unduh Hasil CSV</button><span class="note" id="irtInfo"></span></div>
-    <div class="prog"><i id="irtP" style="width:0"></i></div>
-    <div id="irtBox" style="margin-top:14px"></div>
-    <details><summary>Petunjuk penggunaan</summary><ol>
-      <li>Klik <b>Mulai</b>, lalu jawab setiap soal pilihan ganda. Tidak ada pengurangan nilai untuk jawaban salah.</li>
-      <li>Versi lengkap memakai model Rasch (IRT 1-parameter): soal berikutnya dipilih yang tingkat kesulitannya paling dekat dengan kemampuan kamu saat itu.</li>
-      <li>Hasil: estimasi kemampuan (&theta;), galat baku, dan persentil terhadap norma simulasi. Nilai bank soal bersifat contoh, bukan tes baku.</li></ol></details>
-  </div>  <!-- CV -->
+  <!-- CV -->
   <div class="panel card" id="p-cv">
     <div class="bar" style="margin:0 0 6px"><button class="btn sm" id="cvGen">Buat Kandidat Simulasi Baru</button><button class="btn sm ghost" id="cvDl">Unduh Peringkat CSV</button></div>
     <label style="margin-top:6px">Bobot skill (0-5)</label>
@@ -183,11 +183,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Gunakan hanya sebagai penyaring awal; keputusan akhir tetap oleh tim rekrutmen.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xakun">
-    <h3 style="margin:0 0 4px">📒 Mini Akuntansi <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Jurnal umum → buku besar → neraca saldo → laba rugi & neraca otomatis, dengan bagan akun dan pemeriksaan keseimbangan.</p>
+    <div class="phead"><div class="pi" data-ic="xakun"></div><div><h3>Mini Akuntansi <span class="tag x">Excel</span></h3><p>Jurnal umum → buku besar → neraca saldo → laba rugi & neraca otomatis, dengan bagan akun dan pemeriksaan keseimbangan.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xakun.png" loading="lazy" alt="Pratinjau dashboard Mini Akuntansi"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">Kapasitas 80 baris jurnal, 30 akun, 2 bulan data; tanpa dashboard.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">Kapasitas 2.000 baris jurnal, 100 akun, 6 bulan data simulasi; laporan keuangan lengkap, dashboard, dan pemeriksaan otomatis.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xakun" href="demo-excel/01-Mini-Akuntansi-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xakun" href="demo-excel/01-Mini-Akuntansi-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xakun">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -195,11 +195,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xaging">
-    <h3 style="margin:0 0 4px">🧾 Aging Piutang & Utang <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Umur piutang dan utang usaha per pelanggan/pemasok dengan bucket 1-30, 31-60, 61-90, >90 hari dan prioritas penagihan.</p>
+    <div class="phead"><div class="pi" data-ic="xaging"></div><div><h3>Aging Piutang & Utang <span class="tag x">Excel</span></h3><p>Umur piutang dan utang usaha per pelanggan/pemasok dengan bucket 1-30, 31-60, 61-90, >90 hari dan prioritas penagihan.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xaging.png" loading="lazy" alt="Pratinjau dashboard Aging Piutang & Utang"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">8 pelanggan, kapasitas 60 faktur; hanya piutang.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">20 pelanggan + 14 pemasok, kapasitas 500 faktur; aging piutang dan utang, peringkat penagihan, dan dashboard.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xaging" href="demo-excel/02-Aging-Piutang-Utang-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xaging" href="demo-excel/02-Aging-Piutang-Utang-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xaging">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -207,11 +207,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xbudget">
-    <h3 style="margin:0 0 4px">🎯 Budget vs Aktual <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Anggaran per departemen dan akun melawan realisasi, selisih nominal dan persen, status otomatis, serta grafik.</p>
+    <div class="phead"><div class="pi" data-ic="xbudget"></div><div><h3>Budget vs Aktual <span class="tag x">Excel</span></h3><p>Anggaran per departemen dan akun melawan realisasi, selisih nominal dan persen, status otomatis, serta grafik.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xbudget.png" loading="lazy" alt="Pratinjau dashboard Budget vs Aktual"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">3 departemen × 6 akun × 6 bulan.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">6 departemen × 8 akun × 12 bulan, prakiraan sisa tahun, dan dashboard varians.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xbudget" href="demo-excel/03-Budget-vs-Aktual-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xbudget" href="demo-excel/03-Budget-vs-Aktual-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xbudget">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -219,11 +219,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xcash">
-    <h3 style="margin:0 0 4px">💧 Proyeksi Arus Kas 13 Minggu <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Saldo kas mingguan dari penerimaan dan pengeluaran, dengan batas kas minimum dan peringatan defisit.</p>
+    <div class="phead"><div class="pi" data-ic="xcash"></div><div><h3>Proyeksi Arus Kas 13 Minggu <span class="tag x">Excel</span></h3><p>Saldo kas mingguan dari penerimaan dan pengeluaran, dengan batas kas minimum dan peringatan defisit.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xcash.png" loading="lazy" alt="Pratinjau dashboard Proyeksi Arus Kas 13 Minggu"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">8 minggu, satu skenario.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">13 minggu dengan skenario Base, Optimis, Pesimis, serta grafik saldo dan peringatan.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xcash" href="demo-excel/04-Proyeksi-Arus-Kas-13-Minggu-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xcash" href="demo-excel/04-Proyeksi-Arus-Kas-13-Minggu-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xcash">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -231,11 +231,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xloan">
-    <h3 style="margin:0 0 4px">🏦 Simulator Pinjaman & Investasi <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Jadwal angsuran, total bunga, serta NPV/IRR untuk menilai proyek investasi.</p>
+    <div class="phead"><div class="pi" data-ic="xloan"></div><div><h3>Simulator Pinjaman & Investasi <span class="tag x">Excel</span></h3><p>Jadwal angsuran, total bunga, serta NPV/IRR untuk menilai proyek investasi.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xloan.png" loading="lazy" alt="Pratinjau dashboard Simulator Pinjaman & Investasi"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">Anuitas hingga 60 bulan; satu proyek.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">Anuitas dan flat sampai 360 bulan, provisi, biaya admin, pelunasan sebagian, ringkasan tahunan, dan perbandingan skema.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xloan" href="demo-excel/05-Simulator-Pinjaman-Investasi-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xloan" href="demo-excel/05-Simulator-Pinjaman-Investasi-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xloan">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -243,11 +243,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xaset">
-    <h3 style="margin:0 0 4px">🏭 Register Aset Tetap & Penyusutan <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Daftar aset, penyusutan bulanan, akumulasi, nilai buku, dan rekap per kategori.</p>
+    <div class="phead"><div class="pi" data-ic="xaset"></div><div><h3>Register Aset Tetap & Penyusutan <span class="tag x">Excel</span></h3><p>Daftar aset, penyusutan bulanan, akumulasi, nilai buku, dan rekap per kategori.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xaset.png" loading="lazy" alt="Pratinjau dashboard Register Aset Tetap & Penyusutan"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">12 aset, garis lurus.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">300 aset (30 simulasi): garis lurus dan saldo menurun ganda, proyeksi 5 tahun, jurnal penyusutan bulanan, dan dashboard.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xaset" href="demo-excel/06-Register-Aset-Tetap-Penyusutan-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xaset" href="demo-excel/06-Register-Aset-Tetap-Penyusutan-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xaset">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -255,11 +255,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xpipe">
-    <h3 style="margin:0 0 4px">🧲 Pipeline & Forecast Penjualan <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Pantau peluang penjualan per tahap, nilai tertimbang probabilitas, win rate, dan prakiraan penutupan per bulan.</p>
+    <div class="phead"><div class="pi" data-ic="xpipe"></div><div><h3>Pipeline & Forecast Penjualan <span class="tag x">Excel</span></h3><p>Pantau peluang penjualan per tahap, nilai tertimbang probabilitas, win rate, dan prakiraan penutupan per bulan.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xpipe.png" loading="lazy" alt="Pratinjau dashboard Pipeline & Forecast Penjualan"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">3 sales, kapasitas 40 deal; ringkasan pipeline per tahap.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">8 sales, kapasitas 500 deal; kinerja per sales terhadap target, prakiraan 6 bulan (best case, commit, tertimbang), deal terlambat, dan dashboard.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xpipe" href="demo-excel/07-Pipeline-Forecast-Penjualan-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xpipe" href="demo-excel/07-Pipeline-Forecast-Penjualan-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xpipe">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
@@ -267,12 +267,36 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
   </div>
   <div class="panel card xl" id="p-xkomisi">
-    <h3 style="margin:0 0 4px">🏅 Target & Komisi Sales <span class="tag x">Excel</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Hitung pencapaian target dan komisi berjenjang tiap tenaga penjual otomatis dari catatan penjualan.</p>
+    <div class="phead"><div class="pi" data-ic="xkomisi"></div><div><h3>Target & Komisi Sales <span class="tag x">Excel</span></h3><p>Hitung pencapaian target dan komisi berjenjang tiap tenaga penjual otomatis dari catatan penjualan.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xkomisi.png" loading="lazy" alt="Pratinjau dashboard Target & Komisi Sales"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
     <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">5 sales, 2 bulan, kapasitas 300 transaksi; komisi bulan terpilih.</div></div>
     <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">10 sales, kapasitas 3.000 transaksi; rekap tahunan per bulan, slip komisi siap cetak, peringkat, dan dashboard.</div></div></div>
-    <div class="bar"><a class="btn sm" id="dl-xkomisi" href="demo-excel/08-Target-Komisi-Sales-demo.xlsx" download>⬇ Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="bar"><a class="btn sm" id="dl-xkomisi" href="demo-excel/08-Target-Komisi-Sales-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
     <div class="note" id="xn-xkomisi">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
+      <li>Ganti data simulasi di sheet input (sel berfont biru) dengan data kamu; hasil dan grafik otomatis menyesuaikan.</li>
+      <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
+  </div>
+  <div class="panel card xl" id="p-xtalent">
+    <div class="phead"><div class="pi" data-ic="xtalent"></div><div><h3>Talent Review 9-Box & Kompetensi <span class="tag x">Excel</span></h3><p>Petakan kinerja dan potensi karyawan ke matriks 9-box, ukur gap kompetensi, dan tetapkan tindakan pengembangan.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xtalent.png" loading="lazy" alt="Pratinjau dashboard Talent Review 9-Box & Kompetensi"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
+    <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">25 karyawan, kapasitas 40; kotak 9-box dan tindakan otomatis, ringkasan sebaran.</div></div>
+    <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">120 karyawan, kapasitas 400; matriks 9-box, peta panas kompetensi per departemen, gap terhadap target, daftar suksesi, dan dashboard.</div></div></div>
+    <div class="bar"><a class="btn sm" id="dl-xtalent" href="demo-excel/09-Talent-Review-9-Box-Kompetensi-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="note" id="xn-xtalent">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
+    <details><summary>Petunjuk penggunaan</summary><ol>
+      <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
+      <li>Ganti data simulasi di sheet input (sel berfont biru) dengan data kamu; hasil dan grafik otomatis menyesuaikan.</li>
+      <li>Butuh Excel 2010 atau lebih baru (tanpa makro dan tanpa fungsi baru seperti XLOOKUP), juga terbuka di LibreOffice dan Google Sheets.</li></ol></details>
+  </div>
+  <div class="panel card xl" id="p-xsosmed">
+    <div class="phead"><div class="pi" data-ic="xsosmed"></div><div><h3>Social Media Performance Tracker <span class="tag x">Excel</span></h3><p>Catat performa tiap postingan dan baca engagement rate per platform, format, pilar konten, dan waktu posting.</p></div></div>
+    <figure class="prev"><img src="assets/prev-xsosmed.png" loading="lazy" alt="Pratinjau dashboard Social Media Performance Tracker"><figcaption>Pratinjau versi lengkap (data simulasi)</figcaption></figure>
+    <div class="cols"><div class="col"><h4>Versi Demo <span class="tag">gratis</span></h4><div class="note" style="margin:0">2 platform, kapasitas 80 postingan; ringkasan per platform, format, dan pilar.</div></div>
+    <div class="col"><h4>Versi Lengkap <span class="tag p">berbayar</span></h4><div class="note" style="margin:0">5 platform, kapasitas 1.000 postingan; tren bulanan, 10 postingan terbaik, peta panas hari × slot waktu, pertumbuhan pengikut, dan dashboard.</div></div></div>
+    <div class="bar"><a class="btn sm" id="dl-xsosmed" href="demo-excel/10-Social-Media-Performance-Tracker-demo.xlsx" download>Unduh Demo Excel</a><a class="btn sm ghost wa" href="#">Pesan Versi Lengkap</a></div>
+    <div class="note" id="xn-xsosmed">Berisi data simulasi. Sel biru = input, sel kuning = parameter kunci; rumus asli (bukan nilai mati) sehingga bisa diubah sesuai kebutuhan. Sheet dilindungi tanpa kata sandi agar rumus tidak terhapus tidak sengaja.</div>
     <details><summary>Petunjuk penggunaan</summary><ol>
       <li>Buka sheet <b>PETUNJUK</b> terlebih dulu, lalu isi sheet <b>PARAMETER</b> (sel kuning).</li>
       <li>Ganti data simulasi di sheet input (sel berfont biru) dengan data kamu; hasil dan grafik otomatis menyesuaikan.</li>
@@ -367,29 +391,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Versi lengkap: kanal tanpa batas dan ekspor CSV.</li></ol></details>
   </div>
 
-  <!-- UTM -->
-  <div class="panel card" id="p-utm">
-    <div class="row">
-      <div style="grid-column:span 2"><label>URL tujuan</label><input id="utU" value="https://contoh.com/produk"></div>
-      <div><label>Preset platform</label><select id="utP"></select></div>
-      <div><label>Campaign</label><input id="utC" value="promo_oktober"></div>
-      <div><label>Source</label><input id="utS" value="instagram"></div>
-      <div><label>Medium</label><input id="utM" value="social"></div>
-      <div><label>Term (opsional)</label><input id="utT"></div>
-      <div><label>Content (opsional)</label><input id="utN" value="reels_01"></div>
-    </div>
-    <div class="row" style="margin-top:8px"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="utL" checked style="width:auto"> Rapikan otomatis (huruf kecil, spasi jadi garis bawah)</label></div>
-    <div class="bar"><button class="btn sm" id="utCopy">Salin URL</button></div>
-    <label>Hasil</label><textarea id="utOut" style="min-height:70px" readonly></textarea>
-    <div class="note" id="utMsg"></div>
-    <div id="utBatchBox" style="margin-top:12px"><label>Mode massal: tempel banyak URL (satu per baris), parameter UTM di atas dipakai untuk semuanya</label><textarea id="utBatch" placeholder="https://contoh.com/a&#10;https://contoh.com/b"></textarea><div class="bar"><button class="btn sm" id="utRun">Buat Semua</button><button class="btn sm ghost" id="utDl">Unduh CSV</button></div><div class="tbl"><table id="utTb"></table></div></div>
-    <details><summary>Petunjuk penggunaan</summary><ol>
-      <li>Isi URL tujuan dan parameter. Source = asal trafik, medium = jenis kanal, campaign = nama kampanye.</li>
-      <li>Pilih preset untuk mengisi source/medium otomatis, lalu salin URL hasilnya.</li>
-      <li>Konsisten memakai huruf kecil agar laporan analitik tidak terpecah (mis. Instagram vs instagram).</li>
-      <li>Versi lengkap: mode massal untuk banyak URL dan ekspor CSV.</li></ol></details>
-  </div>
-
   <!-- KALENDER -->
   <div class="panel card" id="p-kalender">
     <div class="row">
@@ -430,43 +431,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <li>Versi lengkap: 30 posting contoh, tempel data sendiri, dan ekspor CSV.</li></ol></details>
   </div>
 
-  <!-- CAPTION -->
-  <div class="panel card" id="p-caption">
-    <div class="row">
-      <div><label>Topik</label><input id="cpTopic" value="laporan mingguan yang rapi"></div>
-      <div><label>Produk / penawaran</label><input id="cpOffer" value="template laporan siap pakai"></div>
-      <div><label>Platform</label><select id="cpPF"><option value="Instagram|2200">Instagram</option><option value="TikTok|2200">TikTok</option><option value="X|280">X</option><option value="LinkedIn|3000">LinkedIn</option></select></div>
-      <div><label>Nada</label><select id="cpTone"><option value="santai">Santai</option><option value="profesional">Profesional</option><option value="persuasif">Persuasif</option></select></div>
-      <div><label>Tujuan</label><select id="cpGoal"><option value="edukasi">Edukasi</option><option value="promosi">Promosi</option><option value="engagement">Memancing interaksi</option></select></div>
-      <div><label>Niche hashtag</label><select id="cpNiche"></select></div>
-    </div>
-    <div class="bar"><button class="btn sm" id="cpGen">Buat Caption</button><button class="btn sm ghost" id="cpDl">Unduh Semua (.txt)</button></div>
-    <div id="cpOut"></div>
-    <div id="cpTags"></div>
-    <details><summary>Petunjuk penggunaan</summary><ol>
-      <li>Isi topik dan penawaran, pilih platform, nada, dan tujuan, lalu klik <b>Buat Caption</b>.</li>
-      <li>Setiap variasi menampilkan jumlah karakter terhadap batas platform. Klik <b>Salin</b> untuk menyalin.</li>
-      <li>Generator berbasis template (bukan AI), jadi hasilnya perlu kamu sesuaikan dengan gaya brand.</li>
-      <li>Versi lengkap: 5 variasi per klik, 7 niche hashtag, dan unduh semua hasil.</li></ol></details>
-  </div>
-
-  <!-- WAKTU -->
-  <div class="panel card" id="p-waktu">
-    <div class="bar" style="margin:0 0 8px"><button class="btn sm" id="wtGen">Simulasi Baru</button><button class="btn sm ghost" id="wtDl">Unduh Ranking CSV</button></div>
-    <div class="kpis" id="wtK"></div>
-    <div id="wtGrid" style="overflow:auto"></div>
-    <div class="tbl" style="margin-top:12px"><table id="wtTb"></table></div>
-    <div id="wtPasteBox" style="margin-top:12px"><label>Tempel riwayat posting (CSV: tanggal jam, engagement)</label><textarea id="wtIn" placeholder="2026-10-01 19:30,420"></textarea><div class="bar"><button class="btn sm" id="wtUse">Hitung dari Data Ini</button></div></div>
-    <details><summary>Petunjuk penggunaan</summary><ol>
-      <li>Peta panas menunjukkan rata-rata engagement per hari dan jam dari riwayat posting simulasi. Warna lebih pekat berarti lebih tinggi.</li>
-      <li>Tabel mencantumkan slot teratas (minimal 2 posting per slot agar tidak menyesatkan).</li>
-      <li>Versi lengkap: hitung dari riwayat posting kamu sendiri dan unduh ranking slot.</li>
-      <li>Hasil dari data kecil bersifat indikatif; uji beberapa minggu sebelum menyimpulkan.</li></ol></details>
-  </div>
-
   <div class="panel card xl" id="p-bot">
-    <h3 style="margin:0 0 4px">🤖 Bot Auto-Post Media Sosial <span class="tag p">Python</span></h3>
-    <p style="margin:0 0 6px;color:var(--mute)">Memposting konten terjadwal ke Telegram (dan X) lewat GitHub Actions, tanpa server sendiri. Bank konten dan jadwal bisa kamu ubah di file JSON.</p>
+    <div class="phead"><div class="pi" data-ic="bot"></div><div><h3>Bot Auto-Post Media Sosial <span class="tag p">Python</span></h3><p>Memposting konten terjadwal ke Telegram (dan X) lewat GitHub Actions, tanpa server sendiri. Bank konten dan jadwal bisa kamu ubah di file JSON.</p></div></div>
     <div class="cols"><div class="col"><h4>Isi paket</h4><div class="note" style="margin:0">post_bot.py, bank konten (JSON), workflow GitHub Actions (jam 08.00 dan 19.00 WIB), mode dry-run, uji otomatis, dan panduan pemasangan.</div></div>
     <div class="col"><h4>Cocok untuk</h4><div class="note" style="margin:0">Admin media sosial dan UMKM yang ingin konsisten posting. Butuh akun GitHub dan token bot Telegram milik sendiri.</div></div></div>
     <div class="bar"><a class="btn sm ghost wa" href="#">Tanya / Pesan Bot</a></div>
@@ -479,7 +445,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <p class="lead">Pembayaran sekali, tanpa langganan. Hubungi lewat WhatsApp untuk pemesanan. File lengkap dikirim setelah pembayaran terkonfirmasi.</p>
   <div class="grid g3">
     <div class="card price"><h3>Single</h3><div class="amt" id="pr1"></div><ul><li>1 program pilihan (HTML atau Excel)</li><li>Versi lengkap tanpa batasan demo</li><li>Panduan penggunaan</li><li>Update 3 bulan</li></ul><a class="btn ghost wa" href="#">Pesan Single</a></div>
-    <div class="card price hot"><h3>Bundle Lengkap</h3><div class="amt" id="pr2"></div><ul><li>Semua program: 15 tool HTML, 8 workbook Excel, bot auto-post</li><li>Template &amp; data contoh</li><li>Panduan tiap program</li><li>Update 12 bulan</li><li>Dukungan WhatsApp</li></ul><a class="btn wa" href="#">Pesan Bundle</a></div>
+    <div class="card price hot"><h3>Bundle Lengkap</h3><div class="amt" id="pr2"></div><ul><li>Semua program: 10 tool HTML, 10 workbook Excel, bot auto-post</li><li>Template &amp; data contoh</li><li>Panduan tiap program</li><li>Update 12 bulan</li><li>Dukungan WhatsApp</li></ul><a class="btn wa" href="#">Pesan Bundle</a></div>
     <div class="card price"><h3>Custom Pro</h3><div class="amt" id="pr3"></div><ul><li>Branding perusahaan kamu</li><li>Bagan akun, tahap penjualan, dan laporan disesuaikan</li><li>Hubungkan ke data sendiri</li><li>Pelatihan tim</li></ul><a class="btn ghost wa" href="#">Konsultasi</a></div>
   </div>
 </div></section>
@@ -490,7 +456,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <details><summary>Apakah perlu internet?</summary><p>Perhitungan berjalan lokal. Internet hanya dipakai untuk memuat pustaka grafik pada tool HTML; workbook Excel tidak membutuhkannya.</p></details>
   <details><summary>Excel versi berapa yang dibutuhkan?</summary><p>Excel 2010 atau lebih baru. Workbook tidak memakai makro maupun fungsi baru (XLOOKUP, FILTER), jadi juga terbuka di LibreOffice dan Google Sheets.</p></details>
   <details><summary>Apa bedanya demo dan versi lengkap?</summary><p>Demo memakai data simulasi dengan kapasitas dan fitur terbatas. Versi lengkap membuka kapasitas penuh, dashboard, ekspor, serta fitur tambahan, dan dikirim sebagai file terpisah setelah pembayaran.</p></details>
-  <details><summary>Apakah tes psikologi ini baku?</summary><p>Bukan. Tes kepribadian, minat, dan kemampuan adalah alat refleksi dan skrining awal dengan bank soal contoh; bukan alat diagnosis dan tidak menggantikan asesmen psikolog. Perhitungan lembur dan akuntansi juga bersifat estimasi; cocokkan dengan peraturan dan kebijakan perusahaan.</p></details>
+  <details><summary>Apakah tes psikologi ini baku?</summary><p>Bukan. Tes kepribadian dan minat karier adalah alat refleksi dan eksplorasi dengan butir contoh; bukan alat diagnosis dan tidak menggantikan asesmen psikolog. Talent Review 9-Box adalah kerangka diskusi kalibrasi, bukan keputusan otomatis. Perhitungan lembur dan akuntansi juga bersifat estimasi; cocokkan dengan peraturan dan kebijakan perusahaan.</p></details>
   <details><summary>Apakah data di demo ini asli?</summary><p>Bukan. Seluruh data dibuat oleh generator simulasi untuk keperluan demonstrasi.</p></details>
 </div></section>
 
@@ -539,15 +505,46 @@ function chart(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(d
 const Z={responsive:true,maintainAspectRatio:false};
 
 /* ---------- Navigasi & tab ---------- */
-const META={kepribadian:{ic:'🧩',t:'Tes Kepribadian',d:'Inventori Big Five dengan skor per dimensi dan interpretasi.'},riasec:{ic:'🧭',t:'Minat Karier (RIASEC)',d:'Eksplorasi minat model Holland dan bidang kerja yang relevan.',tab:'Minat Karier'},sejahtera:{ic:'🌿',t:'Kesejahteraan Kerja',d:'Refleksi beban kerja, energi, dan dukungan sosial dengan ringkasan skor.',tab:'Kesejahteraan'},irt:{ic:'🎯',t:'Tes Kemampuan Adaptif',d:'Soal menyesuaikan kesulitan dengan model IRT (Rasch).',tab:'Tes Adaptif'},cv:{ic:'🗂️',t:'Pemilah CV',d:'Skor dan peringkat kandidat berdasarkan kriteria berbobot.'},lembur:{ic:'⏱️',t:'Kalkulator Lembur',d:'Hitung upah lembur hari kerja dan hari libur sesuai ketentuan umum.'},kalender:{ic:'🗓️',t:'Kalender Konten',d:'Rencanakan konten per tanggal, platform, dan status produksi.'},engage:{ic:'📈',t:'Engagement & Benchmark',d:'Hitung engagement rate dan bandingkan antar tipe konten.'},caption:{ic:'✍️',t:'Caption & Hashtag',d:'Susun caption dan hashtag per platform dan tujuan.'},waktu:{ic:'⏰',t:'Waktu Posting Terbaik',d:'Temukan hari dan jam dengan engagement tertinggi.'},utm:{ic:'🔗',t:'UTM Builder',d:'Buat tautan kampanye berparameter UTM satu per satu atau massal.'},roi:{ic:'💰',t:'ROI Iklan & Influencer',d:'Bandingkan CPM, CPC, CPA, dan ROAS antar kanal.'},funnel:{ic:'🔻',t:'Funnel Penjualan & CAC',d:'Konversi tiap tahap, biaya akuisisi pelanggan (CAC), payback, dan LTV.',tab:'Funnel & CAC'},harga:{ic:'🏷️',t:'Harga & Break-even',d:'Margin, markup, titik impas, dan harga untuk target margin.'},lead:{ic:'🔥',t:'Lead Scoring',d:'Skor dan peringkat lead berdasarkan kriteria berbobot (Hot / Warm / Cold).'},bot:{ic:'🤖',t:'Bot Auto-Post',d:'Posting terjadwal ke Telegram/X lewat GitHub Actions (Python).'},xakun:{ic:'📒',t:'Mini Akuntansi',d:'Jurnal umum → buku besar → neraca saldo → laba rugi & neraca otomatis, dengan bagan akun dan pemeriksaan keseimbangan.',tab:'Mini Akuntansi'},xaging:{ic:'🧾',t:'Aging Piutang & Utang',d:'Umur piutang dan utang usaha per pelanggan/pemasok dengan bucket 1-30, 31-60, 61-90, >90 hari dan prioritas penagihan.',tab:'Aging Piutang & Utang'},xbudget:{ic:'🎯',t:'Budget vs Aktual',d:'Anggaran per departemen dan akun melawan realisasi, selisih nominal dan persen, status otomatis, serta grafik.',tab:'Budget vs Aktual'},xcash:{ic:'💧',t:'Proyeksi Arus Kas 13 Minggu',d:'Saldo kas mingguan dari penerimaan dan pengeluaran, dengan batas kas minimum dan peringatan defisit.',tab:'Arus Kas 13 Minggu'},xloan:{ic:'🏦',t:'Simulator Pinjaman & Investasi',d:'Jadwal angsuran, total bunga, serta NPV/IRR untuk menilai proyek investasi.',tab:'Simulasi Pinjaman & Invest'},xaset:{ic:'🏭',t:'Register Aset Tetap & Penyusutan',d:'Daftar aset, penyusutan bulanan, akumulasi, nilai buku, dan rekap per kategori.',tab:'Aset Tetap & Penyusutan'},xpipe:{ic:'🧲',t:'Pipeline & Forecast Penjualan',d:'Pantau peluang penjualan per tahap, nilai tertimbang probabilitas, win rate, dan prakiraan penutupan per bulan.',tab:'Pipeline & Forecast Penjua'},xkomisi:{ic:'🏅',t:'Target & Komisi Sales',d:'Hitung pencapaian target dan komisi berjenjang tiap tenaga penjual otomatis dari catatan penjualan.',tab:'Target & Komisi Sales'}};
-const CATS=[['🧠', 'Psikologi', ['kepribadian', 'riasec', 'sejahtera', 'irt', 'cv']], ['💼', 'Finance & Accounting', ['xakun', 'xaging', 'xbudget', 'xcash', 'xloan', 'xaset', 'lembur']], ['🚀', 'Sales & Marketing', ['xpipe', 'xkomisi', 'funnel', 'harga', 'lead', 'roi', 'utm']], ['📣', 'Media Sosial', ['kalender', 'engage', 'caption', 'waktu', 'bot']]];
-const XLK=['xakun', 'xaging', 'xbudget', 'xcash', 'xloan', 'xaset', 'xpipe', 'xkomisi'];
+const IC={
+kepribadian:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+riasec:'<circle cx="12" cy="12" r="9"/><polygon points="16 8 14 14 8 16 10 10"/>',
+cv:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+xtalent:'<rect x="3" y="3" width="5" height="5"/><rect x="9.5" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="9.5" width="5" height="5"/><rect x="9.5" y="9.5" width="5" height="5"/><rect x="16" y="9.5" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><rect x="9.5" y="16" width="5" height="5"/><rect x="16" y="16" width="5" height="5"/>',
+xakun:'<path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M8 8h7M8 12h7"/>',
+xaging:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+xbudget:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+xcash:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+xloan:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/>',
+xaset:'<path d="M4 21V5l8-2v18M12 9h8v12M7 8h2M7 12h2M7 16h2M15 13h2M15 17h2M2 21h20"/>',
+lembur:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/>',
+xpipe:'<path d="M3 4h18l-7 8v7l-4 2v-9z"/>',
+xkomisi:'<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/>',
+funnel:'<path d="M3 5h18M6 10h12M9 15h6M11 20h2"/>',
+harga:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
+lead:'<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>',
+roi:'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
+xsosmed:'<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',
+kalender:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+engage:'<path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/>',
+bot:'<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>'};
+const ico=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||''}</svg>`;
+const META={kepribadian:{t:'Tes Kepribadian',d:'Inventori Big Five dengan skor per dimensi dan interpretasi.'},riasec:{t:'Minat Karier (RIASEC)',d:'Eksplorasi minat model Holland dan bidang kerja yang relevan.',tab:'Minat Karier'},cv:{t:'Pemilah CV',d:'Skor dan peringkat kandidat berdasarkan kriteria berbobot.'},lembur:{t:'Kalkulator Lembur',d:'Hitung upah lembur hari kerja dan hari libur sesuai ketentuan umum.'},kalender:{t:'Kalender Konten',d:'Rencanakan konten per tanggal, platform, dan status produksi.'},engage:{t:'Engagement & Benchmark',d:'Hitung engagement rate dan bandingkan antar tipe konten.'},roi:{t:'ROI Iklan & Influencer',d:'Bandingkan CPM, CPC, CPA, dan ROAS antar kanal.'},funnel:{t:'Funnel Penjualan & CAC',d:'Konversi tiap tahap, biaya akuisisi pelanggan (CAC), payback, dan LTV.',tab:'Funnel & CAC'},harga:{t:'Harga & Break-even',d:'Margin, markup, titik impas, dan harga untuk target margin.'},lead:{t:'Lead Scoring',d:'Skor dan peringkat lead berdasarkan kriteria berbobot (Hot / Warm / Cold).'},bot:{t:'Bot Auto-Post',d:'Posting terjadwal ke Telegram/X lewat GitHub Actions (Python).'},xakun:{t:'Mini Akuntansi',d:'Jurnal umum → buku besar → neraca saldo → laba rugi & neraca otomatis, dengan bagan akun dan pemeriksaan keseimbangan.',tab:'Mini Akuntansi'},xaging:{t:'Aging Piutang & Utang',d:'Umur piutang dan utang usaha per pelanggan/pemasok dengan bucket 1-30, 31-60, 61-90, >90 hari dan prioritas penagihan.',tab:'Aging Piutang & Utang'},xbudget:{t:'Budget vs Aktual',d:'Anggaran per departemen dan akun melawan realisasi, selisih nominal dan persen, status otomatis, serta grafik.',tab:'Budget vs Aktual'},xcash:{t:'Proyeksi Arus Kas 13 Minggu',d:'Saldo kas mingguan dari penerimaan dan pengeluaran, dengan batas kas minimum dan peringatan defisit.',tab:'Arus Kas 13 Minggu'},xloan:{t:'Simulator Pinjaman & Investasi',d:'Jadwal angsuran, total bunga, serta NPV/IRR untuk menilai proyek investasi.',tab:'Pinjaman & Investasi'},xaset:{t:'Register Aset Tetap & Penyusutan',d:'Daftar aset, penyusutan bulanan, akumulasi, nilai buku, dan rekap per kategori.',tab:'Aset Tetap'},xpipe:{t:'Pipeline & Forecast Penjualan',d:'Pantau peluang penjualan per tahap, nilai tertimbang probabilitas, win rate, dan prakiraan penutupan per bulan.',tab:'Pipeline & Forecast'},xkomisi:{t:'Target & Komisi Sales',d:'Hitung pencapaian target dan komisi berjenjang tiap tenaga penjual otomatis dari catatan penjualan.',tab:'Target & Komisi'},xtalent:{t:'Talent Review 9-Box & Kompetensi',d:'Petakan kinerja dan potensi karyawan ke matriks 9-box, ukur gap kompetensi, dan tetapkan tindakan pengembangan.',tab:'Talent 9-Box'},xsosmed:{t:'Social Media Performance Tracker',d:'Catat performa tiap postingan dan baca engagement rate per platform, format, pilar konten, dan waktu posting.',tab:'Social Media Tracker'}};
+const CATS=[['kepribadian', 'Psikologi', ['kepribadian', 'riasec', 'cv', 'xtalent']], ['xloan', 'Finance & Accounting', ['xakun', 'xaging', 'xbudget', 'xcash', 'xloan', 'xaset', 'lembur']], ['roi', 'Sales & Marketing', ['xpipe', 'xkomisi', 'funnel', 'harga', 'lead', 'roi']], ['xsosmed', 'Media Sosial', ['xsosmed', 'kalender', 'engage', 'bot']]];
+const XLK=['xakun', 'xaging', 'xbudget', 'xcash', 'xloan', 'xaset', 'xpipe', 'xkomisi', 'xtalent', 'xsosmed'];
 const FIRST='kepribadian';
-$('#cats').innerHTML=CATS.map(([ic,n,ks])=>`<h3 class="cathead">${ic} ${n.replace(/&/g,'&amp;')} <small>${ks.length} program</small></h3><div class="grid g5">${ks.map(k=>`<div class="card pcard" data-go="${k}"><div class="ic">${META[k].ic}</div><h3>${META[k].t.replace(/&/g,'&amp;')}${XLK.includes(k)?' <span class="tag x">Excel</span>':''}</h3><p>${META[k].d}</p></div>`).join('')}</div>`).join('');
-$('#tabs').innerHTML=CATS.map(([ic,n,ks])=>`<div class="catlabel">${ic} ${n.replace(/&/g,'&amp;')}</div>`+ks.map(k=>`<button class="tab${k===FIRST?' on':''}" data-t="${k}">${(META[k].tab||META[k].t).replace(/&/g,'&amp;')}</button>`).join('')).join('');
-const INIT={funnel:()=>fnInit(),harga:()=>hgInit(),lead:()=>ldInit(),kepribadian:()=>pqInit(),riasec:()=>riInit(),sejahtera:()=>swInit(),irt:()=>irtInit(),cv:()=>cvInit(),lembur:()=>lbInit(),kalender:()=>kcInit(),engage:()=>egInit(),caption:()=>cpInit(),waktu:()=>wtInit(),utm:()=>utInit(),roi:()=>roiInit(),bot:()=>{}};
+$('#cats').innerHTML=CATS.map(([ic,n,ks])=>`<h3 class="cathead">${ico(ic)}${n.replace(/&/g,'&amp;')} <small>${ks.length} program</small></h3><div class="grid g5">${ks.map(k=>`<div class="card pcard" data-go="${k}"><div class="ic">${ico(k)}</div><h3>${META[k].t.replace(/&/g,'&amp;')}${XLK.includes(k)?' <span class="tag x">Excel</span>':''}</h3><p>${META[k].d}</p></div>`).join('')}</div>`).join('');
+$('#tabs').innerHTML=CATS.map(([ic,n,ks])=>`<div class="catlabel">${n.replace(/&/g,'&amp;')}</div>`+ks.map(k=>`<button class="tab${k===FIRST?' on':''}" data-t="${k}">${(META[k].tab||META[k].t).replace(/&/g,'&amp;')}</button>`).join('')).join('');
+const INIT={funnel:()=>fnInit(),harga:()=>hgInit(),lead:()=>ldInit(),kepribadian:()=>pqInit(),riasec:()=>riInit(),cv:()=>cvInit(),lembur:()=>lbInit(),kalender:()=>kcInit(),engage:()=>egInit(),roi:()=>roiInit(),bot:()=>{}};
 XLK.forEach(k=>INIT[k]=()=>{});
-function openTab(t){$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));INIT[t]()}
+function pager(box,btnR,btnX){if(!box||box.dataset.pg)return;box.dataset.pg=1;const qs=[...box.children],per=6,pages=Math.ceil(qs.length/per);let cur=0;const nav=document.createElement('div');nav.className='pager';box.after(nav);
+  function show(){qs.forEach((q,i)=>q.style.display=Math.floor(i/per)===cur?'':'none');const done=qs.filter(q=>q.querySelector('input:checked')).length;nav.innerHTML=`<div class="prog"><i style="width:${done/qs.length*100}%"></i></div><div class="pgrow"><button class="btn sm ghost" data-d="-1" ${cur?'':'disabled'}>Sebelumnya</button><span class="note" style="margin:0">Halaman ${cur+1} dari ${pages} · ${done}/${qs.length} terjawab</span><button class="btn sm" data-d="1" ${cur<pages-1?'':'disabled'}>Berikutnya</button></div>`}
+  nav.onclick=e=>{const b=e.target.closest('button');if(b){cur=Math.max(0,Math.min(pages-1,cur+ +b.dataset.d));show()}};box.addEventListener('change',show);
+  [btnR,btnX].forEach(id=>{const b=$(id);b&&b.addEventListener('click',()=>setTimeout(()=>{if(id===btnX)cur=0;show()},0))});show()}
+$$('.panel').forEach(p=>{const k=p.id.replace('p-','');if(!p.querySelector('.phead')&&META[k])p.insertAdjacentHTML('afterbegin',`<div class="phead"><div class="pi" data-ic="${k}"></div><div><h3>${META[k].t.replace(/&/g,'&amp;')}</h3><p>${META[k].d}</p></div></div>`)});
+$$('[data-ic]').forEach(e=>e.innerHTML=ico(e.dataset.ic));
+$$('.panel input[type=number]').forEach(i=>{if(i.closest('table'))return;const h=document.createElement('div');h.className='note fv';i.after(h);const u=()=>{const v=+i.value;h.textContent=Math.abs(v)>=10000?fmt(v):''};i.addEventListener('input',u);u()});
+function openTab(t){$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));INIT[t]();
+  if(t==='kepribadian')pager($('#pqQ'),'#pqRand','#pqReset');if(t==='riasec')pager($('#riQ'),'#riRand','#riReset')}
 $$('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.t));
 $$('.pcard').forEach(c=>c.onclick=()=>{openTab(c.dataset.go);document.getElementById('demo').scrollIntoView()});
 $('#yr').textContent=new Date().getFullYear();
@@ -560,9 +557,9 @@ $('#pr2').innerHTML=CONFIG.harga.bundle+' <small>sekali bayar</small>';
 $('#pr3').innerHTML=CONFIG.harga.custom;
 
 /* ================= Program tambahan: Psikologi, Finance & Media Sosial ================= */
-function lockBtn(id){const b=$('#'+id);if(b&&DEMO){b.textContent='🔒 '+b.textContent;b.onclick=lock}}
+function lockBtn(id){const b=$('#'+id);if(b&&DEMO){b.classList.add('lk');b.onclick=lock}}
 const uPick=a=>a[Math.floor(Math.random()*a.length)];
-const lockNote=(id,t)=>{const e=$('#'+id);if(e&&DEMO)e.innerHTML='<div class="note">🔒 '+t+' tersedia di versi lengkap.</div>'};
+const lockNote=(id,t)=>{const e=$('#'+id);if(e&&DEMO)e.innerHTML='<div class="note">'+t+' tersedia di versi lengkap.</div>'};
 
 /* ---------- 7. Tes Kepribadian (Big Five) ---------- */
 const PQ_T={O:'Keterbukaan',C:'Ketelitian',E:'Ekstraversi',A:'Keramahan',N:'Sensitivitas Emosi'};
@@ -592,41 +589,7 @@ function pqCalc(){
   pqList.forEach((q,i)=>{const c=document.querySelector(`input[name="pq${i}"]:checked`);if(!c){miss++;return}const v=q.rev?6-+c.value:+c.value;(sums[q.k]=sums[q.k]||[]).push(v)});
   if(miss)return $('#pqR').innerHTML=`<div class="note" style="color:var(--bad)">Masih ada ${miss} pernyataan yang belum dijawab.</div>`;
   pqRes=Object.keys(PQ).map(k=>{const m=sums[k].reduce((a,b)=>a+b,0)/sums[k].length,p=(m-1)/4*100;return{k,p,lv:p<40?'Rendah':p<65?'Sedang':'Tinggi',li:p<40?0:p<65?1:2}});
-  $('#pqR').innerHTML='<div class="kpi" style="margin-bottom:10px">'+pqRes.map(r=>`<div class="hb"><span>${PQ_T[r.k]}</span><div><i style="width:${r.p}%"></i></div><b>${pct(r.p)} · ${r.lv}</b></div>${PQ_I?`<div class="note" style="margin:0 0 8px">${PQ_I[r.k][r.li]}</div>`:''}`).join('')+(PQ_I?'':'<div class="note">🔒 Interpretasi tiap dimensi tersedia di versi lengkap (30 pernyataan).</div>')+'</div>';
-}
-
-/* ---------- 8. Tes Kemampuan Adaptif (IRT/Rasch) ---------- */
-const IQ=[
-['Berapa hasil 7 × 8?',['54','56','64','48'],1,-2],
-['Lawan kata "hemat" adalah ...',['boros','murah','irit','rajin'],0,-1.5],
-['Kecepatan 60 km/jam. Berapa waktu tempuh untuk jarak 150 km?',['2 jam','2,5 jam','3 jam','2 jam 15 menit'],1,-0.8],
-['Peluang muncul angka genap pada satu lemparan dadu adalah ...',['1/6','1/3','1/2','2/3'],2,-0.7],
-['Jika x + 2x + 3x = 54, maka x = ...',['6','9','12','18'],1,-0.2]];
-
-let irt={asked:[],resp:[],cur:-1},irtLen=DEMO?5:10;
-let irtNextIdx=()=>irt.asked.length;
-
-
-function irtInit(){
-  if($('#irtStart').dataset.b)return;$('#irtStart').dataset.b=1;
-  $('#irtStart').onclick=irtStart;lockBtn('irtDl');
-  
-  $('#irtInfo').textContent=DEMO?'🔒 Demo: 5 soal tetap, tanpa estimasi kemampuan.':'';
-  $('#irtBox').innerHTML='<div class="note">Klik <b>Mulai</b> untuk memulai tes.</div>';
-}
-function irtStart(){irt={asked:[],resp:[],cur:-1};irtShow()}
-function irtShow(){
-  const n=irt.asked.length;$('#irtP').style.width=(n/irtLen*100)+'%';
-  if(n>=irtLen)return irtDone();
-  const i=irtNextIdx();irt.cur=i;const q=IQ[i];
-  $('#irtBox').innerHTML=`<div style="font-weight:700;margin-bottom:8px">Soal ${n+1} dari ${irtLen}</div><p style="font-size:17px;margin:0 0 10px">${q[0]}</p>`+q[1].map((o,j)=>`<button class="qopt" data-j="${j}">${String.fromCharCode(65+j)}. ${o}</button>`).join('');
-  $$('#irtBox .qopt').forEach(b=>b.onclick=()=>{irt.asked.push(i);irt.resp.push(+b.dataset.j===q[2]?1:0);irtShow()});
-}
-function irtDone(){
-  const ok=irt.resp.reduce((a,b)=>a+b,0);let h=`<div class="kpis"><div class="kpi"><small>Skor mentah</small><b>${ok} / ${irtLen}</b></div>`;
-  
-  h+='</div>';if(DEMO)h+='<div class="note">🔒 Estimasi kemampuan (θ), persentil, dan soal adaptif tersedia di versi lengkap.</div>';
-  $('#irtBox').innerHTML=h;
+  $('#pqR').innerHTML='<div class="kpi" style="margin-bottom:10px">'+pqRes.map(r=>`<div class="hb"><span>${PQ_T[r.k]}</span><div><i style="width:${r.p}%"></i></div><b>${pct(r.p)} · ${r.lv}</b></div>${PQ_I?`<div class="note" style="margin:0 0 8px">${PQ_I[r.k][r.li]}</div>`:''}`).join('')+(PQ_I?'':'<div class="note">Interpretasi tiap dimensi tersedia di versi lengkap (30 pernyataan).</div>')+'</div>';
 }
 
 /* ---------- 9. Pemilah CV ---------- */
@@ -663,7 +626,7 @@ function lbPay(type,six,h,rate){
 }
 function lbInit(){
   if($('#lbAdd').dataset.b)return;$('#lbAdd').dataset.b=1;
-  if(DEMO){const o=$('#lbT').options[1];o.textContent='🔒 Hari libur (versi lengkap)';o.disabled=true}
+  if(DEMO){const o=$('#lbT').options[1];o.textContent='Hari libur (versi lengkap)';o.disabled=true}
   $$('#p-lembur input,#p-lembur select').forEach(e=>e.oninput=lbRender);
   $('#lbAdd').onclick=()=>{if(DEMO&&lbRows.length>=1)return lock();lbRows.push({t:$('#lbT').value,six:$('#lbD').value==='6',h:+$('#lbH').value||0});lbRender()};
   $('#lbClr').onclick=()=>{lbRows=[];lbRender()};
@@ -680,7 +643,7 @@ function lbRender(){
   const kh=lbRows.filter(x=>x.t==='kerja').reduce((a,x)=>a+x.h,0),wn=[];
   if(lbRows.some(x=>x.t==='kerja'&&x.h>4))wn.push('Ada entri hari kerja lebih dari 4 jam (batas umum lembur 4 jam/hari).');
   if(kh>18)wn.push('Total lembur hari kerja melebihi 18 jam; batas umum 18 jam per minggu, pastikan daftar ini untuk satu minggu atau satu bulan sesuai kebutuhan.');
-  $('#lbWarn').textContent=(wn.join(' ')+(DEMO?' 🔒 Demo: 1 entri dan hari kerja biasa saja.':'')).trim();
+  $('#lbWarn').textContent=(wn.join(' ')+(DEMO?' Demo: 1 entri dan hari kerja biasa saja.':'')).trim();
 }
 
 
@@ -721,29 +684,7 @@ function riInit(){
   riSt=mkLikert({id:'ri',q:'#riQ',res:'#riR',data:RI,render:res=>{
     const s=[...res].sort((a,b)=>b.p-a.p),code=s.slice(0,3).map(x=>x.k).join('');
     return `<div class="kpi" style="margin-bottom:10px"><small>Kode minat (3 teratas)</small><b style="font-size:28px">${code}</b><div class="note">${s.slice(0,3).map(x=>RI_T[x.k]).join(' · ')}</div></div>`+
-      '<div class="kpi" style="margin-bottom:10px">'+s.map(x=>hbar(RI_T[x.k],x.p,pct(x.p))).join('')+(RI_C?'<div style="margin-top:10px;font-size:13.5px"><b>Contoh bidang pekerjaan untuk tipe teratas:</b><br>'+s.slice(0,3).map(x=>`<b>${RI_T[x.k]}</b>: ${RI_C[x.k]}`).join('<br>')+'</div>':'<div class="note">🔒 Contoh bidang pekerjaan dan 36 pernyataan tersedia di versi lengkap.</div>')+'</div>';
-  }});
-  
-}
-
-/* ---------- Kesejahteraan Kerja ---------- */
-const SW_T={K:'Kelelahan kerja',E:'Keterlibatan',B:'Keseimbangan kerja-hidup'};
-const SW={
- K:[['Saya merasa terkuras secara emosional setelah bekerja.',0],['Saya merasa lelah bahkan sebelum hari kerja dimulai.',0]],
- E:[['Saya merasa antusias dengan pekerjaan saya.',0],['Saya merasa pekerjaan saya bermakna.',0]],
- B:[['Saya punya cukup waktu untuk keluarga dan diri sendiri.',0],['Saya bisa berhenti memikirkan pekerjaan saat di rumah.',0]]};
-
-let SW_R=null;
-
-let swSt=null;
-function swInit(){
-  if(swSt)return;
-  swSt=mkLikert({id:'sw',q:'#swQ',res:'#swR',data:SW,render:res=>{
-    let h='<div class="kpi" style="margin-bottom:10px">';
-    res.forEach(r=>{const lv=r.p<40?0:r.p<65?1:2,bad=r.k==='K'?lv===2:lv===0,ok=r.k==='K'?lv===0:lv===2,col=bad?'C':ok?'A':'B';
-      h+=hbar(SW_T[r.k],r.p,`${pct(r.p)} <span class="pill ${col}">${['Rendah','Sedang','Tinggi'][lv]}</span>`)+(SW_R?`<div class="note" style="margin:0 0 8px">${SW_R[r.k][lv]}</div>`:'');
-      if(r.k==='K'&&lv===2)h+='<div class="note" style="color:var(--bad)">Jika kelelahan terus mengganggu keseharian, pertimbangkan berbicara dengan atasan, HRD, atau tenaga profesional.</div>'});
-    return h+(SW_R?'':'<div class="note">🔒 Saran tindak lanjut per dimensi dan 12 pernyataan tersedia di versi lengkap.</div>')+'</div>';
+      '<div class="kpi" style="margin-bottom:10px">'+s.map(x=>hbar(RI_T[x.k],x.p,pct(x.p))).join('')+(RI_C?'<div style="margin-top:10px;font-size:13.5px"><b>Contoh bidang pekerjaan untuk tipe teratas:</b><br>'+s.slice(0,3).map(x=>`<b>${RI_T[x.k]}</b>: ${RI_C[x.k]}`).join('<br>')+'</div>':'<div class="note">Contoh bidang pekerjaan dan 36 pernyataan tersedia di versi lengkap.</div>')+'</div>';
   }});
   
 }
@@ -810,94 +751,6 @@ function egRender(){
   renderTable($('#egTb'),[['Tanggal','Tipe','Like','Komentar','Share','Simpan','Reach','ER pengikut','ER reach','Level'],...rows.map(r=>[esc(r.d),esc(r.t),fmt(r.l),fmt(r.c),fmt(r.s),fmt(r.k),fmt(r.r),pct(r.er*100),pct(r.erR*100),`<span class="pill ${lv(r.er)[1]}">${lv(r.er)[0]}</span>`])]);
 }
 
-/* ---------- Caption & Hashtag ---------- */
-const CP_HOOK={edukasi:['Tahukah kamu? {t} ternyata lebih sederhana dari yang dikira.','3 hal tentang {t} yang jarang dibahas:','Banyak yang salah paham soal {t}. Ini yang benar:'],
- promosi:['Kabar baik: {o} sekarang tersedia.','Lagi cari solusi untuk {t}? Kenalan dengan {o}.','{o} dibuat supaya {t} jadi lebih mudah.'],
- engagement:['Pertanyaan hari ini: bagaimana caramu menangani {t}?','Pilih satu: cara lama atau cara baru untuk {t}? Tulis di komentar!','Ceritakan dong, apa tantangan terbesarmu soal {t}?']};
-const CP_BODY={santai:['Simpel aja: mulai dari langkah kecil dan konsisten, hasilnya pasti terasa.','Nggak perlu ribet, yang penting rapi dan bisa diulang tiap minggu.','Banyak yang sudah coba, dan ternyata hemat waktu banget.'],
- profesional:['Pendekatan yang terstruktur membantu hasil lebih konsisten dan mudah diukur.','Kunci utamanya adalah proses yang jelas, terdokumentasi, dan bisa diulang.','Dengan alat yang tepat, waktu kerja dapat dialihkan ke hal yang lebih bernilai.'],
- persuasif:['Waktumu terlalu berharga untuk dihabiskan mengerjakan hal yang sama secara manual.','Mulai sekarang, ubah pekerjaan berulang jadi proses yang selesai lebih cepat.','Coba dulu versi demonya dan lihat sendiri bedanya.']};
-const CP_CTA={edukasi:['Simpan postingan ini untuk nanti.','Bagikan ke temanmu yang butuh tahu.','Ikuti untuk tips berikutnya.'],promosi:['Coba demo gratisnya, link ada di bio.','Hubungi kami untuk info lengkap.','Cek detailnya di link bio.'],engagement:['Tulis jawabanmu di kolom komentar.','Tag temanmu yang harus ikut menjawab.','Jawab dengan emoji favoritmu.']};
-const CP_EMO={santai:['✨','🙌','😉','👇'],profesional:['📌','✅','📊','💼'],persuasif:['🚀','🔥','👉','⏱️']};
-const CP_NICHE={umum:['#tipshariini','#belajarbareng','#produktivitas','#inspirasi','#indonesia','#konten','#sharing','#fyp'],bisnis:['#bisnisonline','#umkm','#wirausaha','#strategibisnis','#kerjacerdas','#pengusaha','#marketing','#brandlokal'],edukasi:['#belajar','#edukasi','#tipsbelajar','#ilmubermanfaat','#pengetahuan','#kelasonline','#pelajar','#skill']};
-
-let cpLast=[];
-function cpInit(){
-  if($('#cpGen').dataset.b)return;$('#cpGen').dataset.b=1;
-  $('#cpNiche').innerHTML=Object.keys(CP_NICHE).map(k=>`<option>${k}</option>`).join('');
-  $('#cpGen').onclick=cpRun;lockBtn('cpDl');
-  
-  $('#cpOut').onclick=e=>{const b=e.target.closest('[data-copy]');if(!b)return;const t=cpLast[+b.dataset.copy];(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove()});b.textContent='Tersalin ✓';setTimeout(()=>b.textContent='Salin',1500)};
-  cpRun();
-}
-function cpRun(){
-  const [pf,lim]=$('#cpPF').value.split('|'),tone=$('#cpTone').value,goal=$('#cpGoal').value,t=$('#cpTopic').value.trim()||'topik kamu',o=$('#cpOffer').value.trim()||'produk kami',n=DEMO?2:5;
-  const fill=s=>s.replace(/\{t\}/g,t).replace(/\{o\}/g,o);
-  const tags=[...CP_NICHE[$('#cpNiche').value]].sort(()=>Math.random()-.5).slice(0,pf==='X'?3:8);
-  const own='#'+t.toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,20);if(own.length>2)tags.unshift(own);
-  const used=new Set();cpLast=[];
-  for(let i=0;i<n*3&&cpLast.length<n;i++){
-    const h=fill(uPick(CP_HOOK[goal])),b=uPick(CP_BODY[tone]),c=uPick(CP_CTA[goal]),e=uPick(CP_EMO[tone]);const key=h+b+c;if(used.has(key))continue;used.add(key);
-    let txt=`${e} ${h}\n\n${b}\n\n${c}`+(pf==='X'?'':`\n\n${tags.join(' ')}`);
-    if(pf==='X')txt+=' '+tags.slice(0,2).join(' ');
-    cpLast.push(txt);
-  }
-  $('#cpOut').innerHTML=cpLast.map((x,i)=>`<div class="kpi" style="margin-bottom:10px"><div style="white-space:pre-wrap;font-size:14px">${esc(x)}</div><div class="bar" style="margin-top:8px"><button class="btn sm ghost" data-copy="${i}">Salin</button><span class="note ${x.length>lim?'down':''}">${x.length}/${lim} karakter${x.length>lim?' (melebihi batas '+pf+')':''}</span></div></div>`).join('');
-  $('#cpTags').innerHTML=pf==='X'?'':`<div class="note">Hashtag cadangan: ${Object.values(CP_NICHE).flat().slice(0,12).join(' ')}</div>`;
-}
-
-/* ---------- Waktu Posting Terbaik ---------- */
-const WT_D=['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
-let wtLog=[];
-function wtGen(){
-  const day=[.9,1.1,1.15,1.1,1,.85,.8];
-  wtLog=Array.from({length:DEMO?120:260},()=>{const d=Math.floor(Math.random()*7),h=Math.random()<.5?Math.floor(18+Math.random()*4):Math.random()<.5?Math.floor(11+Math.random()*3):Math.floor(Math.random()*24);
-    const hf=(h>=19&&h<=21)?1.5:(h>=11&&h<=13)?1.25:(h<6)?.4:.8;return{d,h,e:Math.round(120*day[d]*hf*(.7+Math.random()*.6))}});
-  wtRender();
-}
-function wtInit(){
-  if($('#wtGen').dataset.b)return;$('#wtGen').dataset.b=1;
-  $('#wtGen').onclick=wtGen;lockBtn('wtDl');lockNote('wtPasteBox','Hitung dari riwayat posting sendiri');
-  
-  wtGen();
-}
-function wtCells(){const c={};wtLog.forEach(x=>{const k=x.d+'_'+x.h;(c[k]=c[k]||{d:x.d,h:x.h,s:0,n:0});c[k].s+=x.e;c[k].n++});return Object.values(c).map(x=>({...x,m:x.s/x.n}))}
-function wtTop(){return wtCells().filter(x=>x.n>=2).sort((a,b)=>b.m-a.m).slice(0,DEMO?3:10)}
-function wtRender(){
-  const cells=wtCells(),max=Math.max(1,...cells.map(c=>c.m)),map={};cells.forEach(c=>map[c.d+'_'+c.h]=c);
-  let h='<table style="border-collapse:collapse;font-size:11px"><tr><th></th>'+Array.from({length:24},(_,i)=>`<th style="padding:2px 3px">${i}</th>`).join('')+'</tr>';
-  for(let d=0;d<7;d++){h+=`<tr><td style="padding:2px 6px;font-weight:700">${WT_D[d]}</td>`;for(let i=0;i<24;i++){const c=map[d+'_'+i],a=c?c.m/max:0;h+=`<td title="${c?WT_D[d]+' '+i+':00 · rata-rata '+c.m.toFixed(0)+' ('+c.n+' posting)':'tanpa data'}" style="width:26px;height:22px;border:1px solid #fff;background:${c?`rgba(14,165,164,${.12+a*.88})`:'#f1f5f9'}"></td>`}h+='</tr>'}
-  $('#wtGrid').innerHTML=h+'</table>';
-  const top=wtTop();
-  $('#wtK').innerHTML=`<div class="kpi"><small>Data posting</small><b>${wtLog.length}</b></div><div class="kpi"><small>Slot terbaik</small><b>${top[0]?WT_D[top[0].d]+' '+String(top[0].h).padStart(2,'0')+':00':'-'}</b></div><div class="kpi"><small>Rata-rata slot terbaik</small><b>${top[0]?fmt(top[0].m):'-'}</b></div>`;
-  renderTable($('#wtTb'),[['#','Hari','Jam','Rata-rata engagement','Jumlah posting'],...top.map((s,i)=>[i+1,WT_D[s.d],String(s.h).padStart(2,'0')+':00',fmt(s.m),s.n])]);
-}
-
-/* ---------- UTM Builder ---------- */
-const UT_P={'Instagram':['instagram','social'],'TikTok':['tiktok','social'],'X (Twitter)':['x','social'],'LinkedIn':['linkedin','social'],'YouTube':['youtube','video'],'Newsletter':['newsletter','email'],'Iklan Meta':['facebook','cpc'],'Google Ads':['google','cpc']};
-function utSlug(v){return $('#utL').checked?v.trim().toLowerCase().replace(/\s+/g,'_'):v.trim()}
-function utBuild(u){
-  let url;try{url=new URL(u.trim())}catch(e){return null}
-  if(!/^https?:$/.test(url.protocol))return null;
-  [['utm_source','utS'],['utm_medium','utM'],['utm_campaign','utC'],['utm_term','utT'],['utm_content','utN']].forEach(([k,id])=>{const v=utSlug($('#'+id).value);if(v)url.searchParams.set(k,v)});
-  return url.toString();
-}
-function utRun(){
-  const r=utBuild($('#utU').value),miss=['utS','utM','utC'].filter(id=>!$('#'+id).value.trim());
-  $('#utOut').value=r||'';$('#utMsg').textContent=!r?'URL tidak valid (harus diawali http:// atau https://).':miss.length?'Source, medium, dan campaign sebaiknya diisi semua.':'';
-}
-let utRows=[];
-function utInit(){
-  if($('#utCopy').dataset.b)return;$('#utCopy').dataset.b=1;
-  $('#utP').innerHTML='<option value="">- pilih -</option>'+Object.keys(UT_P).map(k=>`<option>${k}</option>`).join('');
-  $('#utP').onchange=()=>{const p=UT_P[$('#utP').value];if(p){$('#utS').value=p[0];$('#utM').value=p[1];utRun()}};
-  $$('#p-utm input').forEach(e=>{if(e.type!=='checkbox'||e.id==='utL')e.oninput=utRun});
-  $('#utCopy').onclick=()=>{const t=$('#utOut').value;if(!t)return;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{$('#utOut').select();document.execCommand('copy')});$('#utCopy').textContent='Tersalin ✓';setTimeout(()=>$('#utCopy').textContent='Salin URL',1500)};
-  lockNote('utBatchBox','Mode massal dan ekspor CSV');
-  
-  utRun();
-}
-
 /* ---------- ROI Iklan & Influencer ---------- */
 let roiRows=[];
 const ROI_N=['Meta Ads','TikTok Ads','Google Ads','Influencer A','Influencer B','Email Blast','Marketplace Ads','Endorse Mikro'];
@@ -938,7 +791,7 @@ function fnInit(){
   if(!fnB){fnB=true;
     $('#fnS').innerHTML=FN_ST.map((s,i)=>`<div><label>${s}</label><input type="number" class="fnS" min="0" value="${fnV[i]}"></div>`).join('');
     $$('#p-funnel input').forEach(e=>e.oninput=fnRun);$('#fnGen').onclick=fnGen;lockBtn('fnDl');
-    if(DEMO)$$('.fnPaid').forEach(e=>{e.querySelector('input').disabled=true;e.querySelector('label').textContent='🔒 '+e.querySelector('label').textContent});
+    if(DEMO)$$('.fnPaid').forEach(e=>{e.querySelector('input').disabled=true;e.querySelector('label').textContent=''+e.querySelector('label').textContent});
     
   }
   fnRun();
@@ -950,7 +803,7 @@ function fnRun(){
   const cac=cust?spend/cust:0,gp=aov*gm,pay=gp?cac/gp:0,rev=cust*aov;
   let h=`<div class="kpi"><small>Konversi lead → closing</small><b>${pct(fnV[0]?cust/fnV[0]*100:0)}</b></div><div class="kpi"><small>Pelanggan baru</small><b>${fmt(cust)}</b></div><div class="kpi"><small>CAC</small><b>${idr(cac)}</b></div><div class="kpi"><small>Pendapatan order pertama</small><b>${idr(rev)}</b></div><div class="kpi"><small>Payback (order)</small><b>${pay.toFixed(1).replace('.',',')}×</b></div>`;
   
-  $('#fnK').innerHTML=h+(DEMO?'<div class="kpi"><small>🔒 LTV & LTV:CAC</small><b>versi lengkap</b></div>':'');
+  $('#fnK').innerHTML=h+(DEMO?'<div class="kpi"><small>LTV & LTV:CAC</small><b>versi lengkap</b></div>':'');
   chart('fnC',{type:'bar',data:{labels:FN_ST,datasets:[{label:'Jumlah',data:fnV,backgroundColor:'#14b8a6'}]},options:{...Z,indexAxis:'y',plugins:{legend:{display:false}}}});
   renderTable($('#fnTb'),[['Tahap','Jumlah','Dari tahap sebelumnya','Dari lead'],...fnV.map((v,i)=>[FN_ST[i],fmt(v),i?pct(fnV[i-1]?v/fnV[i-1]*100:0):'-',pct(fnV[0]?v/fnV[0]*100:0)])]);
 }
@@ -966,7 +819,7 @@ function hgRun(){
   const c=+$('#hgC').value||0,p=+$('#hgP').value||0,f=+$('#hgF').value||0,tm=(+$('#hgM').value||0)/100,v=+$('#hgV').value||0,cm=p-c,mg=p?cm/p:0,mk=c?cm/c:0;
   const bep=cm>0?Math.ceil(f/cm):0,tp=tm<1?c/(1-tm):0,profit=cm*v-f;
   $('#hgK').innerHTML=`<div class="kpi"><small>Margin kotor</small><b class="${mg>=tm?'up':'down'}">${pct(mg*100)}</b></div><div class="kpi"><small>Markup</small><b>${pct(mk*100)}</b></div><div class="kpi"><small>Harga untuk target margin</small><b>${idr(tp)}</b></div><div class="kpi"><small>BEP (unit / bulan)</small><b>${cm>0?fmt(bep):'-'}</b></div><div class="kpi"><small>BEP (Rp / bulan)</small><b>${cm>0?idr(bep*p):'-'}</b></div><div class="kpi"><small>Laba bulanan</small><b class="${profit>=0?'up':'down'}">${idr(profit)}</b></div>`;
-  let s='<div class="note">🔒 Tabel sensitivitas harga dan volume diskon impas tersedia di versi lengkap.</div>';
+  let s='<div class="note">Tabel sensitivitas harga dan volume diskon impas tersedia di versi lengkap.</div>';
   
   if(s){$('#hgS').innerHTML='';$('#hgSensBox').style.display='none';$('#hgNote').innerHTML=s}else{$('#hgSensBox').style.display='';$('#hgNote').innerHTML=''}
   if(cm<=0)$('#hgNote').innerHTML+='<div class="note" style="color:var(--bad)">Harga jual di bawah atau sama dengan HPP: tiap unit menambah kerugian.</div>';
@@ -994,7 +847,7 @@ function ldRun(){
 
 const TITLES=Object.fromEntries(Object.entries(META).map(([k,v])=>[k,v.t]));
 if(DEMO){
-  $('#demo .lead').insertAdjacentHTML('afterend','<div class="note" style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:10px 14px;margin:-10px 0 18px;color:#92400e"><b>Mode demo:</b> data simulasi, kapasitas dan fitur dibatasi (tombol 🔒). Versi lengkap dikirim sebagai file terpisah setelah pembayaran.</div>');
+  $('#demo .lead').insertAdjacentHTML('afterend','<div class="note" style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:10px 14px;margin:-10px 0 18px;color:#92400e"><b>Mode demo:</b> data simulasi, kapasitas dan fitur dibatasi (tombol berikon kunci). Versi lengkap dikirim sebagai file terpisah setelah pembayaran.</div>');
 }else{
   const h=document.getElementById('harga');h&&h.remove();
   $$('nav ul a[href="#harga"]').forEach(a=>a.parentElement.remove());
@@ -1003,7 +856,7 @@ if(DEMO){
   $('#yr').parentElement.insertAdjacentHTML('beforeend',' · Lisensi untuk satu pengguna / satu perusahaan. Dilarang dijual ulang atau dibagikan.');
   XLK.concat(['bot']).forEach(k=>{const a=$('#dl-'+k);if(a){a.remove()}});
   $$('#p-bot .wa,.xl .wa').forEach(a=>a.remove());
-  $$('.xl .cols').forEach(c=>c.remove());
+  $$('.xl .cols,figure.prev').forEach(c=>c.remove());
   $$('.xl .note').forEach(n=>{if(n.id&&n.id.startsWith('xn-'))n.insertAdjacentHTML('beforebegin','<div class="note"><b>File Excel versi lengkap ada di folder paket</b> (berakhiran -full.xlsx). Buka langsung di Excel; panduan ada di sheet PETUNJUK.</div>')});
 }
 if(!['full','demo'].includes(EDITION)){
