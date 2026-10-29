@@ -102,7 +102,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 input[type=number]{font-variant-numeric:tabular-nums}
 .btn.lk::before{content:"";display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px;background:currentColor;opacity:.75;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z'/%3E%3C/svg%3E") center/contain no-repeat}
 figure.prev{margin:0 0 14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-figure.prev img{display:block;width:100%;height:auto}figure.prev figcaption{font-size:12px;color:var(--mute);padding:8px 14px;border-top:1px solid var(--line);background:#f8fafd}
+figure.prev img{display:block;width:100%;height:auto;max-height:560px;object-fit:cover;object-position:top}figure.prev figcaption{font-size:12px;color:var(--mute);padding:8px 14px;border-top:1px solid var(--line);background:#f8fafd}
 .q{padding:14px 0}.q p{font-size:15px;font-weight:500}
 .lik{display:flex;flex-wrap:wrap;gap:8px}.lik label{position:relative;margin:0;padding:7px 18px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:#fff;transition:.15s}
 .lik label:hover{border-color:var(--brand)}.lik input{position:absolute;opacity:0;width:0}.lik label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
@@ -113,6 +113,21 @@ figure.prev img{display:block;width:100%;height:auto}figure.prev figcaption{font
 
 .fv{margin:3px 0 0;font-weight:600;color:var(--brand2);min-height:0}.fv:empty{display:none}
 
+.herogrid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.heroshot .win{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transform:perspective(1400px) rotateY(-7deg) rotateX(2deg)}
+.win .bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#eef2f8;font-size:12px;color:#5b6b82}
+.win .bar i{width:10px;height:10px;border-radius:50%;background:#cbd5e1}.win .bar i:nth-child(1){background:#f87171}.win .bar i:nth-child(2){background:#fbbf24}.win .bar i:nth-child(3){background:#4ade80}.win .bar span{margin-left:8px}
+.win img{display:block;width:100%;height:410px;object-fit:cover;object-position:50% 71%}
+.hero .stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:34px}
+.feat{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;margin:0 0 26px;padding:28px;background:linear-gradient(135deg,#0b1a30,#10304a);color:#fff;border:0}
+.feat h3{font-size:28px;margin:8px 0 8px;letter-spacing:-.5px}.feat p{color:#b9c7dd;margin:0 0 14px}
+.fbadge{display:inline-block;background:rgba(94,234,212,.15);color:#5eead4;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px}
+.fl{list-style:none;padding:0;margin:0 0 20px;font-size:14.5px;color:#dbe6f5}.fl li{padding:5px 0 5px 24px;position:relative}.fl li:before{content:"✓";position:absolute;left:0;color:#5eead4;font-weight:800}
+.fimg{border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 18px 40px rgba(0,0,0,.35)}.fimg img{display:block;width:100%;height:320px;object-fit:cover;object-position:50% 71%}
+.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.why{padding:22px;border-top:3px solid var(--brand)}.why h4{margin:0 0 6px;font-size:16px}.why p{margin:0;color:var(--mute);font-size:14px}
+.pricegrid{max-width:780px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+@media(max-width:900px){.herogrid{grid-template-columns:1fr;gap:34px}.heroshot .win{transform:none}.win img{height:230px}.hero .stats{grid-template-columns:1fr 1fr;gap:22px}.hero{padding:56px 0 64px}.feat{grid-template-columns:1fr;padding:22px}.fimg img{height:220px}}
+
 </style>
 </head>
 <body>
@@ -122,21 +137,29 @@ figure.prev img{display:block;width:100%;height:auto}figure.prev figcaption{font
   <a class="btn sm" id="navWA" href="#harga">Pesan</a>
 </div></nav>
 
-<header class="hero"><div class="wrap">
+<header class="hero"><div class="wrap herogrid">
+  <div class="herotxt">
   <div class="eyebrow" style="color:#5eead4">Enterprise Toolkit</div>
   <h1>Alat kerja profesional, <span>siap pakai hari ini.</span></h1>
-  <p>Workbook Excel untuk Finance &amp; Accounting dan Sales &amp; Marketing, tes dan skrining untuk Human Resources, serta alat analitik untuk Media Sosial. Tanpa instalasi, tanpa langganan; data demo sepenuhnya simulasi.</p>
+  <p>Workbook Excel untuk HRMS, Finance &amp; Accounting, serta Sales &amp; Marketing, ditambah alat analitik untuk Media Sosial. Tanpa instalasi, tanpa langganan; data demo sepenuhnya simulasi.</p>
   <div class="cta"><a class="btn" href="#demo">Coba Sekarang</a><a class="btn ghost" href="#harga">Lihat Paket</a></div>
   <div class="stats">
     <div><b>22</b><small>program</small></div><div><b>4</b><small>kategori</small></div>
     <div><b>11</b><small>workbook Excel</small></div>
-    <div><b>Demo + Full</b><small>coba dulu sebelum beli</small></div>
-  </div>
+    <div><b>Gratis</b><small>coba demo dulu</small></div>
+  </div></div>
+  <div class="heroshot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>HRMS Enterprise &middot; Dashboard SDM</span></div><img src="assets/prev-xhrms.png" alt="Dashboard HRMS Enterprise"></div></div>
 </div></header>
 
 <section id="produk"><div class="wrap">
   <div class="eyebrow">Produk</div><h2>Empat kategori, satu standar kualitas</h2>
   <p class="lead">Setiap program punya versi demo (data simulasi, kapasitas terbatas) dan versi lengkap. Klik kartu untuk mencoba.</p>
+  <div id="unggulan" class="feat card">
+    <div class="ftxt"><span class="fbadge">Produk unggulan</span><h3>HRMS Enterprise</h3>
+    <p>Sistem SDM lengkap dalam satu workbook Excel, dengan semua parameter bisa kamu sesuaikan sendiri.</p>
+    <ul class="fl"><li>Payroll otomatis: BPJS dan PPh 21 (TER, progresif Desember)</li><li>Slip gaji siap cetak, absensi, dan saldo cuti</li><li>Rekrutmen, kinerja KPI berbobot, dan pelatihan</li><li>Dashboard SDM dan 2 kolom kustom, band gaji, tabel rating</li></ul>
+    <a class="btn" href="#demo" id="featBtn">Coba demo HRMS</a></div>
+    <div class="fimg"><img src="assets/prev-xhrms.png" alt="Pratinjau HRMS Enterprise" loading="lazy"></div></div>
   <div id="cats"></div>
 </div></section>
 
@@ -452,13 +475,22 @@ figure.prev img{display:block;width:100%;height:auto}figure.prev figcaption{font
   </div>
 </div></section>
 
+<section id="why" style="background:#fff;border-block:1px solid var(--line)"><div class="wrap">
+  <div class="eyebrow">Keunggulan</div><h2>Dibuat supaya langsung terpakai</h2>
+  <div class="grid g4 whyg">
+    <div class="card why"><h4>Sekali bayar</h4><p>Tanpa langganan dan tanpa biaya bulanan. File yang kamu terima menjadi milikmu untuk dipakai sendiri.</p></div>
+    <div class="card why"><h4>Data tetap di komputermu</h4><p>Perhitungan berjalan lokal. Tidak ada server, tidak ada akun, dan tidak ada data yang dikirim ke mana pun.</p></div>
+    <div class="card why"><h4>Rumus asli, bisa diubah</h4><p>Tanpa makro dan tanpa fungsi baru, jadi terbuka di Excel 2010+, LibreOffice, dan Google Sheets.</p></div>
+    <div class="card why"><h4>Coba dulu sebelum beli</h4><p>Demo gratis di halaman ini memakai data simulasi, sehingga kamu bisa menilai kualitasnya sendiri.</p></div>
+  </div>
+</div></section>
+
 <section id="harga"><div class="wrap">
   <div class="eyebrow">Harga</div><h2>Pilih paket yang sesuai</h2>
   <p class="lead">Pembayaran sekali, tanpa langganan. Hubungi lewat WhatsApp untuk pemesanan. File lengkap dikirim setelah pembayaran terkonfirmasi.</p>
-  <div class="grid g3">
-    <div class="card price"><h3>Single</h3><div class="amt" id="pr1"></div><ul><li>1 program pilihan (HTML atau Excel)</li><li>Versi lengkap tanpa batasan demo</li><li>Panduan penggunaan</li><li>Update 3 bulan</li></ul><a class="btn ghost wa" href="#">Pesan Single</a></div>
-    <div class="card price hot"><h3>Bundle Lengkap</h3><div class="amt" id="pr2"></div><ul><li>Semua program: 10 tool HTML, 11 workbook Excel, bot auto-post</li><li>Template &amp; data contoh</li><li>Panduan tiap program</li><li>Update 12 bulan</li><li>Dukungan WhatsApp</li></ul><a class="btn wa" href="#">Pesan Bundle</a></div>
-    <div class="card price"><h3>Custom Pro</h3><div class="amt" id="pr3"></div><ul><li>Branding perusahaan kamu</li><li>Bagan akun, tahap penjualan, dan laporan disesuaikan</li><li>Hubungkan ke data sendiri</li><li>Pelatihan tim</li></ul><a class="btn ghost wa" href="#">Konsultasi</a></div>
+  <div class="grid g3 pricegrid">
+    <div class="card price"><h3>Single</h3><div class="amt" id="pr1"></div><ul><li>1 program pilihan (HTML atau Excel)</li><li>Versi lengkap tanpa batasan demo</li><li>Panduan penggunaan</li></ul><a class="btn ghost wa" href="#">Pesan Single</a></div>
+    <div class="card price hot"><h3>Bundle Lengkap</h3><div class="amt" id="pr2"></div><ul><li>Semua program: 10 tool HTML, 11 workbook Excel, bot auto-post</li><li>Template &amp; data contoh</li><li>Panduan tiap program</li></ul><a class="btn wa" href="#">Pesan Bundle</a></div>
   </div>
 </div></section>
 
@@ -469,6 +501,7 @@ figure.prev img{display:block;width:100%;height:auto}figure.prev figcaption{font
   <details><summary>Excel versi berapa yang dibutuhkan?</summary><p>Excel 2010 atau lebih baru. Workbook tidak memakai makro maupun fungsi baru (XLOOKUP, FILTER), jadi juga terbuka di LibreOffice dan Google Sheets.</p></details>
   <details><summary>Apa bedanya demo dan versi lengkap?</summary><p>Demo memakai data simulasi dengan kapasitas dan fitur terbatas. Versi lengkap membuka kapasitas penuh, dashboard, ekspor, serta fitur tambahan, dan dikirim sebagai file terpisah setelah pembayaran.</p></details>
   <details><summary>Apakah tes psikologi ini baku?</summary><p>Bukan. Tes kepribadian dan minat karier adalah alat refleksi dan eksplorasi dengan butir contoh; bukan alat diagnosis dan tidak menggantikan asesmen psikolog. Talent Review 9-Box adalah kerangka diskusi kalibrasi, bukan keputusan otomatis. Perhitungan lembur dan akuntansi juga bersifat estimasi; cocokkan dengan peraturan dan kebijakan perusahaan.</p></details>
+  <details><summary>Apakah ada garansi, update, atau dukungan?</summary><p>Tidak. Produk dijual sekali bayar sebagaimana adanya, tanpa layanan garansi, pembaruan, maupun dukungan. Panduan ada di sheet PETUNJUK dan file PANDUAN.md, semua rumus terbuka sehingga bisa kamu sesuaikan sendiri, dan demo gratis tersedia untuk dicoba lebih dulu.</p></details>
   <details><summary>Apakah data di demo ini asli?</summary><p>Bukan. Seluruh data dibuat oleh generator simulasi untuk keperluan demonstrasi.</p></details>
 </div></section>
 
@@ -559,6 +592,7 @@ $$('.panel input[type=number]').forEach(i=>{if(i.closest('table'))return;const h
 function openTab(t){$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));INIT[t]();
   if(t==='kepribadian')pager($('#pqQ'),'#pqRand','#pqReset');if(t==='riasec')pager($('#riQ'),'#riRand','#riReset')}
 $$('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.t));
+const fb=$('#featBtn');if(fb)fb.onclick=e=>{e.preventDefault();openTab('xhrms');document.getElementById('demo').scrollIntoView()};
 $$('.pcard').forEach(c=>c.onclick=()=>{openTab(c.dataset.go);document.getElementById('demo').scrollIntoView()});
 $('#yr').textContent=new Date().getFullYear();
 const wa=t=>`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
@@ -567,7 +601,6 @@ function lock(e){if(e){e.preventDefault();e.stopPropagation()}alert('Fitur ini h
 $$('.wa').forEach(a=>a.href=wa(CONFIG.pesan+' - '+(a.closest('.panel')?a.closest('.panel').querySelector('h3').textContent.replace(/\s+/g,' ').trim()+' - ':'')+a.textContent));
 $('#pr1').innerHTML=CONFIG.harga.single+' <small>sekali bayar</small>';
 $('#pr2').innerHTML=CONFIG.harga.bundle+' <small>sekali bayar</small>';
-$('#pr3').innerHTML=CONFIG.harga.custom;
 
 /* ================= Program tambahan: Psikologi, Finance & Media Sosial ================= */
 function lockBtn(id){const b=$('#'+id);if(b&&DEMO){b.classList.add('lk');b.onclick=lock}}
@@ -865,7 +898,7 @@ if(DEMO){
   const h=document.getElementById('harga');h&&h.remove();
   $$('nav ul a[href="#harga"]').forEach(a=>a.parentElement.remove());
   $$('.hero a[href="#harga"]').forEach(a=>a.remove());
-  $('#navWA').textContent='Bantuan';$('#navWA').href=wa('Halo, saya butuh bantuan untuk Mantam Product');
+  $('#navWA').remove();$$('.heroshot,#unggulan,#why').forEach(e=>e.remove());
   $('#yr').parentElement.insertAdjacentHTML('beforeend',' · Lisensi untuk satu pengguna / satu perusahaan. Dilarang dijual ulang atau dibagikan.');
   XLK.concat(['bot']).forEach(k=>{const a=$('#dl-'+k);if(a){a.remove()}});
   $$('#p-bot .wa,.xl .wa').forEach(a=>a.remove());
