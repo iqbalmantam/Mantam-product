@@ -105,7 +105,7 @@ V.m_studio=el=>{
   const d=SOC.d,sets=SOC.tags(),pf=el._p||d.acc[0].p,st=el._st||{topik:'',penawaran:'',kontak:''},cap=el._cap||'';
   const rd=()=>({t:$('#c_t').value,pe:$('#c_pe').value,k:$('#c_k').value});
   el.innerHTML=`<div class="grid g2" style="align-items:start"><div class="card"><h3>Penulis caption</h3>
-  <div class="form"><div><label>Platform</label><select class="sel" id="c_p">${opts(d.acc.map(a=>a.p),pf)}</select></div><div><label>Tanggal & jam rencana</label><div style="display:flex;gap:6px"><input class="inp" type="date" id="c_d" value="${d.today}"><input class="inp" type="time" id="c_j" value="09:00" style="width:130px"></div></div>
+  <div class="form"><div><label>Platform</label><select class="sel" id="c_p">${opts(d.acc.map(a=>a.p),pf)}</select></div><div><label>Tanggal & jam rencana</label><div style="display:flex;gap:6px"><input class="inp" type="date" id="c_d" value="${d.today}" style="flex:1 1 150px"><input class="inp" type="time" id="c_j" value="09:00" style="flex:0 0 130px;width:130px"></div></div>
   <div class="full"><label>Caption</label><textarea class="inp" id="c_c" rows="9" placeholder="Tulis caption di sini, atau pilih templat di kanan…">${esc(cap)}</textarea></div></div>
   <div id="cnt" style="margin:8px 0"></div><div id="qc" style="font-size:13px"></div>
   <div class="tools" style="margin-top:12px;flex-wrap:wrap"><button class="btn" data-em="😀 🔥 ✨ 👇 ✅ 🙏 💡 🎁">😀 Emoji</button><span class="sp"></span><button class="btn" id="cp">Salin caption</button><button class="btn" id="sv">Simpan ke papan konten</button><button class="btn pri" id="sh">Salin & buka platform</button></div><div id="em" style="margin-top:8px;font-size:20px;display:none"></div></div>

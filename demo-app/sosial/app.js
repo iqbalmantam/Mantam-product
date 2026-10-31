@@ -7,6 +7,7 @@ const MODS_ALL=MODS.slice();
 const App={cur:'dashboard',q:'',
  init(){if(CONFIG.modules){for(let i=MODS.length-1;i>=0;i--)if(!CONFIG.modules.includes(MODS[i].key))MODS.splice(i,1);this.cur=MODS[0].items[0][0]}
   [['HR','hr'],['FIN','fin'],['SAL','sales'],['SOC','sosial']].forEach(([o,k])=>{if(!CONFIG.modules||CONFIG.modules.includes(k))window[o]!==undefined||0;});(typeof HR!=='undefined')&&HR.init();(typeof FIN!=='undefined')&&FIN.init();(typeof SAL!=='undefined')&&SAL.init();(typeof SOC!=='undefined')&&SOC.init();try{if(Store.get('theme','')==='dark')document.documentElement.dataset.theme='dark'}catch(e){}
+  {const cs=getComputedStyle(document.documentElement);PAL[0]=cs.getPropertyValue('--brand').trim()||PAL[0];PAL[1]=cs.getPropertyValue('--brand2').trim()||PAL[1];const bi=$('.brand i');if(bi)bi.innerHTML=ico(MODS[0].items[0][2])}
   $('#lic').textContent=DEMO()?'EDISI DEMO':'LISENSI LENGKAP';$('#lic').className='lic'+(DEMO()?'':' full');
   $('#nav').innerHTML=MODS.map(m=>`<div class="mod"><h6>${m.g}${m.soon?' · segera':''}</h6>${m.items.map(i=>`<button class="nav${m.soon?' soon':''}" data-k="${i[0]}">${ico(i[2])}<span>${i[1]}</span></button>`).join('')}</div>`).join('');
   $$('.nav:not(.soon)').forEach(b=>b.onclick=()=>{this.cur=b.dataset.k;this.q='';$('#q').value='';this.render()});

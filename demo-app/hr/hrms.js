@@ -223,7 +223,7 @@ V.pengaturan=el=>{
 };
 
 V.harian=el=>{
-  const P=HR.P;let ds=el._ds||P.rep,tab=el._tab||'hari';
+  const P=HR.P;let ds=el._ds;if(!ds){ds=P.rep;const x=dt(ds);while(!HR.isWork(iso(x)))x.setDate(x.getDate()-1);ds=el._ds=iso(x)}let tab=el._tab||'hari';
   const SL={H:'Hadir',S:'Sakit',I:'Izin',C:'Cuti',A:'Alpa'},SC2={H:'ok',S:'warn',I:'info',C:'info',A:'bad'};
   const drawDay=()=>{const act=HR.active(),day=(HR.d.att[ds]=HR.d.att[ds]||{}),work=HR.isWork(ds);
    $('#bd').innerHTML=`<div class="tools"><button class="btn" id="pv">◀</button><input class="inp" type="date" id="dd" value="${ds}" style="width:auto"><button class="btn" id="nx">▶</button>${work?pill('Hari kerja','ok'):pill('Libur / akhir pekan','mut')}<span class="sp"></span><button class="btn" id="im">Impor CSV</button><button class="btn" id="ha">Hadirkan semua</button><button class="btn dng" id="ko">Kosongkan hari</button></div>
