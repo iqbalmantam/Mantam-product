@@ -63,3 +63,8 @@ svg.ch text{fill:var(--mute);font-size:11px}
 
 .btn{white-space:nowrap}.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
 textarea.inp{width:100%;resize:vertical;font-family:inherit}
+/* tabel lebar: kolom pertama tetap terlihat saat digeser */
+.tbl td:first-child{position:sticky;left:0;background:var(--panel);z-index:1;box-shadow:1px 0 0 var(--line)}.tbl th:first-child{left:0;z-index:3}.tbl tr:hover td:first-child{background:#eef7f8}[data-theme=dark] .tbl tr:hover td:first-child{background:#13294a}.tbl tfoot td:first-child{background:var(--bg)}
+/* layar kecil */
+@media(max-width:900px){.app{grid-template-columns:64px 1fr}.side{padding:12px 6px;align-items:center}.side .brand div,.side .mod h6,.side .nav span,.side .foot{display:none}.side .brand{padding:4px 0 12px}.nav{justify-content:center;padding:10px}.top{padding:12px 16px}.content{padding:16px}.search{display:none}.g2,.g3,.g32{grid-template-columns:1fr}.mod-grid{grid-template-columns:1fr}.cal{overflow:auto}}
+@media(max-width:640px){.g4{grid-template-columns:1fr}.form{grid-template-columns:1fr}.form .full{grid-column:1}.modal{width:calc(100vw - 24px)!important;max-width:none}.top h1{font-size:18px}.tools{flex-wrap:wrap}}

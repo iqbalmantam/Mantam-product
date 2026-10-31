@@ -6,6 +6,14 @@ const lockPage=(el,t,d)=>{el.innerHTML=`<div class="card" style="text-align:cent
 function pickBackup(name,valid,apply){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){return toast('Berkas bukan cadangan yang valid (JSON rusak)')}
   if(!valid(j))return toast('Berkas ini bukan cadangan '+name);
   modal('Pulihkan cadangan',`<p style="margin:0">Data ${esc(name)} saat ini akan <b>diganti</b> dengan isi berkas <b>${esc(f.name)}</b>. Tindakan ini tidak bisa dibatalkan. Cadangkan dulu data sekarang bila perlu.</p>`,{buttons:[{text:'Batal'},{text:'Pulihkan',cls:'dng',fn:()=>{apply(j);toast('Cadangan dipulihkan')}}]})};r.readAsText(f)};i.click()}
+/* input rupiah: tampil dengan pemisah ribuan, nilai .value tetap angka murni */
+const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v,#p_v,#n_p,#a_h,[id^=j_d],[id^=j_k],#k_g,#l_b,#f_gaji,#f_tun,[data-p=transport],[data-p=makan],[data-p=bjMax],[data-k=bonus],[data-k=lain],#p_j,#p_h,#d_v,#k_c,[data-t$=".t"]';
+(function(){const nd=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value'),disp=v=>{v=String(v??'').replace(/[^\d-]/g,'').replace(/(?!^)-/g,'');if(v===''||v==='-')return v;return (v[0]==='-'?'-':'')+Number(v.replace('-','')).toLocaleString('id-ID')};
+ function money(el){if(el.__m||el.tagName!=='INPUT')return;el.__m=1;const init=nd.get.call(el);el.type='text';el.inputMode='numeric';el.style.textAlign='right';
+  Object.defineProperty(el,'value',{configurable:true,get(){return nd.get.call(el).replace(/\./g,'').replace(/[^\d-]/g,'')},set(v){nd.set.call(el,disp(v))}});
+  nd.set.call(el,disp(init));el.addEventListener('input',()=>{const s=el.selectionStart,old=nd.get.call(el),n=disp(old);if(n!==old){const dots=(old.slice(0,s).match(/\./g)||[]).length;nd.set.call(el,n);const dn=(n.slice(0,s).match(/\./g)||[]).length;try{el.setSelectionRange(s+dn-dots,s+dn-dots)}catch(e){}}})}
+ const scan=r=>{if(r.nodeType!==1)return;if(r.matches&&r.matches(MONEY_SEL))money(r);r.querySelectorAll&&r.querySelectorAll(MONEY_SEL).forEach(money)};
+ new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(scan))).observe(document.documentElement,{childList:true,subtree:true})})();
 const V={};
 const CO={get(){try{return Store.get('company','')||(CONFIG.edition==='demo'?'PT Nusantara Karya Mandiri (contoh)':'Nama Perusahaan Anda')}catch(e){return 'Nama Perusahaan Anda'}},set(v){Store.set('company',v||'Nama Perusahaan Anda')}};
 document.addEventListener('change',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.co!==undefined){CO.set(t.value);const c=document.getElementById('cr');if(c)c.textContent=c.textContent.split(' · ')[0]+' · '+CO.get()}});
