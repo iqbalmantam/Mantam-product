@@ -1,5 +1,5 @@
 /* Mantam Suite · core: util, store, UI kit, grafik SVG */
-const CONFIG={edition:'demo',buyer:'',whatsapp:'6289623291732',appName:'Mantam Suite'};
+const CONFIG={edition:'demo',buyer:'',modules:null,whatsapp:'6289623291732',appName:'Mantam Suite'};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const DEMO=()=>CONFIG.edition==='demo';
 const fmt=n=>new Intl.NumberFormat('id-ID').format(Math.round(n||0));
