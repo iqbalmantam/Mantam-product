@@ -1,5 +1,5 @@
 /* Mantam Suite · core: util, store, UI kit, grafik SVG */
-const CONFIG={edition:'demo',buyer:'',modules:['hr'],whatsapp:'6289623291732',appName:'Mantam HR'};
+const CONFIG={edition:'demo',buyer:'',modules:['hr'],whatsapp:'6289623291732',appName:'Mantam HRMS'};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 function opts(arr,sel){return arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 const lockPage=(el,t,d)=>{el.innerHTML=`<div class="card" style="text-align:center;padding:50px"><h3>${t}</h3><p style="color:var(--mute)">${d}</p><button class="btn pri" id="u">Lihat edisi lengkap</button></div>`;$('#u').onclick=()=>lock(t)};
