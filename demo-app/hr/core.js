@@ -3,6 +3,9 @@ const CONFIG={edition:'demo',buyer:'',modules:['hr'],whatsapp:'6289623291732',ap
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 function opts(arr,sel){return arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 const lockPage=(el,t,d)=>{el.innerHTML=`<div class="card" style="text-align:center;padding:50px"><h3>${t}</h3><p style="color:var(--mute)">${d}</p><button class="btn pri" id="u">Lihat edisi lengkap</button></div>`;$('#u').onclick=()=>lock(t)};
+function pickBackup(name,valid,apply){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{let j;try{j=JSON.parse(r.result)}catch(e){return toast('Berkas bukan cadangan yang valid (JSON rusak)')}
+  if(!valid(j))return toast('Berkas ini bukan cadangan '+name);
+  modal('Pulihkan cadangan',`<p style="margin:0">Data ${esc(name)} saat ini akan <b>diganti</b> dengan isi berkas <b>${esc(f.name)}</b>. Tindakan ini tidak bisa dibatalkan. Cadangkan dulu data sekarang bila perlu.</p>`,{buttons:[{text:'Batal'},{text:'Pulihkan',cls:'dng',fn:()=>{apply(j);toast('Cadangan dipulihkan')}}]})};r.readAsText(f)};i.click()}
 const V={};
 const CO={get(){try{return Store.get('company','')||(CONFIG.edition==='demo'?'PT Nusantara Karya Mandiri (contoh)':'Nama Perusahaan Anda')}catch(e){return 'Nama Perusahaan Anda'}},set(v){Store.set('company',v||'Nama Perusahaan Anda')}};
 document.addEventListener('change',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.co!==undefined){CO.set(t.value);const c=document.getElementById('cr');if(c)c.textContent=c.textContent.split(' · ')[0]+' · '+CO.get()}});
