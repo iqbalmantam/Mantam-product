@@ -1,7 +1,7 @@
 /* Mantam Suite · modul HRMS: mesin payroll + tampilan */
 const HR={d:null,P:null,
  init(){
-  const saved=Store.get('hr',null),ver=2;
+  const saved=Store.get('hr',null),ver=3;
   if(saved&&saved.ver===ver&&saved.edition===CONFIG.edition){this.d=saved.d;this.P=saved.P;return}
   this.reset();
  },
@@ -11,11 +11,22 @@ const HR={d:null,P:null,
   this.d={emps:S.emps,cuti:S.cuti,latih:S.latih,low:S.low,cand:S.cand,depts:S.depts};
   this.P={company:'PT Nusantara Karya Mandiri (contoh)',bulan:10,tahun:2026,hariKerja:22,jam:173,mult:1.75,transport:25000,makan:30000,rep:'2026-10-31',jatah:12,bjPct:.05,bjMax:6e6,
    bpjs:S.bpjs,ptkp:S.ptkp,bracket:S.bracket,ter:S.ter,grade:S.grade,rating:S.rating,kpiN:S.kpiN,kpiW:S.kpiW,box:S.box,hol:S.hol,
-   thrH:85,thrM:70,potH:4,potM:3};
+   thrH:85,thrM:70,potH:4,potM:3,jamMasuk:'08:00',jamPulang:'17:00',telat:10};
+  this.seedAtt();
   this.save();
  },
- blank(){this.d.emps=[];this.d.cuti=[];this.d.latih=[];this.d.low=[];this.d.cand=[];this.save()},
- save(){Store.set('hr',{ver:2,edition:CONFIG.edition,d:this.d,P:this.P})},
+ blank(){this.d.att={};this.d.emps=[];this.d.cuti=[];this.d.latih=[];this.d.low=[];this.d.cand=[];this.save()},
+ save(){Store.set('hr',{ver:3,edition:CONFIG.edition,d:this.d,P:this.P})},
+ tmin(t){const [a,b]=String(t||'0:0').split(':');return (+a||0)*60+(+b||0)},
+ mm(n){return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')},
+ isWork(ds){const d=dt(ds),w=d.getDay();return w>0&&w<6&&!this.P.hol.includes(ds)},
+ leaveOn(id,ds){return this.d.cuti.some(c=>c.id===id&&c.status==='Disetujui'&&c.mulai<=ds&&c.selesai>=ds)},
+ seedAtt(){const P=this.P,att=this.d.att={},days=[];for(let d=new Date(P.tahun,P.bulan-1,1);d.getMonth()===P.bulan-1;d.setDate(d.getDate()+1)){const s=iso(d);if(this.isWork(s)&&s<=P.rep)days.push(s)}
+  this.d.emps.forEach((e,ei)=>{if(e.st==='Resign')return;const a=e.abs,rest=[['S',a.sakit],['I',a.izin],['C',a.cuti],['A',a.alpa]],slots=days.map((_,i)=>i),pick=[];let k=(ei*7+3)%days.length;rest.forEach(([s,n])=>{for(let j=0;j<n;j++){while(pick.some(x=>x[0]===k))k=(k+5)%days.length;pick.push([k,s]);k=(k+5)%days.length}});
+   let lem=a.lembur;days.forEach((ds,i)=>{const p=pick.find(x=>x[0]===i);(att[ds]=att[ds]||{})[e.id]=p?{s:p[1]}:(()=>{let ex=0;if(lem>0){ex=Math.min(lem,2);lem-=ex}const late=(ei+i)%9===0?'08:'+String(12+(i%5)*3):'07:'+String(50+(i%9));return {s:'H',in:late,out:this.mm(this.tmin(P.jamPulang)+ex*60+(i%4))}})()})})},
+ recap(bln,thn){const P=this.P,r={};this.d.emps.forEach(e=>r[e.id]={hadir:0,sakit:0,izin:0,cuti:0,alpa:0,telat:0,lembur:0,kosong:0});const keys=Object.keys(this.d.att||{}).filter(k=>+k.slice(0,4)===thn&&+k.slice(5,7)===bln);
+  keys.forEach(ds=>this.d.emps.forEach(e=>{const x=this.d.att[ds][e.id];if(!x||!r[e.id])return;const R=r[e.id];if(x.s==='H'){R.hadir++;if(x.in&&this.tmin(x.in)>this.tmin(P.jamMasuk)+P.telat)R.telat++;if(x.out){const ex=Math.max(0,this.tmin(x.out)-this.tmin(P.jamPulang));R.lembur+=Math.floor(ex/30)/2}}else if(x.s==='S')R.sakit++;else if(x.s==='I')R.izin++;else if(x.s==='C')R.cuti++;else if(x.s==='A')R.alpa++}));
+  this.d.emps.forEach(e=>{if(e.st==='Resign')return;let n=0;for(let d=new Date(thn,bln-1,1);d.getMonth()===bln-1;d.setDate(d.getDate()+1)){const s=iso(d);if(this.isWork(s)&&s<=P.rep&&!(this.d.att[s]&&this.d.att[s][e.id]))n++}r[e.id].kosong=n});return r},
  workdays(y,m){const h=new Set(this.P.hol);let n=0;for(let d=new Date(y,m-1,1);d.getMonth()===m-1;d.setDate(d.getDate()+1)){const w=d.getDay();if(w&&w<6&&!h.has(iso(d)))n++}return n},
  key(){return this.P.tahun+'-'+this.P.bulan},
  setPeriod(bulan,tahun){const P=this.P,old=this.key();P.hk=P.hk||{};P.hk[old]=P.hariKerja;
@@ -55,9 +66,8 @@ const HR={d:null,P:null,
 const ST_C={Tetap:'ok',Kontrak:'info',Probation:'warn',Magang:'warn',Resign:'bad'};
 const DEPTS=()=>HR.d.depts;
 function empOptions(sel){return HR.d.emps.map(e=>`<option value="${e.id}" ${e.id===sel?'selected':''}>${e.id} · ${esc(e.nama)}</option>`).join('')}
-function opts(arr,sel){return arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 
-const V={}; /* tampilan */
+/* V dipindah ke core.js */ /* tampilan */
 V.dashboard=el=>{
   const pay=HR.pay(),act=HR.active(),P=HR.P,sum=k=>pay.reduce((s,x)=>s+x.c[k],0),res=HR.d.emps.filter(e=>e.st==='Resign').length;
   const kon=act.filter(e=>e.k1&&dt(e.k1)>=dt(P.rep)&&dt(e.k1)<=new Date(dt(P.rep).getTime()+60*864e5));
@@ -106,10 +116,10 @@ V.absensi=el=>{
 };
 V.payroll=el=>{
   const P=HR.P,pay=HR.pay(),sum=k=>pay.reduce((s,x)=>s+x.c[k],0);
-  el.innerHTML=`<div class="tools"><select class="sel" id="pb">${MN.map((m,i)=>`<option value="${i+1}" ${i+1===P.bulan?'selected':''}>${m}</option>`).join('')}</select><select class="sel" id="pt">${[2025,2026,2027].map(y=>`<option ${y===P.tahun?'selected':''}>${y}</option>`).join('')}</select>${P.bulan>=12?pill('PPh 21 progresif (masa pajak terakhir)','info'):pill('PPh 21 metode TER','info')}<span class="sp"></span><button class="btn" id="ex">${ico('down')} Ekspor CSV</button><button class="btn pri" id="sl">${ico('file')} Slip gaji</button></div>
+  el.innerHTML=`<div class="tools"><select class="sel" id="pb">${MN.map((m,i)=>`<option value="${i+1}" ${i+1===P.bulan?'selected':''}>${m}</option>`).join('')}</select><select class="sel" id="pt">${[2025,2026,2027].map(y=>`<option ${y===P.tahun?'selected':''}>${y}</option>`).join('')}</select>${P.bulan>=12?pill('PPh 21 progresif (masa pajak terakhir)','info'):pill('PPh 21 metode TER','info')}<span class="sp"></span><button class="btn" id="ex">${ico('down')} Ekspor CSV</button><button class="btn" id="sa">${ico('file')} Cetak semua slip (PDF)</button><button class="btn pri" id="sl">${ico('file')} Slip gaji</button></div>
   <div class="grid g4" style="margin-bottom:14px"><div class="card kpi"><small>Total pendapatan bruto</small><b>${juta(sum('pend'))}</b></div><div class="card kpi"><small>Total PPh 21</small><b>${juta(sum('O'))}</b></div><div class="card kpi"><small>BPJS perusahaan</small><b>${juta(sum('U'))}</b></div><div class="card kpi"><small>Gaji bersih (THP)</small><b>${juta(sum('T'))}</b></div></div>
   <div class="tbl" style="max-height:calc(100vh - 330px)" id="tb"></div>`;
-  $('#ex').classList.toggle('lk',DEMO());$('#sl').classList.toggle('lk',DEMO());
+  $('#ex').classList.toggle('lk',DEMO());$('#sl').classList.toggle('lk',DEMO());$('#sa').classList.toggle('lk',DEMO());$('#sa').onclick=()=>printAllSlips();
   $('#pb').onchange=e=>{const b=+e.target.value;if(DEMO()&&b>=12){lock('PPh 21 progresif Desember');e.target.value=P.bulan;return}HR.setPeriod(b,P.tahun);App.render()};$('#pt').onchange=e=>{HR.setPeriod(P.bulan,+e.target.value);App.render()};
   const col=(h,k,o={})=>({h,n:1,v:r=>r.c[k],r:r=>(o.b?'<b>':'')+fmt(r.c[k])+(o.b?'</b>':''),sum:1});
   dataTable($('#tb'),[{h:'Karyawan',v:r=>r.e.nama,r:r=>`<span class="av">${initials(r.e.nama)}</span>${esc(r.e.nama)}`},{h:'PTKP',v:r=>r.e.ptkp,r:r=>`${r.e.ptkp} <small style="color:var(--mute)">${r.c.cat}</small>`},col('Gaji pokok','F'),col('Tunjangan','G'),{h:'Transport+makan',n:1,v:r=>r.c.H+r.c.I,r:r=>fmt(r.c.H+r.c.I),sum:1},col('Lembur','J'),col('Bonus','K'),col('Pot. alpa','L'),col('PPh 21','O'),col('BPJS karyawan','Pj',{}),col('THP','T',{b:1}),col('Biaya perusahaan','V')].map((c,i)=>i===9?{h:'BPJS karyawan',n:1,v:r=>r.c.Pj+r.c.Q+r.c.R,r:r=>fmt(r.c.Pj+r.c.Q+r.c.R),sum:1}:c),pay,{total:1,click:r=>slipView(r)});
@@ -119,10 +129,10 @@ V.payroll=el=>{
 function slipView(r){
   if(DEMO())return lock('Slip gaji siap cetak');
   const {e,c}=r,P=HR.P,row=(a,b)=>`<tr><td>${a}</td><td style="text-align:right">${fmt(b)}</td></tr>`;
-  const m=modal('Slip gaji',`<div class="slip" id="slipbox"><h2>${esc(P.company)}</h2><div style="color:#64748b;margin-bottom:12px">SLIP GAJI · ${MN[P.bulan-1]} ${P.tahun}</div><table style="margin-bottom:14px"><tr><td><b>${esc(e.nama)}</b> (${e.id})</td><td>${esc(e.jab)} · ${e.grade}</td></tr><tr><td>${e.dept}</td><td>PTKP ${e.ptkp} · masa kerja ${HR.masa(e).toFixed(1).replace('.',',')} thn</td></tr></table>
+  const m=modal('Slip gaji',`<div class="slip" id="slipbox"><h2>${esc(CO.get())}</h2><div style="color:#64748b;margin-bottom:12px">SLIP GAJI · ${MN[P.bulan-1]} ${P.tahun}</div><table style="margin-bottom:14px"><tr><td><b>${esc(e.nama)}</b> (${e.id})</td><td>${esc(e.jab)} · ${e.grade}</td></tr><tr><td>${e.dept}</td><td>PTKP ${e.ptkp} · masa kerja ${HR.masa(e).toFixed(1).replace('.',',')} thn</td></tr></table>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px"><div><b>PENDAPATAN</b><table>${row('Gaji pokok',c.F)}${row('Tunjangan tetap',c.G)}${row('Transport',c.H)}${row('Makan',c.I)}${row('Lembur',c.J)}${row('Bonus',c.K)}<tr><td><b>Jumlah</b></td><td style="text-align:right"><b>${fmt(c.pend)}</b></td></tr></table></div>
   <div><b>POTONGAN</b><table>${row('Alpa',c.L)}${row('PPh 21',c.O)}${row('BPJS JHT',c.Pj)}${row('BPJS JP',c.Q)}${row('BPJS Kesehatan',c.R)}${row('Potongan lain',c.S)}<tr><td><b>Jumlah</b></td><td style="text-align:right"><b>${fmt(c.L+c.O+c.Pj+c.Q+c.R+c.S)}</b></td></tr></table></div></div>
-  <div style="margin-top:16px;padding:12px 16px;background:#0b1a30;color:#fff;border-radius:10px;display:flex;justify-content:space-between"><b>GAJI BERSIH DITERIMA</b><b style="font-size:18px">${idr(c.T)}</b></div><p style="font-size:11px;color:#64748b;margin-top:12px">BPJS ditanggung perusahaan ${idr(c.U)} · Total biaya perusahaan ${idr(c.V)}. Dokumen ini dihasilkan otomatis.</p></div>`,{w:'780px',buttons:[{text:'Tutup'},{text:'Cetak',cls:'pri',fn:()=>{window.print();return false}}]});
+  <div style="margin-top:16px;padding:12px 16px;background:#0b1a30;color:#fff;border-radius:10px;display:flex;justify-content:space-between"><b>GAJI BERSIH DITERIMA</b><b style="font-size:18px">${idr(c.T)}</b></div><p style="font-size:11px;color:#64748b;margin-top:12px">BPJS ditanggung perusahaan ${idr(c.U)} · Total biaya perusahaan ${idr(c.V)}. Dokumen ini dihasilkan otomatis.</p></div>`,{w:'780px',buttons:[{text:'Tutup'},{text:'Cetak / PDF',cls:'pri',fn:()=>{printSlip(r);return false}}]});
 }
 const nmE=id=>(HR.d.emps.find(e=>e.id===id)||{}).nama||id;
 function cutiForm(c,done){
@@ -198,7 +208,7 @@ V.pelatihan=el=>{
 V.pengaturan=el=>{
   const P=HR.P;
   el.innerHTML=`<div class="note">Tarif BPJS, PTKP, dan tabel TER adalah nilai acuan yang dapat berubah. Verifikasi dengan peraturan resmi (PP 58/2023, PMK 168/2023, ketentuan BPJS terbaru) sebelum dipakai untuk penggajian nyata.</div>
-  <div class="grid g2"><div class="card"><h3>Perusahaan & periode</h3><div class="form"><div class="full"><label>Nama perusahaan</label><input class="inp" data-p="company" value="${esc(P.company)}"></div><div><label>Hari kerja bulan ini</label><input class="inp" type="number" data-p="hariKerja" value="${P.hariKerja}"></div><div><label>Pembagi upah per jam</label><input class="inp" type="number" data-p="jam" value="${P.jam}"></div><div><label>Pengali lembur rata-rata</label><input class="inp" type="number" step=".05" data-p="mult" value="${P.mult}"></div><div><label>Jatah cuti tahunan</label><input class="inp" type="number" data-p="jatah" value="${P.jatah}"></div><div><label>Tunjangan transport / hari hadir</label><input class="inp" type="number" data-p="transport" value="${P.transport}"></div><div><label>Tunjangan makan / hari hadir</label><input class="inp" type="number" data-p="makan" value="${P.makan}"></div><div><label>Biaya jabatan (%)</label><input class="inp" type="number" step=".01" data-p="bjPct" value="${P.bjPct}"></div><div><label>Biaya jabatan maks / tahun</label><input class="inp" type="number" data-p="bjMax" value="${P.bjMax}"></div></div></div>
+  <div class="grid g2"><div class="card"><h3>Perusahaan & periode</h3><div class="form"><div class="full"><label>Nama perusahaan</label><input class="inp" data-co value="${esc(CO.get())}"></div><div><label>Hari kerja bulan ini</label><input class="inp" type="number" data-p="hariKerja" value="${P.hariKerja}"></div><div><label>Pembagi upah per jam</label><input class="inp" type="number" data-p="jam" value="${P.jam}"></div><div><label>Pengali lembur rata-rata</label><input class="inp" type="number" step=".05" data-p="mult" value="${P.mult}"></div><div><label>Jatah cuti tahunan</label><input class="inp" type="number" data-p="jatah" value="${P.jatah}"></div><div><label>Tunjangan transport / hari hadir</label><input class="inp" type="number" data-p="transport" value="${P.transport}"></div><div><label>Tunjangan makan / hari hadir</label><input class="inp" type="number" data-p="makan" value="${P.makan}"></div><div><label>Biaya jabatan (%)</label><input class="inp" type="number" step=".01" data-p="bjPct" value="${P.bjPct}"></div><div><label>Biaya jabatan maks / tahun</label><input class="inp" type="number" data-p="bjMax" value="${P.bjMax}"></div><div><label>Jam masuk</label><input class="inp" type="time" data-p="jamMasuk" value="${P.jamMasuk}"></div><div><label>Jam pulang (lembur dihitung setelahnya)</label><input class="inp" type="time" data-p="jamPulang" value="${P.jamPulang}"></div><div><label>Toleransi terlambat (menit)</label><input class="inp" type="number" data-p="telat" value="${P.telat}"></div></div></div>
   <div class="card"><h3>Tarif BPJS</h3><div class="tbl"><table><thead><tr><th>Komponen</th><th class="n">Perusahaan</th><th class="n">Karyawan</th><th class="n">Batas upah</th></tr></thead><tbody>${P.bpjs.map((b,i)=>`<tr><td>${b[0]}</td><td class="n"><input class="inp" style="width:80px;text-align:right" type="number" step=".0001" data-b="${i}.1" value="${b[1]}"></td><td class="n"><input class="inp" style="width:80px;text-align:right" type="number" step=".0001" data-b="${i}.2" value="${b[2]}"></td><td class="n"><input class="inp" style="width:130px;text-align:right" type="number" data-b="${i}.3" value="${b[3]}"></td></tr>`).join('')}</tbody></table></div><p style="color:var(--mute);font-size:12px">Batas 9.999.999.999 = tanpa batas. Tarif JKK mengikuti kelas risiko usaha.</p>
   <h3 style="margin-top:14px">PTKP & kategori TER</h3><div class="tbl"><table><thead><tr><th>Status</th><th class="n">PTKP / tahun</th><th>Kategori</th></tr></thead><tbody>${P.ptkp.map(p=>`<tr><td>${p[0]}</td><td class="n">${fmt(p[1])}</td><td>${p[2]}</td></tr>`).join('')}</tbody></table></div></div></div>
   <div class="card" style="margin-top:16px"><h3>Data & aplikasi</h3><h3 style="margin-top:16px">Departemen</h3><div class="form"><div class="full"><label>Daftar departemen (pisahkan dengan koma)</label><input class="inp" id="dp" value="${esc(HR.d.depts.join(', '))}"></div></div><div class="tools" style="margin-top:12px"><button class="btn" id="bk">${ico('down')} Cadangkan data (JSON)</button><button class="btn" id="bl">Mulai dari data kosong</button><button class="btn dng" id="rs">Kembalikan data contoh</button><span class="sp"></span><button class="btn" id="th">${ico('moon')} Tema gelap/terang</button></div><p style="color:var(--mute);margin:8px 0 0">Data tersimpan di komputer ini saja. Edisi: <b>${DEMO()?'Demo (terbatas)':'Lengkap · '+esc(CONFIG.buyer)}</b>. Produk diberikan sebagaimana adanya, tanpa layanan garansi, pembaruan, maupun dukungan.</p></div>`;
@@ -209,4 +219,24 @@ V.pengaturan=el=>{
   $('#th').onclick=()=>App.theme();
   $('#dp').onchange=e=>{const l=e.target.value.split(',').map(x=>x.trim()).filter(Boolean);if(!l.length){toast('Minimal satu departemen');return}HR.d.depts=l;HR.save();toast('Departemen disimpan')};
   $('#bl').onclick=gate('Mulai dari data kosong',()=>{if(confirm('Semua karyawan, cuti, rekrutmen, dan pelatihan contoh dihapus; pengaturan tarif tetap. Lanjutkan?')){HR.blank();App.cur='karyawan';App.render();toast('Data dikosongkan. Tambahkan karyawan Anda.')}});
+};
+
+V.harian=el=>{
+  const P=HR.P;let ds=el._ds||P.rep,tab=el._tab||'hari';
+  const SL={H:'Hadir',S:'Sakit',I:'Izin',C:'Cuti',A:'Alpa'},SC2={H:'ok',S:'warn',I:'info',C:'info',A:'bad'};
+  const drawDay=()=>{const act=HR.active(),day=(HR.d.att[ds]=HR.d.att[ds]||{}),work=HR.isWork(ds);
+   $('#bd').innerHTML=`<div class="tools"><button class="btn" id="pv">◀</button><input class="inp" type="date" id="dd" value="${ds}" style="width:auto"><button class="btn" id="nx">▶</button>${work?pill('Hari kerja','ok'):pill('Libur / akhir pekan','mut')}<span class="sp"></span><button class="btn" id="ha">Hadirkan semua</button><button class="btn dng" id="ko">Kosongkan hari</button></div>
+   <div class="tbl" style="max-height:calc(100vh - 260px)"><table><thead><tr><th>Karyawan</th><th>Dept</th><th>Status</th><th>Masuk</th><th>Pulang</th><th class="n">Terlambat</th><th class="n">Lembur (jam)</th></tr></thead><tbody>${act.map(e=>{const x=day[e.id]||{},lv=!x.s&&HR.leaveOn(e.id,ds)&&work,s=x.s||(lv?'C':'');const late=s==='H'&&x.in?Math.max(0,HR.tmin(x.in)-HR.tmin(P.jamMasuk)-P.telat):0,ex=s==='H'&&x.out?Math.floor(Math.max(0,HR.tmin(x.out)-HR.tmin(P.jamPulang))/30)/2:0;
+    return `<tr><td><span class="av">${initials(e.nama)}</span>${esc(e.nama)}</td><td>${esc(e.dept)}</td><td><select class="sel" data-e="${e.id}" data-f="s"><option value="">—</option>${Object.entries(SL).map(([k,v])=>`<option value="${k}" ${s===k?'selected':''}>${v}</option>`).join('')}</select>${lv?' <small style="color:var(--mute)">cuti disetujui</small>':''}</td><td><input class="inp" type="time" data-e="${e.id}" data-f="in" value="${x.in||''}" ${s==='H'?'':'disabled'}></td><td><input class="inp" type="time" data-e="${e.id}" data-f="out" value="${x.out||''}" ${s==='H'?'':'disabled'}></td><td class="n">${late?pill(late+' mnt','warn'):'-'}</td><td class="n">${ex||'-'}</td></tr>`}).join('')||'<tr><td colspan="7" class="empty">Belum ada karyawan</td></tr>'}</tbody></table></div>`;
+   const go=n=>{const d=dt(ds);d.setDate(d.getDate()+n);ds=el._ds=iso(d);drawDay()};
+   $('#pv').onclick=()=>go(-1);$('#nx').onclick=()=>go(1);$('#dd').onchange=e=>{if(e.target.value){ds=el._ds=e.target.value;drawDay()}};
+   $$('[data-e]',el).forEach(i=>i.onchange=()=>{const x=day[i.dataset.e]=day[i.dataset.e]||{};if(i.dataset.f==='s'){x.s=i.value;if(!i.value)delete day[i.dataset.e];else if(i.value==='H'){x.in=x.in||P.jamMasuk;x.out=x.out||P.jamPulang}else{delete x.in;delete x.out}}else x[i.dataset.f]=i.value;HR.save();drawDay()});
+   $('#ha').onclick=()=>{HR.active().forEach(e=>{if(HR.leaveOn(e.id,ds)&&!(day[e.id]&&day[e.id].s))day[e.id]={s:'C'};else if(!(day[e.id]&&day[e.id].s))day[e.id]={s:'H',in:P.jamMasuk,out:P.jamPulang}});HR.save();drawDay();toast('Semua karyawan yang belum diisi ditandai hadir')};
+   $('#ko').onclick=()=>{if(!confirm('Kosongkan semua catatan pada tanggal ini?'))return;delete HR.d.att[ds];HR.save();drawDay()}};
+  const drawRec=()=>{const R=HR.recap(P.bulan,P.tahun);
+   $('#bd').innerHTML=`<div class="note" style="background:rgba(14,165,164,.08);border-color:rgba(14,165,164,.3);color:var(--brand)">Rekap kehadiran <b>${MN[P.bulan-1]} ${P.tahun}</b> dari catatan harian. Terapkan ke payroll untuk mengisi Hadir, Sakit, Izin, Cuti, Alpa, dan Lembur (bonus dan potongan lain tidak berubah). Kolom "Belum diisi" = hari kerja sampai tanggal laporan yang belum dicatat.</div><div class="tools"><span class="sp"></span><button class="btn pri ${DEMO()?'lk':''}" id="ap">Terapkan ke payroll</button></div><div class="tbl" id="tb"></div>`;
+   dataTable($('#tb'),[{h:'Karyawan',v:e=>e.nama,r:e=>`<span class="av">${initials(e.nama)}</span>${esc(e.nama)}`},{h:'Hadir',n:1,v:e=>R[e.id].hadir},{h:'Sakit',n:1,v:e=>R[e.id].sakit},{h:'Izin',n:1,v:e=>R[e.id].izin},{h:'Cuti',n:1,v:e=>R[e.id].cuti},{h:'Alpa',n:1,v:e=>R[e.id].alpa},{h:'Terlambat (x)',n:1,v:e=>R[e.id].telat},{h:'Lembur (jam)',n:1,v:e=>R[e.id].lembur},{h:'Belum diisi',n:1,v:e=>R[e.id].kosong,r:e=>R[e.id].kosong?pill(R[e.id].kosong+' hari','warn'):'-'}],HR.active());
+   $('#ap').onclick=gate('Terapkan absensi harian ke payroll',()=>{HR.active().forEach(e=>{const r=R[e.id];Object.assign(e.abs,{hadir:r.hadir,sakit:r.sakit,izin:r.izin,cuti:r.cuti,alpa:r.alpa,lembur:r.lembur})});HR.save();toast('Rekap diterapkan ke payroll '+MN[P.bulan-1]+' '+P.tahun)})};
+  el.innerHTML=`<div class="tabs"><button data-t="hari" class="${tab==='hari'?'on':''}">Catat harian</button><button data-t="rekap" class="${tab==='rekap'?'on':''}">Rekap bulanan</button></div><div id="bd"></div>`;
+  $$('.tabs button',el).forEach(b=>b.onclick=()=>{el._tab=b.dataset.t;V.harian(el)});tab==='hari'?drawDay():drawRec();
 };

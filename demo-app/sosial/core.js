@@ -1,6 +1,11 @@
 /* Mantam Suite · core: util, store, UI kit, grafik SVG */
-const CONFIG={edition:'demo',buyer:'',modules:null,whatsapp:'6289623291732',appName:'Mantam Suite'};
+const CONFIG={edition:'demo',buyer:'',modules:['sosial'],whatsapp:'6289623291732',appName:'Mantam Sosmed'};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+function opts(arr,sel){return arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
+const lockPage=(el,t,d)=>{el.innerHTML=`<div class="card" style="text-align:center;padding:50px"><h3>${t}</h3><p style="color:var(--mute)">${d}</p><button class="btn pri" id="u">Lihat edisi lengkap</button></div>`;$('#u').onclick=()=>lock(t)};
+const V={};
+const CO={get(){try{return Store.get('company','')||(CONFIG.edition==='demo'?'PT Nusantara Karya Mandiri (contoh)':'Nama Perusahaan Anda')}catch(e){return 'Nama Perusahaan Anda'}},set(v){Store.set('company',v||'Nama Perusahaan Anda')}};
+document.addEventListener('change',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.co!==undefined){CO.set(t.value);const c=document.getElementById('cr');if(c)c.textContent=c.textContent.split(' · ')[0]+' · '+CO.get()}});
 const DEMO=()=>CONFIG.edition==='demo';
 const fmt=n=>new Intl.NumberFormat('id-ID').format(Math.round(n||0));
 const idr=n=>'Rp '+fmt(n);
@@ -53,7 +58,7 @@ function modal(title,html,opts={}){
   m.close=close;return m;
 }
 function lock(feature){
-  const m=modal('Fitur versi lengkap',`<p style="margin:0 0 10px"><b>${esc(feature)}</b> hanya tersedia di versi lengkap Mantam Suite.</p><p style="margin:0;color:var(--mute)">Versi demo ini memakai data simulasi dengan kapasitas dan fitur terbatas. Pesan versi lengkap lewat WhatsApp.</p>`,{w:'460px',buttons:[{text:'Nanti saja'},{text:'Pesan via WhatsApp',cls:'pri',fn:()=>{window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Halo, saya tertarik Mantam Suite versi lengkap ('+feature+')')}`,'_blank')}}]});
+  const m=modal('Fitur versi lengkap',`<p style="margin:0 0 10px"><b>${esc(feature)}</b> hanya tersedia di versi lengkap ${esc(CONFIG.appName)}.</p><p style="margin:0;color:var(--mute)">Versi demo ini memakai data simulasi dengan kapasitas dan fitur terbatas. Pesan versi lengkap lewat WhatsApp.</p>`,{w:'460px',buttons:[{text:'Nanti saja'},{text:'Pesan via WhatsApp',cls:'pri',fn:()=>{window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Halo, saya tertarik '+CONFIG.appName+' versi lengkap ('+feature+')')}`,'_blank')}}]});
 }
 const gate=(feature,fn)=>(...a)=>DEMO()?lock(feature):fn(...a);
 function download(name,text,mime='text/csv;charset=utf-8'){const b=new Blob(['﻿'+text],{type:mime});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),600)}
