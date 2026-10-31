@@ -1,4 +1,4 @@
-/* Mantam Suite · modul Finance & Accounting */
+/* Aplikasi bisnis · modul Finance & Accounting */
 const FIN={d:null,
  init(){const s=Store.get('fin',null);if(s&&s.ver===2&&s.edition===CONFIG.edition){this.d=s.d;return}this.reset()},
  reset(){this.d=JSON.parse(JSON.stringify(DEMO()?FIN_DEMO:FIN_FULL));this.d.sel=this.d.bulan;this.d.lock='';const o=this.sums(this.start(1),this.end(this.d.bulan),false);this.d.budget={};this.d.coa.forEach(a=>{if(['Pendapatan','HPP','Beban'].includes(a.t)){const v=this.bal(o,a.k);if(v)this.d.budget[a.k]=Math.round(v/this.d.bulan*1.05/1e5)*1e5}});this.save()},
@@ -201,7 +201,7 @@ V.f_pengaturan=el=>{
   const parse=t=>t.split('\n').map(x=>x.split(';')).filter(x=>x[0].trim()).map(x=>({n:x[0].trim(),t:+x[1]||30}));
   $('#cu').onchange=e=>{d.cust=parse(e.target.value);FIN.save();toast('Pelanggan disimpan')};$('#su').onchange=e=>{d.supp=parse(e.target.value);FIN.save();toast('Pemasok disimpan')};
   $('#ac').onclick=()=>{if(DEMO())return lock('Tambah akun');modal('Tambah akun',`<div class="form"><div><label>Kode (angka)</label><input class="inp" type="number" id="a_k"></div><div><label>Nama akun</label><input class="inp" id="a_n"></div><div><label>Tipe</label><select class="sel" id="a_t">${opts(['Aset','Liabilitas','Ekuitas','Pendapatan','HPP','Beban','Lain-lain'])}</select></div><div><label>Kelompok</label><select class="sel" id="a_g">${opts(['Aset Lancar','Aset Tetap','Liabilitas Jangka Pendek','Liabilitas Jangka Panjang','Ekuitas','Pendapatan','HPP','Beban Operasional','Pendapatan/Beban Lain'])}</select></div></div>`,{buttons:[{text:'Batal'},{text:'Simpan',cls:'pri',fn:()=>{const k=+$('#a_k').value,n=$('#a_n').value.trim();if(!k||!n){toast('Kode dan nama wajib diisi');return false}if(d.coa.some(a=>a.k===k)){toast('Kode sudah ada');return false}d.coa.push({k,n,t:$('#a_t').value,g:$('#a_g').value});d.coa.sort((a,b)=>a.k-b.k);FIN.save();V.f_pengaturan(el);toast('Akun ditambahkan')}}]})};
-  $('#bk').onclick=gate('Cadangan data',()=>download('mantam-finance-cadangan.json',JSON.stringify(FIN.d),'application/json'));
+  $('#bk').onclick=gate('Cadangan data',()=>download('finance-cadangan.json',JSON.stringify(FIN.d),'application/json'));
   $('#bl').onclick=gate('Mulai dari data kosong',()=>{if(confirm('Semua jurnal, faktur, pembayaran, dan aset contoh dihapus. Isi saldo awal setelahnya. Lanjutkan?')){FIN.blank();App.render();toast('Data dikosongkan. Isi saldo awal di sini.')}});
   $('#rs').onclick=()=>{if(confirm('Semua perubahan akan hilang. Lanjutkan?')){FIN.reset();App.render();toast('Data contoh dikembalikan')}};
 };

@@ -1,5 +1,5 @@
-/* Mantam Suite · core: util, store, UI kit, grafik SVG */
-const CONFIG={edition:'demo',buyer:'',modules:['fin'],whatsapp:'6289623291732',appName:'Mantam Finance'};
+/* Aplikasi bisnis · core: util, store, UI kit, grafik SVG */
+const CONFIG={edition:'demo',buyer:'',modules:['fin'],whatsapp:'6289623291732',appName:'Finance'};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 function opts(arr,sel){return arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 const lockPage=(el,t,d)=>{el.innerHTML=`<div class="card" style="text-align:center;padding:50px"><h3>${t}</h3><p style="color:var(--mute)">${d}</p><button class="btn pri" id="u">Lihat edisi lengkap</button></div>`;$('#u').onclick=()=>lock(t)};
@@ -22,9 +22,9 @@ const initials=n=>n.split(' ').slice(0,2).map(x=>x[0]).join('').toUpperCase();
 /* ---------- penyimpanan lokal (localStorage, cadangan memori) ---------- */
 const Store={
   mem:{},
-  get(k,def){try{const v=localStorage.getItem('mantam:'+k);return v?JSON.parse(v):(this.mem[k]??def)}catch(e){return this.mem[k]??def}},
-  set(k,v){this.mem[k]=v;try{localStorage.setItem('mantam:'+k,JSON.stringify(v))}catch(e){}},
-  del(k){delete this.mem[k];try{localStorage.removeItem('mantam:'+k)}catch(e){}}
+  get(k,def){try{const v=localStorage.getItem('app:'+k);return v?JSON.parse(v):(this.mem[k]??def)}catch(e){return this.mem[k]??def}},
+  set(k,v){this.mem[k]=v;try{localStorage.setItem('app:'+k,JSON.stringify(v))}catch(e){}},
+  del(k){delete this.mem[k];try{localStorage.removeItem('app:'+k)}catch(e){}}
 };
 
 /* ---------- ikon ---------- */

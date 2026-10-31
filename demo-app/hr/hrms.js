@@ -1,4 +1,4 @@
-/* Mantam Suite · modul HRMS: mesin payroll + tampilan */
+/* Aplikasi bisnis · modul HRMS: mesin payroll + tampilan */
 const HR={d:null,P:null,
  init(){
   const saved=Store.get('hr',null),ver=3;
@@ -214,7 +214,7 @@ V.pengaturan=el=>{
   <div class="card" style="margin-top:16px"><h3>Data & aplikasi</h3><h3 style="margin-top:16px">Departemen</h3><div class="form"><div class="full"><label>Daftar departemen (pisahkan dengan koma)</label><input class="inp" id="dp" value="${esc(HR.d.depts.join(', '))}"></div></div><div class="tools" style="margin-top:12px"><button class="btn" id="bk">${ico('down')} Cadangkan data (JSON)</button><button class="btn" id="bl">Mulai dari data kosong</button><button class="btn dng" id="rs">Kembalikan data contoh</button><span class="sp"></span><button class="btn" id="th">${ico('moon')} Tema gelap/terang</button></div><p style="color:var(--mute);margin:8px 0 0">Data tersimpan di komputer ini saja. Edisi: <b>${DEMO()?'Demo (terbatas)':'Lengkap · '+esc(CONFIG.buyer)}</b>. Produk diberikan sebagaimana adanya, tanpa layanan garansi, pembaruan, maupun dukungan.</p></div>`;
   $$('[data-p]',el).forEach(i=>i.onchange=()=>{const k=i.dataset.p;P[k]=i.type==='number'?+i.value:i.value;HR.save();toast('Pengaturan disimpan')});
   $$('[data-b]',el).forEach(i=>i.onchange=()=>{const [a,b]=i.dataset.b.split('.').map(Number);P.bpjs[a][b]=+i.value;HR.save();toast('Tarif disimpan')});
-  $('#bk').onclick=gate('Cadangan data',()=>download('mantam-hrms-cadangan.json',JSON.stringify({d:HR.d,P:HR.P}),'application/json'));
+  $('#bk').onclick=gate('Cadangan data',()=>download('hrms-cadangan.json',JSON.stringify({d:HR.d,P:HR.P}),'application/json'));
   $('#rs').onclick=()=>{if(confirm('Semua perubahan akan hilang. Lanjutkan?')){HR.reset();App.render();toast('Data contoh dikembalikan')}};
   $('#th').onclick=()=>App.theme();
   $('#dp').onchange=e=>{const l=e.target.value.split(',').map(x=>x.trim()).filter(Boolean);if(!l.length){toast('Minimal satu departemen');return}HR.d.depts=l;HR.save();toast('Departemen disimpan')};

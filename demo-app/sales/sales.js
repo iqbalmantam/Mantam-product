@@ -1,4 +1,4 @@
-/* Mantam Suite · modul Sales & Marketing */
+/* Aplikasi bisnis · modul Sales & Marketing */
 const SAL={d:null,
  init(){const s=Store.get('sal',null);if(s&&s.ver===2&&s.edition===CONFIG.edition){this.d=s.d;return}this.reset()},
  reset(){this.d=JSON.parse(JSON.stringify(DEMO()?SAL_DEMO:SAL_FULL));const d=this.d;d.p.ppn=.11;d.p.valid=14;d.p.terms='Pembayaran 14 hari setelah faktur. Harga belum termasuk biaya lain yang disepakati.';const ST=['Disetujui','Terkirim','Draft','Ditolak','Terkirim','Disetujui'];d.quotes=d.cust.slice(0,6).map((c,i)=>({no:'QUO-'+String(i+1).padStart(4,'0'),d:iso(new Date(dt(d.rep).getTime()-(20-i*3)*864e5)),c:c.n,s:c.s,st:ST[i],note:'',lines:[{p:d.prods[i%d.prods.length].n,q:2+i,disc:i%3?0.05:0},...(i%2?[{p:d.prods[(i+1)%d.prods.length].n,q:1,disc:0}]:[])]}));this.save()},
@@ -152,7 +152,7 @@ V.s_pengaturan=el=>{
   $$('[data-t]',el).forEach(i=>i.onchange=()=>{const [k,f]=i.dataset.t.split('.'),t=SAL.d.team[+k];if(f==='n'){const nm=i.value.trim();if(!nm){toast('Nama wajib diisi');return}[SAL.d.trx,SAL.d.cust,SAL.d.leads,SAL.d.deals].forEach(L=>L.forEach(x=>{if(x.s===t.n)x.s=nm}));t.n=nm}else t[f]=f==='t'?+i.value:i.value;SAL.save();toast('Tim disimpan')});
   $$('[data-dt]',el).forEach(b=>b.onclick=()=>{if(SAL.d.team.length<2)return toast('Minimal satu sales');if(!confirm('Hapus sales ini dari tim? Transaksinya tetap tersimpan.'))return;SAL.d.team.splice(+b.dataset.dt,1);SAL.save();V.s_pengaturan(el)});
   $('#at').onclick=()=>{if(DEMO()&&SAL.d.team.length>=3)return lock('Sales lebih dari 3');SAL.d.team.push({n:'Sales Baru '+(SAL.d.team.length+1),w:SAL.d.wil[0],t:250000000});SAL.save();V.s_pengaturan(el)};
-  $('#bk').onclick=gate('Cadangan data',()=>download('mantam-sales-cadangan.json',JSON.stringify(SAL.d),'application/json'));
+  $('#bk').onclick=gate('Cadangan data',()=>download('sales-cadangan.json',JSON.stringify(SAL.d),'application/json'));
   $('#bl').onclick=gate('Mulai dari data kosong',()=>{if(confirm('Pelanggan, lead, peluang, penjualan, dan kampanye contoh dihapus; produk dan tim tetap. Lanjutkan?')){SAL.blank();App.cur='s_pelanggan';App.render();toast('Data dikosongkan. Tambahkan data Anda.')}});
   $('#rs').onclick=()=>{if(confirm('Semua perubahan akan hilang. Lanjutkan?')){SAL.reset();App.render();toast('Data contoh dikembalikan')}};
 };
