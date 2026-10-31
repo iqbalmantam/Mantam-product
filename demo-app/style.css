@@ -62,3 +62,4 @@ svg.ch text{fill:var(--mute);font-size:11px}
 @media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}.g32,.g3{grid-template-columns:1fr}}
 
 .btn{white-space:nowrap}.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+textarea.inp{width:100%;resize:vertical;font-family:inherit}

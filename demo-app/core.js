@@ -49,7 +49,7 @@ function modal(title,html,opts={}){
   document.body.appendChild(m);const close=()=>m.remove();
   m.querySelector('.x').onclick=close;m.addEventListener('mousedown',e=>{if(e.target===m)close()});
   const foot=m.querySelector('footer');
-  (opts.buttons||[]).forEach(b=>{const x=document.createElement('button');x.className='btn '+(b.cls||'');x.textContent=b.text;x.onclick=()=>{if(b.fn(m)!==false)close()};foot.appendChild(x)});
+  (opts.buttons||[]).forEach(b=>{const x=document.createElement('button');x.className='btn '+(b.cls||'');x.textContent=b.text;x.onclick=()=>{if(!b.fn||b.fn(m)!==false)close()};foot.appendChild(x)});
   m.close=close;return m;
 }
 function lock(feature){
@@ -95,3 +95,23 @@ function donut(el,labels,vals,o={}){
   el.innerHTML=`<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap"><svg viewBox="0 0 ${S} ${S}" width="${S}" height="${S}">${p}<text x="${c}" y="${c+2}" text-anchor="middle" style="font-size:24px;font-weight:800;fill:var(--ink)">${o.center??tot}</text><text x="${c}" y="${c+18}" text-anchor="middle" style="font-size:10px;fill:var(--mute)">${o.sub||'total'}</text></svg><div>${labels.map((l,i)=>`<div style="margin:5px 0;font-size:12.5px"><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${PAL[i%PAL.length]};margin-right:8px"></i>${esc(l)} <b>${vals[i]}</b></div>`).join('')}</div></div>`;
 }
 function spark(vals,w=90,h=26){const mx=Math.max(...vals),mn=Math.min(...vals),rg=mx-mn||1;return `<svg width="${w}" height="${h}"><polyline fill="none" stroke="var(--brand)" stroke-width="2" points="${vals.map((v,i)=>`${i/(vals.length-1)*w},${h-2-(v-mn)/rg*(h-4)}`).join(' ')}"/></svg>`}
+
+/* ---------- impor CSV ---------- */
+function parseCSV(t){t=t.replace(/^﻿/,'');const first=t.split(/\r?\n/)[0]||'',del=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',',rows=[];let row=[],f='',q=false;
+  for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===del){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);f='';if(row.some(x=>x.trim()!==''))rows.push(row);row=[]}else f+=c}
+  row.push(f);if(row.some(x=>x.trim()!==''))rows.push(row);return rows}
+function parseNum(v){let s=String(v??'').replace(/Rp|\s/gi,'');if(s==='')return NaN;if(/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s))s=s.replace(/\./g,'').replace(',','.');else if(/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.');return Number(s)}
+function parseDate(v){const s=String(v??'').trim();let m;if((m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)))return `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;if((m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/)))return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return null}
+/* cols: [{k,h,req,t:'num'|'date'|'str',ex:'contoh'}]; onRows(list)->pesan ; list item = objek per kolom */
+function importCSV(title,cols,onRows,validate){
+  if(DEMO())return lock('Impor CSV');
+  const tpl=()=>download(title.toLowerCase().replace(/\W+/g,'-')+'-templat.csv',toCSV([cols.map(c=>c.h),cols.map(c=>c.ex??'')]));
+  const m=modal('Impor CSV · '+title,`<p style="margin:0 0 8px;color:var(--mute)">Kolom: ${cols.map(c=>`<b>${esc(c.h)}</b>${c.req?'*':''}`).join(', ')}. Baris pertama adalah judul kolom. Tanggal: YYYY-MM-DD atau DD/MM/YYYY.</p><div class="tools"><button class="btn" id="im_t">${ico('down')} Unduh templat</button></div><input type="file" id="im_f" accept=".csv,text/csv,.txt"><div id="im_r" class="note" style="margin-top:12px">Pilih file CSV.</div>`,{w:'620px',buttons:[{text:'Batal'},{text:'Impor',cls:'pri',fn:()=>{const list=window.__imp;if(!list||!list.ok.length){toast('Tidak ada baris valid');return false}const msg=onRows(list.ok);toast(msg||`${list.ok.length} baris diimpor`)}}]});
+  $('#im_t').onclick=tpl;
+  $('#im_f').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const rows=parseCSV(String(r.result));if(rows.length<2){$('#im_r').textContent='File kosong atau tanpa baris data.';window.__imp=null;return}
+    const hd=rows[0].map(x=>x.trim().toLowerCase()),idx=cols.map(c=>{let i=hd.indexOf(c.h.toLowerCase());if(i<0)i=hd.indexOf(c.k.toLowerCase());return i}),miss=cols.filter((c,i)=>c.req&&idx[i]<0).map(c=>c.h);
+    if(miss.length){$('#im_r').innerHTML=`<span style="color:var(--bad)">Kolom wajib tidak ditemukan: ${esc(miss.join(', '))}</span>`;window.__imp=null;return}
+    const ok=[],bad=[];rows.slice(1).forEach((r,n)=>{const o={};let err='';cols.forEach((c,i)=>{let v=idx[i]>=0?(r[idx[i]]??'').trim():'';if(c.t==='num'){const x=parseNum(v);if(v!==''&&isNaN(x))err=`${c.h} bukan angka`;o[c.k]=isNaN(x)?undefined:x}else if(c.t==='date'){const x=v?parseDate(v):null;if(v&&!x)err=`${c.h} format tanggal salah`;o[c.k]=x||undefined}else o[c.k]=v||undefined;if(c.req&&(o[c.k]===undefined||o[c.k]===''))err=err||`${c.h} wajib diisi`});
+      if(!err&&validate)err=validate(o)||'';err?bad.push(`Baris ${n+2}: ${err}`):ok.push(o)});
+    window.__imp={ok,bad};$('#im_r').innerHTML=`<b>${ok.length}</b> baris valid, <b style="color:${bad.length?'var(--bad)':'inherit'}">${bad.length}</b> dilewati.${bad.length?'<br><small>'+bad.slice(0,5).map(esc).join('<br>')+(bad.length>5?'<br>…':'')+'</small>':''}`};r.readAsText(f)};
+}
