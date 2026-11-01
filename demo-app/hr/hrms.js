@@ -242,3 +242,63 @@ V.harian=el=>{
   el.innerHTML=`<div class="tabs"><button data-t="hari" class="${tab==='hari'?'on':''}">Catat harian</button><button data-t="rekap" class="${tab==='rekap'?'on':''}">Rekap bulanan</button></div><div id="bd"></div>`;
   $$('.tabs button',el).forEach(b=>b.onclick=()=>{el._tab=b.dataset.t;V.harian(el)});tab==='hari'?drawDay():drawRec();
 };
+
+/* ---------- THR keagamaan (Permenaker 6/2016) & pesangon (PP 35/2021) ---------- */
+const HRK={
+ bln(a,b){const x=dt(a),y=dt(b);let m=(y.getFullYear()-x.getFullYear())*12+y.getMonth()-x.getMonth();if(y.getDate()<x.getDate())m--;return Math.max(0,m)},
+ upah(e){return (e.gaji||0)+(e.tun||0)},
+ thr(e,tgl){const m=this.bln(e.masuk,tgl),up=this.upah(e);let r='';
+  if(e.st==='Resign'||(e.keluar&&e.keluar<tgl))r='Sudah keluar';else if(e.st==='Magang')r='Magang (tanpa hubungan kerja)';else if(e.masuk>tgl||m<1)r='Masa kerja kurang dari 1 bulan';
+  if(r)return {m,up,v:0,r};
+  return {m,up,v:Math.round(m>=12?up:up*m/12),r:m>=12?'1 bulan upah':m+'/12 × upah'}},
+ pph(e,v){if(!v)return 0;const c=HR.calc(e,HR.P),N=c.N;return Math.max(0,Math.round((N+v)*HR.terRate(c.cat,N+v))-Math.round(N*c.rate))},
+ RS:[
+  {k:'rugi',n:'Efisiensi karena rugi / tutup karena rugi / pailit / PKPU rugi / force majeure tutup',up:.5,mk:1},
+  {k:'fm',n:'Force majeure tanpa penutupan perusahaan',up:.75,mk:1},
+  {k:'efis',n:'Efisiensi mencegah rugi / merger / akuisisi / tutup bukan karena rugi / perilaku pengusaha',up:1,mk:1},
+  {k:'pensiun',n:'Pensiun (mencapai usia pensiun)',up:1.75,mk:1},
+  {k:'sakit',n:'Sakit berkepanjangan / cacat akibat kerja lebih dari 12 bulan / meninggal dunia',up:2,mk:1},
+  {k:'sp',n:'Pelanggaran setelah peringatan 1, 2, dan 3',up:.5,mk:1},
+  {k:'resign',n:'Mengundurkan diri atas kemauan sendiri',up:0,mk:0,pisah:1},
+  {k:'berat',n:'Kesalahan berat',up:0,mk:0,pisah:1},
+  {k:'pkwt',n:'Kontrak (PKWT) berakhir',up:0,mk:0,pkwt:1}],
+ MK:[[3,2],[6,3],[9,4],[12,5],[15,6],[18,7],[21,8],[24,10]],
+ pes(s){const e=s.e,R=this.RS.find(x=>x.k===s.alasan),m=this.bln(e.masuk,s.tgl),th=Math.floor(m/12),up=Math.max(0,+s.upah||0);
+  const bUP=R.up?Math.min(9,th+1):0,bMK=R.mk?(this.MK.filter(x=>th>=x[0]).pop()||[0,0])[1]:0;
+  const UP=Math.round(up*bUP*R.up),UPMK=Math.round(up*bMK*R.mk),cuti=Math.round(Math.max(0,+s.cuti||0)*up/(+s.pembagi||25)),pulang=Math.max(0,+s.pulang||0),lain=Math.max(0,+s.lain||0),pisah=R.pisah?Math.max(0,+s.pisah||0):0;
+  const kp=R.pkwt&&m>=1?Math.round(up*m/12):0,UPH=cuti+pulang+lain,total=UP+UPMK+UPH+pisah+kp;
+  const base=UP+UPMK,L=[[5e7,0],[1e8,.05],[5e8,.15],[Infinity,.25]];let pj=0,lo=0;L.forEach(([hi,r])=>{if(base>lo)pj+=(Math.min(base,hi)-lo)*r;lo=hi});
+  return {R,m,th,bUP,bMK,UP,UPMK,cuti,pulang,lain,pisah,kp,UPH,total,pph:Math.round(pj),up}},
+ ym(m){return Math.floor(m/12)+' tahun '+(m%12)+' bulan'}
+};
+function thrBody(L,tgl){const tot=L.reduce((s,x)=>s+x.t.v,0);
+ return `<div class="pg">${docHead('Daftar Tunjangan Hari Raya (THR)','Hari raya '+fdate(tgl)+' · dibayar paling lambat '+fdate(iso(new Date(dt(tgl).getTime()-7*864e5))))}<table><thead><tr><th>Karyawan</th><th>Tgl masuk</th><th class="n">Masa kerja</th><th class="n">Upah 1 bulan</th><th>Dasar</th><th class="n">THR</th><th>Tanda terima</th></tr></thead><tbody>${L.map(x=>`<tr><td>${esc(x.e.nama)}<br><small>${x.e.id}</small></td><td>${fdate(x.e.masuk)}</td><td class="n">${x.t.m} bln</td><td class="n">${fmt(x.t.up)}</td><td>${x.t.r}</td><td class="n">${fmt(x.t.v)}</td><td style="width:90px"></td></tr>`).join('')}<tr><td colspan="5"><b>Total</b></td><td class="n"><b>${fmt(tot)}</b></td><td></td></tr></tbody></table><p style="font-size:11px;color:#64748b;margin-top:10px">THR dihitung dari upah pokok + tunjangan tetap sesuai Permenaker 6/2016: masa kerja 12 bulan atau lebih = 1 bulan upah; 1–11 bulan = masa kerja/12 × 1 bulan upah. Jika perjanjian atau peraturan perusahaan memberi lebih besar, berlaku yang lebih besar.</p></div>`}
+V.thr=el=>{
+ const P=HR.P;P.thrTgl=P.thrTgl||'2027-03-10';const tgl=P.thrTgl;
+ const L=HR.d.emps.map(e=>{const t=HRK.thr(e,tgl),p=HRK.pph(e,t.v);return {e,t,p}}),pay=L.filter(x=>x.t.v>0),tot=pay.reduce((s,x)=>s+x.t.v,0),pj=pay.reduce((s,x)=>s+x.p,0);
+ el.innerHTML=`<div class="tools"><label style="color:var(--mute)">Tanggal hari raya</label><input class="inp" type="date" id="td" value="${tgl}" style="width:160px"><span class="sp"></span><button class="btn" id="ex">${ico('down')} Ekspor CSV</button><button class="btn" id="pr">${ico('file')} Cetak daftar THR (PDF)</button><button class="btn pri" id="ap">Masukkan ke bonus payroll</button></div>
+ <div class="grid g4" style="margin-bottom:14px"><div class="card kpi"><small>Penerima THR</small><b>${pay.length}</b></div><div class="card kpi"><small>Total THR</small><b>${juta(tot)}</b></div><div class="card kpi"><small>Estimasi PPh 21 atas THR</small><b>${juta(pj)}</b></div><div class="card kpi"><small>Batas bayar</small><b>${fdate(iso(new Date(dt(tgl).getTime()-7*864e5)))}</b></div></div>
+ <div class="note" style="margin-bottom:12px">Dasar: Permenaker 6/2016. Masa kerja 12 bulan atau lebih mendapat 1 bulan upah; 1–11 bulan mendapat masa kerja/12 × upah; di bawah 1 bulan tidak berhak. THR wajib dibayar paling lambat 7 hari sebelum hari raya. Upah = gaji pokok + tunjangan tetap. Tanggal hari raya diisi sesuai kalender (default hanya perkiraan). PPh 21 atas THR adalah estimasi metode TER pada bulan pembayaran.</div><div class="tbl" id="tb"></div>`;
+ dataTable($('#tb'),[{h:'Karyawan',v:x=>x.e.nama,r:x=>`<span class="av">${initials(x.e.nama)}</span>${esc(x.e.nama)} <small style="color:var(--mute)">${x.e.id}</small>`},{h:'Status',v:x=>x.e.st,r:x=>pill(x.e.st,ST_C[x.e.st]||'info')},{h:'Tgl masuk',v:x=>x.e.masuk,r:x=>fdate(x.e.masuk)},{h:'Masa kerja',n:1,v:x=>x.t.m,r:x=>x.t.m+' bln'},{h:'Upah 1 bulan',n:1,v:x=>x.t.up,r:x=>fmt(x.t.up)},{h:'Dasar',v:x=>x.t.r},{h:'THR',n:1,v:x=>x.t.v,r:x=>`<b>${fmt(x.t.v)}</b>`,sum:1},{h:'Est. PPh 21',n:1,v:x=>x.p,r:x=>fmt(x.p),sum:1},{h:'Diterima',n:1,v:x=>x.t.v-x.p,r:x=>fmt(x.t.v-x.p),sum:1}],L,{total:1});
+ $('#td').onchange=e=>{if(!e.target.value)return;P.thrTgl=e.target.value;HR.save();V.thr(el)};
+ $('#pr').onclick=()=>pay.length?printDoc('Daftar THR',thrBody(pay,tgl)):toast('Tidak ada penerima THR');
+ $('#ex').onclick=gate('Ekspor THR',()=>download('thr-'+tgl+'.csv',toCSV([['ID','Nama','Status','Tgl masuk','Masa kerja (bln)','Upah 1 bulan','Dasar','THR','Estimasi PPh 21','Diterima'],...L.map(x=>[x.e.id,x.e.nama,x.e.st,x.e.masuk,x.t.m,x.t.up,x.t.r,x.t.v,x.p,x.t.v-x.p])])));
+ $('#ap').onclick=gate('THR ke payroll',()=>{if(!pay.length)return toast('Tidak ada penerima THR');if(!confirm('Tambahkan THR ke kolom Bonus payroll periode '+MN[P.bulan-1]+' '+P.tahun+' untuk '+pay.length+' karyawan? Lakukan sekali saja pada bulan THR dibayarkan.'))return;pay.forEach(x=>{x.e.abs=x.e.abs||{};x.e.abs.bonus=(x.e.abs.bonus||0)+x.t.v});HR.save();toast('THR ditambahkan ke bonus payroll')});
+};
+function pesBody(s,r){const e=s.e,rw=(a,b)=>`<tr><td>${a}</td><td class="n">${b}</td></tr>`;
+ return `<div class="pg">${docHead('Perhitungan Kompensasi Pemutusan Hubungan Kerja','PP 35/2021')}<table style="margin-bottom:10px"><tr><td style="width:34%;color:#64748b">Karyawan</td><td>${esc(e.nama)} (${e.id}) · ${esc(e.jab)}</td></tr><tr><td style="color:#64748b">Tanggal masuk / berakhir</td><td>${fdate(e.masuk)} s.d. ${fdate(s.tgl)} · ${HRK.ym(r.m)}</td></tr><tr><td style="color:#64748b">Alasan</td><td>${esc(r.R.n)}</td></tr><tr><td style="color:#64748b">Upah sebulan (pokok + tunjangan tetap)</td><td>${idr(r.up)}</td></tr></table>
+ <table><thead><tr><th>Komponen</th><th class="n">Rupiah</th></tr></thead><tbody>${rw('Uang pesangon ('+r.bUP+' bulan × '+r.R.up+')',fmt(r.UP))}${rw('Uang penghargaan masa kerja ('+r.bMK+' bulan × '+r.R.mk+')',fmt(r.UPMK))}${rw('Uang penggantian hak: cuti yang belum diambil',fmt(r.cuti))}${rw('Uang penggantian hak: ongkos pulang',fmt(r.pulang))}${rw('Uang penggantian hak: lainnya',fmt(r.lain))}${r.R.pisah?rw('Uang pisah',fmt(r.pisah)):''}${r.R.pkwt?rw('Kompensasi PKWT ('+r.m+'/12 × upah)',fmt(r.kp)):''}<tr><td><b>Total</b></td><td class="n"><b>${fmt(r.total)}</b></td></tr></tbody></table>
+ <p style="font-size:11px;color:#64748b;margin-top:10px">Estimasi PPh 21 final atas uang pesangon dan UPMK: ${idr(r.pph)} (tarif lapisan 0% sampai Rp50 juta, 5% sampai Rp100 juta, 15% sampai Rp500 juta, 25% di atasnya). Perhitungan ini bersifat estimasi; perjanjian kerja, peraturan perusahaan, atau PKB yang lebih menguntungkan karyawan tetap berlaku.</p><div class="ttd"><div>Perusahaan<br><br><br><br>(................)</div><div>Karyawan<br><br><br><br>(${esc(e.nama)})</div></div></div>`}
+V.pesangon=el=>{
+ const emps=HR.d.emps;if(!emps.length){el.innerHTML='<div class="card" style="padding:40px;text-align:center;color:var(--mute)">Belum ada karyawan.</div>';return}
+ const S=el._s=el._s||{eid:(emps.find(e=>e.st!=='Resign')||emps[0]).id,tgl:HR.P.rep,alasan:'efis',pembagi:25,pulang:0,lain:0,pisah:0,cuti:null,upah:null,fresh:1};
+ const e=emps.find(x=>x.id===S.eid)||emps[0];S.e=e;
+ if(S.fresh){S.upah=HRK.upah(e);S.cuti=HR.saldo(e).sisa;S.fresh=0}
+ const r=HRK.pes(S),R=HRK.RS,row=(a,b,o)=>`<tr><td>${a}</td><td class="n">${o?'<b>'+b+'</b>':b}</td></tr>`;
+ el.innerHTML=`<div class="grid g2" style="align-items:start"><div class="card"><h3>Data pemutusan hubungan kerja</h3><div class="form"><div class="full"><label>Karyawan</label><select class="sel" id="pe">${empOptions(e.id)}</select></div><div class="full"><label>Alasan</label><select class="sel" id="pa">${R.map(x=>`<option value="${x.k}" ${x.k===S.alasan?'selected':''}>${esc(x.n)}</option>`).join('')}</select></div><div><label>Tanggal berakhir hubungan kerja</label><input class="inp" type="date" id="pt" value="${S.tgl}"></div><div><label>Upah sebulan (Rp)</label><input class="inp" type="number" data-rp data-k="upah" value="${S.upah}"></div><div><label>Sisa cuti belum diambil (hari)</label><input class="inp" type="number" data-k="cuti" value="${S.cuti}"></div><div><label>Pembagi upah harian</label><input class="inp" type="number" data-k="pembagi" value="${S.pembagi}"></div><div><label>Ongkos pulang (Rp)</label><input class="inp" type="number" data-rp data-k="pulang" value="${S.pulang}"></div><div><label>Hak lain sesuai PKB (Rp)</label><input class="inp" type="number" data-rp data-k="lain" value="${S.lain}"></div>${r.R.pisah?`<div class="full"><label>Uang pisah menurut perjanjian / PKB (Rp)</label><input class="inp" type="number" data-rp data-k="pisah" value="${S.pisah}"></div>`:''}</div><p style="color:var(--mute);margin:10px 0 0">Upah sebulan terisi otomatis dari gaji pokok + tunjangan tetap. Sisa cuti diambil dari saldo cuti tahun berjalan; ubah bila perlu.</p></div>
+ <div class="card"><h3>Hasil perhitungan</h3><p style="margin:0 0 10px;color:var(--mute)">Masa kerja <b style="color:var(--fg,inherit)">${HRK.ym(r.m)}</b> · ${esc(e.nama)}</p><div class="tbl"><table><tbody>${row('Uang pesangon ('+r.bUP+' bln × '+r.R.up+')',fmt(r.UP))}${row('Uang penghargaan masa kerja ('+r.bMK+' bln × '+r.R.mk+')',fmt(r.UPMK))}${row('Penggantian hak: cuti',fmt(r.cuti))}${row('Penggantian hak: ongkos pulang & lainnya',fmt(r.pulang+r.lain))}${r.R.pisah?row('Uang pisah',fmt(r.pisah)):''}${r.R.pkwt?row('Kompensasi PKWT ('+r.m+'/12 × upah)',fmt(r.kp)):''}${row('Total kompensasi',idr(r.total),1)}${row('Estimasi PPh 21 final (pesangon + UPMK)',fmt(r.pph))}${row('Estimasi diterima bersih',idr(r.total-r.pph),1)}</tbody></table></div><div class="tools" style="margin-top:12px"><span class="sp"></span><button class="btn pri" id="pc">${ico('file')} Cetak perhitungan (PDF)</button></div></div></div>
+ <div class="note" style="margin-top:14px">Dasar: PP 35/2021 (turunan UU Cipta Kerja). Pesangon dan UPMK dihitung dari masa kerja dengan pengali sesuai alasan PHK; UPMK baru ada setelah masa kerja 3 tahun; pesangon maksimal 9 bulan upah. Pengunduran diri dan kesalahan berat tidak mendapat pesangon dan UPMK, hanya penggantian hak dan uang pisah menurut perjanjian. Kontrak (PKWT) berakhir mendapat kompensasi masa kerja/12 × upah. Bila perusahaan punya program pensiun, perhitungan dapat berbeda. Hasil adalah estimasi; konsultasikan dengan ahli ketenagakerjaan untuk kasus nyata.</div>`;
+ $('#pe').onchange=x=>{S.eid=x.target.value;S.fresh=1;V.pesangon(el)};$('#pa').onchange=x=>{S.alasan=x.target.value;V.pesangon(el)};$('#pt').onchange=x=>{if(x.target.value){S.tgl=x.target.value;V.pesangon(el)}};
+ $$('[data-k]',el).forEach(i=>i.onchange=()=>{S[i.dataset.k]=+i.value||0;V.pesangon(el)});
+ $('#pc').onclick=()=>printDoc('Kompensasi PHK '+e.nama,pesBody(S,r));
+};

@@ -7,7 +7,7 @@ function pickBackup(name,valid,apply){const i=document.createElement('input');i.
   if(!valid(j))return toast('Berkas ini bukan cadangan '+name);
   modal('Pulihkan cadangan',`<p style="margin:0">Data ${esc(name)} saat ini akan <b>diganti</b> dengan isi berkas <b>${esc(f.name)}</b>. Tindakan ini tidak bisa dibatalkan. Cadangkan dulu data sekarang bila perlu.</p>`,{buttons:[{text:'Batal'},{text:'Pulihkan',cls:'dng',fn:()=>{apply(j);toast('Cadangan dipulihkan')}}]})};r.readAsText(f)};i.click()}
 /* input rupiah: tampil dengan pemisah ribuan, nilai .value tetap angka murni */
-const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v,#p_v,#n_p,#a_h,[id^=j_d],[id^=j_k],#k_g,#l_b,#f_gaji,#f_tun,[data-p=transport],[data-p=makan],[data-p=bjMax],[data-k=bonus],[data-k=lain],#p_j,#p_h,#d_v,#k_c,[data-t$=".t"],#f_hrg,#m_biaya,#d_nilai';
+const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v,#p_v,#n_p,#a_h,[id^=j_d],[id^=j_k],#k_g,#l_b,#f_gaji,#f_tun,[data-p=transport],[data-p=makan],[data-p=bjMax],[data-k=bonus],[data-k=lain],#p_j,#p_h,#d_v,#k_c,[data-t$=".t"],#f_hrg,#m_biaya,#d_nilai,[data-rp]';
 (function(){const nd=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value'),disp=v=>{v=String(v??'').replace(/[^\d-]/g,'').replace(/(?!^)-/g,'');if(v===''||v==='-')return v;return (v[0]==='-'?'-':'')+Number(v.replace('-','')).toLocaleString('id-ID')};
  function money(el){if(el.__m||el.tagName!=='INPUT')return;el.__m=1;const init=nd.get.call(el);el.type='text';el.inputMode='numeric';el.style.textAlign='right';
   Object.defineProperty(el,'value',{configurable:true,get(){return nd.get.call(el).replace(/\./g,'').replace(/[^\d-]/g,'')},set(v){nd.set.call(el,disp(v))}});
