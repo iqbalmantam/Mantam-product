@@ -7,7 +7,7 @@ function pickBackup(name,valid,apply){const i=document.createElement('input');i.
   if(!valid(j))return toast('Berkas ini bukan cadangan '+name);
   modal('Pulihkan cadangan',`<p style="margin:0">Data ${esc(name)} saat ini akan <b>diganti</b> dengan isi berkas <b>${esc(f.name)}</b>. Tindakan ini tidak bisa dibatalkan. Cadangkan dulu data sekarang bila perlu.</p>`,{buttons:[{text:'Batal'},{text:'Pulihkan',cls:'dng',fn:()=>{apply(j);toast('Cadangan dipulihkan')}}]})};r.readAsText(f)};i.click()}
 /* input rupiah: tampil dengan pemisah ribuan, nilai .value tetap angka murni */
-const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v,#p_v,#n_p,#a_h,[id^=j_d],[id^=j_k],#k_g,#l_b,#f_gaji,#f_tun,[data-p=transport],[data-p=makan],[data-p=bjMax],[data-k=bonus],[data-k=lain],#p_j,#p_h,#d_v,#k_c,[data-t$=".t"]';
+const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v,#p_v,#n_p,#a_h,[id^=j_d],[id^=j_k],#k_g,#l_b,#f_gaji,#f_tun,[data-p=transport],[data-p=makan],[data-p=bjMax],[data-k=bonus],[data-k=lain],#p_j,#p_h,#d_v,#k_c,[data-t$=".t"],#f_hrg,#m_biaya,#d_nilai';
 (function(){const nd=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value'),disp=v=>{v=String(v??'').replace(/[^\d-]/g,'').replace(/(?!^)-/g,'');if(v===''||v==='-')return v;return (v[0]==='-'?'-':'')+Number(v.replace('-','')).toLocaleString('id-ID')};
  function money(el){if(el.__m||el.tagName!=='INPUT')return;el.__m=1;const init=nd.get.call(el);el.type='text';el.inputMode='numeric';el.style.textAlign='right';
   Object.defineProperty(el,'value',{configurable:true,get(){return nd.get.call(el).replace(/\./g,'').replace(/[^\d-]/g,'')},set(v){nd.set.call(el,disp(v))}});
@@ -40,7 +40,7 @@ const Store={
 
 /* ---------- ikon ---------- */
 const ICONS={
- moon:'<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',file:'<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',lock:'<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+ pin:'<path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',tool:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/>',qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/>',moon:'<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',file:'<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',lock:'<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
  dash:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2.4.6 4 2.300 4 5.200"/>',
  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
