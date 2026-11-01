@@ -1,0 +1,81 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pesan aplikasi bisnis</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230ea5a4'/%3E%3Cstop offset='1' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M16 46V20l16 18 16-18v26' fill='none' stroke='white' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="description" content="Pilih aplikasi, isi nama pembeli, kirim pesanan lewat WhatsApp. Sekali bayar, tanpa langganan.">
+<meta name="theme-color" content="#0b1a30">
+<style>
+:root{--bg:#f3f6fb;--ink:#0f1b2d;--mute:#5b6b82;--line:#e3e9f2;--navy:#0b1a30;--brand:#0ea5a4;--brand2:#2563eb;--card:#fff;--ok:#16a34a;--bad:#dc2626}
+@media(prefers-color-scheme:dark){:root{--bg:#0a1322;--ink:#e6edf7;--mute:#8da0bd;--line:#1f3250;--card:#111e33}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.6 "Segoe UI",Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:inherit}.w{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:5;background:rgba(11,26,48,.92);backdrop-filter:blur(8px);color:#fff}nav .w{display:flex;align-items:center;gap:18px;height:58px}nav b{font-size:18px;letter-spacing:-.3px}nav a{text-decoration:none;font-size:14px;color:#c3d0e6}nav .sp{flex:1}
+h1{font-size:clamp(26px,4vw,36px);letter-spacing:-.8px;margin:36px 0 6px}h2{font-size:19px;margin:0 0 12px}.sub{color:var(--mute);margin:0 0 26px}
+.grid{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start;padding-bottom:60px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.sum{position:static!important}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px}
+.app{display:flex;gap:14px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;background:var(--card);transition:border-color .15s}
+.app:hover{border-color:var(--brand)}.app.on{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 7%,var(--card))}
+.app input{margin-top:5px;width:18px;height:18px;accent-color:var(--brand);flex:none}.app b{display:block;font-size:16px}.app small{color:var(--mute);display:block;line-height:1.45}.app .pr{margin-left:auto;font-weight:700;white-space:nowrap}
+.app a{font-size:13px;color:var(--brand2)}
+label{display:block;font-size:13px;font-weight:600;color:var(--mute);margin:12px 0 4px}input[type=text],textarea,select{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=text]:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(--brand) 50%,transparent);border-color:var(--brand)}
+.sum{position:sticky;top:76px}.sum .row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:14.5px}.sum .tot{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:20px;font-weight:800}
+.hint{font-size:13px;color:var(--mute);margin:8px 0 0}.good{color:var(--ok);font-weight:600}
+.btn{display:block;width:100%;text-align:center;padding:14px 18px;border-radius:12px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:700;margin-top:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.btn[disabled]{opacity:.45;cursor:not-allowed}.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+ol.st{margin:0;padding:0;list-style:none;counter-reset:s}ol.st li{counter-increment:s;display:flex;gap:12px;margin-bottom:12px}ol.st li:before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+ul.pl{margin:0;padding-left:20px;color:var(--mute);font-size:14.5px}ul.pl li{margin-bottom:5px}
+.err{color:var(--bad);font-size:13px;margin-top:6px;min-height:18px}
+</style></head><body>
+<nav><div class="w"><b>Aplikasi Bisnis</b><span class="sp"></span><a href="index.html">← Kembali ke Beranda</a></div></nav>
+<div class="w">
+<h1>Pesan aplikasi</h1><p class="sub">Pilih aplikasi, isi nama pembeli, lalu kirim pesanan lewat WhatsApp. Sekali bayar, tanpa langganan.</p>
+<div class="grid"><div>
+<div class="card"><h2>1. Pilih aplikasi</h2><div id="apps"></div><p class="hint">Mau mencoba dulu? Setiap aplikasi punya demo di browser, tanpa unduh dan tanpa daftar.</p></div>
+<div class="card"><h2>2. Data pembeli</h2>
+<label for="nm">Nama pembeli *</label><input type="text" id="nm" placeholder="Nama orang atau usaha" autocomplete="name" maxlength="60">
+<p class="hint">Nama ini ditanamkan pada aplikasi edisi lengkap (pada judul dan dokumen cetak), jadi tulis dengan benar.</p>
+<label for="us">Nama usaha (opsional)</label><input type="text" id="us" placeholder="Jika berbeda dengan nama pembeli" maxlength="80">
+<label for="ct">Catatan (opsional)</label><textarea id="ct" rows="3" placeholder="Pertanyaan atau kebutuhan khusus" maxlength="300"></textarea>
+<div class="err" id="er"></div></div>
+<div class="card"><h2>Alur pemesanan</h2><ol class="st"><li><div><b>Kirim pesanan</b><br><span style="color:var(--mute)">Tombol "Kirim pesanan" membuka WhatsApp dengan pesanan yang sudah terisi.</span></div></li><li><div><b>Konfirmasi dan pembayaran</b><br><span style="color:var(--mute)" id="payinfo"></span></div></li><li><div><b>Terima file</b><br><span style="color:var(--mute)">Installer Windows (.exe) atas nama pembeli, ditambah folder HTML sebagai cadangan.</span></div></li><li><div><b>Mulai pakai</b><br><span style="color:var(--mute)">Instal, lalu isi data perusahaan Anda sendiri. Data tersimpan di komputer Anda.</span></div></li></ol></div>
+<div class="card"><h2>Ketentuan</h2><ul class="pl"><li>Sekali bayar, tanpa langganan bulanan.</li><li>Aplikasi diberikan sebagaimana adanya: tanpa garansi, layanan pembaruan, atau dukungan WhatsApp.</li><li>Untuk Windows 10/11. Berjalan tanpa internet, data disimpan di komputer pembeli.</li><li>Windows dapat menampilkan peringatan "Windows protected your PC" karena aplikasi belum bertanda tangan digital. Pilih <i>More info</i> lalu <i>Run anyway</i>.</li><li>Cadangkan data secara berkala lewat menu Pengaturan di setiap aplikasi.</li></ul></div>
+</div>
+<aside class="sum"><div class="card"><h2>Ringkasan</h2><div id="lines"></div><div class="row tot"><span>Total</span><span id="tot">Rp0</span></div><p class="hint" id="note"></p>
+<button class="btn" id="go" disabled>Kirim pesanan lewat WhatsApp</button><a class="btn alt" href="index.html#modul">Coba demo dulu</a></div></aside></div></div>
+<script>
+/* ===== Pengaturan: ubah di sini ===== */
+const CONFIG={
+ whatsapp:"6289623291732",
+ hargaSatu:100000,
+ hargaPaket:350000,
+ /* Rincian pembayaran yang ingin ditampilkan, mis. ["Bank ABC 1234567890 a.n. Nama"]. Kosongkan bila dikirim lewat WhatsApp. */
+ pembayaran:[]
+};
+const APPS=[
+ {k:"hr",n:"HRMS",d:"Karyawan, absen harian, payroll PPh 21 dan BPJS, THR, pesangon, cuti, rekrutmen, kinerja."},
+ {k:"fin",n:"Finance",d:"Jurnal otomatis, laba rugi, neraca, arus kas, PPN, PPh 23, rekonsiliasi bank, tutup buku."},
+ {k:"sales",n:"Sales",d:"CRM, pipeline, penawaran dan faktur PDF, komisi, kampanye."},
+ {k:"aset",n:"Asset",d:"Daftar aset, label QR, audit fisik, servis, peminjaman, penghapusan aset."},
+ {k:"sosial",n:"Sosmed",d:"Kalender konten, studio caption, analitik, jadwal ke kalender ponsel."}];
+const rp=n=>"Rp"+new Intl.NumberFormat("id-ID").format(n),$=s=>document.querySelector(s);
+const sel=new Set(),q=new URLSearchParams(location.search);
+if(q.get("paket")==="5")APPS.forEach(a=>sel.add(a.k));else if(q.get("app")){q.get("app").split(",").forEach(k=>APPS.some(a=>a.k===k)&&sel.add(k))}
+$("#apps").innerHTML=APPS.map(a=>`<label class="app" data-k="${a.k}"><input type="checkbox" value="${a.k}"><span><b>${a.n}</b><small>${a.d}</small><a href="demo-app/${a.k}/index.html" onclick="event.stopPropagation()">Coba demo</a></span><span class="pr">${rp(CONFIG.hargaSatu)}</span></label>`).join("");
+$("#payinfo").textContent=CONFIG.pembayaran.length?"Pembayaran ke: "+CONFIG.pembayaran.join(" · ")+". Kirim bukti transfer di WhatsApp.":"Rincian pembayaran dikirim lewat WhatsApp setelah pesanan Anda dikonfirmasi.";
+function hitung(){const n=sel.size,sum=n*CONFIG.hargaSatu,paket=n>=4,total=paket?CONFIG.hargaPaket:sum;return{n,sum,paket,total}}
+function render(){
+ document.querySelectorAll(".app").forEach(e=>{const on=sel.has(e.dataset.k);e.classList.toggle("on",on);e.querySelector("input").checked=on});
+ const h=hitung(),L=$("#lines");
+ L.innerHTML=h.n?(h.paket?`<div class="row"><span>Paket 5 aplikasi</span><span>${rp(CONFIG.hargaPaket)}</span></div><div class="row" style="color:var(--mute)"><span>Isi paket</span><span>${APPS.map(a=>a.n).join(", ")}</span></div>`:APPS.filter(a=>sel.has(a.k)).map(a=>`<div class="row"><span>${a.n}</span><span>${rp(CONFIG.hargaSatu)}</span></div>`).join("")):'<p class="hint">Belum ada aplikasi dipilih.</p>';
+ $("#tot").textContent=rp(h.total);
+ $("#note").innerHTML=!h.n?"":h.paket?`<span class="good">Harga paket berlaku: kelima aplikasi Anda dapatkan${h.n<5?`, lebih hemat ${rp(h.sum-CONFIG.hargaPaket)} dibanding ${h.n} aplikasi satuan`:`, hemat ${rp(5*CONFIG.hargaSatu-CONFIG.hargaPaket)}`}.</span>`:h.n===3?`Tambah 1 aplikasi lagi, maka harga paket ${rp(CONFIG.hargaPaket)} berlaku untuk kelimanya.`:"";
+ validasi(false)}
+function validasi(show){const nm=$("#nm").value.trim(),ok=sel.size>0&&nm.length>=2;$("#go").disabled=!ok;$("#er").textContent=show&&!ok?(sel.size?"Nama pembeli wajib diisi.":"Pilih minimal satu aplikasi."):"";return ok}
+document.querySelectorAll(".app").forEach(e=>e.onclick=ev=>{if(ev.target.tagName==="A")return;ev.preventDefault();const k=e.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);render()});
+$("#nm").oninput=()=>validasi(false);
+$("#go").onclick=()=>{if(!validasi(true))return;const h=hitung(),nm=$("#nm").value.trim(),us=$("#us").value.trim(),ct=$("#ct").value.trim(),
+ daftar=h.paket?"Paket 5 aplikasi (HRMS, Finance, Sales, Asset, Sosmed)":APPS.filter(a=>sel.has(a.k)).map(a=>a.n).join(", ");
+ const msg=["Halo, saya ingin memesan aplikasi bisnis.","","Pesanan: "+daftar,"Total: "+rp(h.total),"Nama pembeli: "+nm].concat(us?["Nama usaha: "+us]:[],ct?["Catatan: "+ct]:[],["","Mohon info cara pembayarannya. Terima kasih."]).join("\n");
+ location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(msg)};
+render();
+</script></body></html>
