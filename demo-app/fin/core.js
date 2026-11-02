@@ -9,7 +9,7 @@ function pickBackup(name,valid,apply){const i=document.createElement('input');i.
 /* input rupiah: tampil dengan pemisah ribuan, nilai .value tetap angka murni */
 const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v,#p_v,#n_p,#a_h,[id^=j_d],[id^=j_k],#k_g,#l_b,#f_gaji,#f_tun,[data-p=transport],[data-p=makan],[data-p=bjMax],[data-k=bonus],[data-k=lain],#p_j,#p_h,#d_v,#k_c,[data-t$=".t"],#f_hrg,#m_biaya,#d_nilai,[data-rp]';
 (function(){const nd=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value'),disp=v=>{v=String(v??'').replace(/[^\d-]/g,'').replace(/(?!^)-/g,'');if(v===''||v==='-')return v;return (v[0]==='-'?'-':'')+Number(v.replace('-','')).toLocaleString('id-ID')};
- function money(el){if(el.__m||el.tagName!=='INPUT')return;el.__m=1;const init=nd.get.call(el);el.type='text';el.inputMode='numeric';el.style.textAlign='right';
+ function money(el){if(el.__m||el.tagName!=='INPUT')return;el.__m=1;el.dataset.num='1';const init=nd.get.call(el);el.type='text';el.inputMode='numeric';el.style.textAlign='right';
   Object.defineProperty(el,'value',{configurable:true,get(){return nd.get.call(el).replace(/\./g,'').replace(/[^\d-]/g,'')},set(v){nd.set.call(el,disp(v))}});
   nd.set.call(el,disp(init));el.addEventListener('input',()=>{const s=el.selectionStart,old=nd.get.call(el),n=disp(old);if(n!==old){const dots=(old.slice(0,s).match(/\./g)||[]).length;nd.set.call(el,n);const dn=(n.slice(0,s).match(/\./g)||[]).length;try{el.setSelectionRange(s+dn-dots,s+dn-dots)}catch(e){}}})}
  const scan=r=>{if(r.nodeType!==1)return;if(r.matches&&r.matches(MONEY_SEL))money(r);r.querySelectorAll&&r.querySelectorAll(MONEY_SEL).forEach(money)};
@@ -22,13 +22,13 @@ const fmt=n=>new Intl.NumberFormat('id-ID').format(Math.round(n||0));
 const idr=n=>'Rp '+fmt(n);
 const juta=n=>(n/1e6).toLocaleString('id-ID',{maximumFractionDigits:1})+' jt';
 const pct=(n,d=1)=>(n*100).toFixed(d).replace('.',',')+'%';
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const dt=s=>s?new Date(s+'T00:00:00'):null;
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const fdate=s=>{if(!s)return'-';const d=dt(s);return d.getDate()+' '+MN[d.getMonth()].slice(0,3)+' '+d.getFullYear()};
 const years=(a,b)=>(b-a)/(365.25*864e5);
-const initials=n=>n.split(' ').slice(0,2).map(x=>x[0]).join('').toUpperCase();
+const initials=n=>String(n||'').trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'?';
 
 /* ---------- penyimpanan lokal (localStorage, cadangan memori) ---------- */
 const Store={
@@ -94,16 +94,19 @@ function dataTable(el,cols,rows,opt={}){
 /* ---------- grafik SVG tanpa pustaka ---------- */
 const PAL=['#0ea5a4','#2563eb','#f59e0b','#7c3aed','#ef4444','#14b8a6','#64748b'];
 function barChart(el,labels,vals,o={}){
+  if(!labels.length){el.innerHTML='<div class="empty" style="padding:24px">Belum ada data</div>';return}
   const W=o.w||520,H=o.h||230,pl=o.fmt||(v=>fmt(v)),mx=Math.max(...vals,1)*1.12,pad={l:44,r:10,t:12,b:o.rot?52:30},bw=(W-pad.l-pad.r)/labels.length;
   const ticks=4,tk=Array.from({length:ticks+1},(_,i)=>mx*i/ticks);
   el.innerHTML=`<svg class="ch" viewBox="0 0 ${W} ${H}" width="100%" role="img">`+tk.map(v=>{const y=pad.t+(H-pad.t-pad.b)*(1-v/mx);return `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${pad.l-6}" y="${y+4}" text-anchor="end">${(o.axis||pl)(v)}</text>`}).join('')+
   vals.map((v,i)=>{const h=(H-pad.t-pad.b)*v/mx,x=pad.l+i*bw+bw*.18,y=H-pad.b-h;return `<rect x="${x}" y="${y}" width="${bw*.64}" height="${Math.max(h,0)}" rx="5" fill="${o.colors?o.colors[i%o.colors.length]:PAL[0]}"><title>${esc(labels[i])}: ${pl(v)}</title></rect><text x="${x+bw*.32}" y="${H-pad.b+15}" text-anchor="middle"${o.rot?` transform="rotate(-28 ${x+bw*.32} ${H-pad.b+15})" text-anchor="end"`:''}>${esc(String(labels[i]).slice(0,12))}</text><text x="${x+bw*.32}" y="${y-4}" text-anchor="middle" style="font-weight:700;fill:var(--ink)">${pl(v)}</text>`}).join('')+'</svg>';
 }
 function hBars(el,labels,vals,o={}){
+  if(!labels.length){el.innerHTML='<div class="empty" style="padding:24px">Belum ada data</div>';return}
   const mx=Math.max(...vals,1),pl=o.fmt||fmt;
   el.innerHTML=labels.map((l,i)=>`<div class="bar-h"><span>${esc(l)}</span><div><i style="width:${vals[i]/mx*100}%"></i></div><b>${pl(vals[i])}</b></div>`).join('');
 }
 function donut(el,labels,vals,o={}){
+  if(!labels.length){el.innerHTML='<div class="empty" style="padding:24px">Belum ada data</div>';return}
   const S=170,R=66,r=42,c=S/2,tot=vals.reduce((a,b)=>a+b,0)||1;let a0=-Math.PI/2,p='';
   vals.forEach((v,i)=>{if(!v)return;const a1=a0+v/tot*Math.PI*2,big=a1-a0>Math.PI?1:0,pt=(R_,a)=>[c+R_*Math.cos(a),c+R_*Math.sin(a)];
     const [x1,y1]=pt(R,a0),[x2,y2]=pt(R,a1-.0001),[x3,y3]=pt(r,a1-.0001),[x4,y4]=pt(r,a0);
@@ -120,6 +123,7 @@ function parseNum(v){let s=String(v??'').replace(/Rp|\s/gi,'');if(s==='')return 
 function parseDate(v){const s=String(v??'').trim();let m;if((m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)))return `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;if((m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/)))return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return null}
 /* cols: [{k,h,req,t:'num'|'date'|'str',ex:'contoh'}]; onRows(list)->pesan ; list item = objek per kolom */
 function importCSV(title,cols,onRows,validate){
+  window.__imp=null;
   if(DEMO())return lock('Impor CSV');
   const tpl=()=>download(title.toLowerCase().replace(/\W+/g,'-')+'-templat.csv',toCSV([cols.map(c=>c.h),cols.map(c=>c.ex??'')]));
   const m=modal('Impor CSV · '+title,`<p style="margin:0 0 8px;color:var(--mute)">Kolom: ${cols.map(c=>`<b>${esc(c.h)}</b>${c.req?'*':''}`).join(', ')}. Baris pertama adalah judul kolom. Tanggal: YYYY-MM-DD atau DD/MM/YYYY.</p><div class="tools"><button class="btn" id="im_t">${ico('down')} Unduh templat</button></div><input type="file" id="im_f" accept=".csv,text/csv,.txt"><div id="im_r" class="note" style="margin-top:12px">Pilih file CSV.</div>`,{w:'620px',buttons:[{text:'Batal'},{text:'Impor',cls:'pri',fn:()=>{const list=window.__imp;if(!list||!list.ok.length){toast('Tidak ada baris valid');return false}const msg=onRows(list.ok);toast(msg||`${list.ok.length} baris diimpor`)}}]});

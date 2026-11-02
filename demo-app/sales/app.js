@@ -12,13 +12,13 @@ const App={cur:'dashboard',q:'',
   $('#lic').textContent=DEMO()?'EDISI DEMO':'LISENSI LENGKAP';$('#lic').className='lic'+(DEMO()?'':' full');
   $('#nav').innerHTML=MODS.map(m=>`<div class="mod"><h6>${m.g}${m.soon?' · segera':''}</h6>${m.items.map(i=>`<button class="nav${m.soon?' soon':''}" data-k="${i[0]}">${ico(i[2])}<span>${i[1]}</span></button>`).join('')}</div>`).join('');
   $$('.nav:not(.soon)').forEach(b=>b.onclick=()=>{this.cur=b.dataset.k;this.q='';$('#q').value='';this.render()});
-  $('#q').oninput=e=>{this.q=e.target.value;if(['karyawan','f_jurnal','s_pelanggan','s_penjualan','a_daftar'].includes(this.cur))this.render()};
+  $('#q').oninput=e=>{this.q=e.target.value;const el=$('#ct');if(el&&typeof el._onSearch==='function')el._onSearch();else if(['f_jurnal','s_pelanggan','s_penjualan','a_daftar'].includes(this.cur))this.render();else this.rowFilter()};this.rowFilter=()=>{const q=(this.q||'').toLowerCase();$$('#ct tbody tr').forEach(r=>{r.style.display=!q||r.textContent.toLowerCase().includes(q)?'':'none'})};$('#ct').addEventListener('click',()=>setTimeout(()=>{if(this.q&&!$('#ct')._onSearch)this.rowFilter()},0));
   $('#ft').innerHTML=DEMO()?`Edisi demo · fitur terbatas.<br><a href="#" id="up" style="color:#7dd3fc">Buka edisi lengkap</a>`:`Terdaftar: ${esc(CONFIG.buyer)}`;
   const u=$('#up');if(u)u.onclick=e=>{e.preventDefault();lock('Edisi lengkap')};
   this.render()},
  render(){const k=this.cur,grp=MODS.find(m=>m.items.some(i=>i[0]===k)),item=grp.items.find(i=>i[0]===k);
   $$('.nav').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
   $('#h1').textContent=item[1];$('#cr').textContent=grp.g+' · '+CO.get();
-  const el=$('#ct');el.innerHTML='';V[k](el)},
+  const el=$('#ct');el.innerHTML='';el._onSearch=null;V[k](el);if(this.q&&!el._onSearch)this.rowFilter()},
  theme(){const d=document.documentElement;d.dataset.theme=d.dataset.theme==='dark'?'':'dark';try{Store.set('theme',d.dataset.theme)}catch(e){}}};
 App.init();
