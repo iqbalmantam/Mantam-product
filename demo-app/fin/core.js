@@ -95,8 +95,8 @@ function dataTable(el,cols,rows,opt={}){
 const PAL=['#0ea5a4','#2563eb','#f59e0b','#7c3aed','#ef4444','#14b8a6','#64748b'];
 function barChart(el,labels,vals,o={}){
   if(!labels.length){el.innerHTML='<div class="empty" style="padding:24px">Belum ada data</div>';return}
-  const W=o.w||520,H=o.h||230,pl=o.fmt||(v=>fmt(v)),mx=Math.max(...vals,1)*1.12,pad={l:44,r:10,t:12,b:o.rot?52:30},bw=(W-pad.l-pad.r)/labels.length;
-  const ticks=4,tk=Array.from({length:ticks+1},(_,i)=>mx*i/ticks);
+  const W=o.w||520,H=o.h||230,pl=o.fmt||(v=>fmt(v)),int=vals.every(Number.isInteger)&&Math.max(...vals,1)<=8,mx=int?Math.max(Math.ceil(Math.max(...vals,1)*1.12),2):Math.max(...vals,1)*1.12,pad={l:44,r:10,t:12,b:o.rot?52:30},bw=(W-pad.l-pad.r)/labels.length;
+  const ticks=int?mx:4,tk=Array.from({length:ticks+1},(_,i)=>mx*i/ticks);
   el.innerHTML=`<svg class="ch" viewBox="0 0 ${W} ${H}" width="100%" role="img">`+tk.map(v=>{const y=pad.t+(H-pad.t-pad.b)*(1-v/mx);return `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${pad.l-6}" y="${y+4}" text-anchor="end">${(o.axis||pl)(v)}</text>`}).join('')+
   vals.map((v,i)=>{const h=(H-pad.t-pad.b)*v/mx,x=pad.l+i*bw+bw*.18,y=H-pad.b-h;return `<rect x="${x}" y="${y}" width="${bw*.64}" height="${Math.max(h,0)}" rx="5" fill="${o.colors?o.colors[i%o.colors.length]:PAL[0]}"><title>${esc(labels[i])}: ${pl(v)}</title></rect><text x="${x+bw*.32}" y="${H-pad.b+15}" text-anchor="middle"${o.rot?` transform="rotate(-28 ${x+bw*.32} ${H-pad.b+15})" text-anchor="end"`:''}>${esc(String(labels[i]).slice(0,12))}</text><text x="${x+bw*.32}" y="${y-4}" text-anchor="middle" style="font-weight:700;fill:var(--ink)">${pl(v)}</text>`}).join('')+'</svg>';
 }
