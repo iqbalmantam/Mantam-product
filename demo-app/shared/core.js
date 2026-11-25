@@ -16,7 +16,7 @@ const MONEY_SEL='[data-ob],[data-b]:not([data-b$=".1"]):not([data-b$=".2"]),#i_v
 const V={};
 const CO={get(){try{return Store.get('company','')||(CONFIG.edition==='demo'?'PT Nusantara Karya Mandiri (contoh)':'Nama Perusahaan Anda')}catch(e){return 'Nama Perusahaan Anda'}},set(v){Store.set('company',v||'Nama Perusahaan Anda')}};
 document.addEventListener('change',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.co!==undefined){CO.set(t.value);const c=document.getElementById('cr');if(c)c.textContent=c.textContent.split(' · ')[0]+' · '+CO.get()}});
-const DEMO=()=>CONFIG.edition==='demo';
+const DEMO=()=>true;
 const fmt=n=>new Intl.NumberFormat('id-ID').format(Math.round(n||0));
 const idr=n=>'Rp '+fmt(n);
 const juta=n=>(n/1e6).toLocaleString('id-ID',{maximumFractionDigits:1})+' jt';

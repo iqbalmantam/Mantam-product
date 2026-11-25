@@ -53,12 +53,7 @@ V.m_analitik=el=>{
   const hari=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],ev=hari.map((_,i)=>{const a=pb.filter(p=>dt(p.d).getDay()===i);return a.length?+(a.reduce((s,p)=>s+SOC.er(p.m),0)/a.length*100).toFixed(2):0});barChart($('#c1'),hari,ev,{w:900,h:200,colors:[PAL[3]]});
 };
 V.m_ide=el=>{
-  if(DEMO())return lockPage(el,'Generator ide & hashtag','Pembuat ide konten, caption, dan hashtag per pilar tersedia di edisi lengkap.');
-  const tpl={Edukasi:['3 hal yang wajib diketahui tentang {t}','Mitos vs fakta seputar {t}','Panduan cepat {t} untuk pemula'],Promosi:['Penawaran terbatas untuk {t}','Paket hemat {t} minggu ini','Alasan memilih {t} sekarang'],'Behind the scenes':['Sehari di balik layar {t}','Proses di balik {t}'],Testimoni:['Kata pelanggan tentang {t}','Cerita sukses bersama {t}'],Hiburan:['Tebak-tebakan seputar {t}','Meme tim kami tentang {t}'],'Berita produk':['Hadir: pembaruan {t}','Yang baru dari {t}']};
-  el.innerHTML=`<div class="card"><h3>Generator ide konten</h3><div class="form"><div><label>Topik / produk</label><input class="inp" id="g_t" value="layanan kami"></div><div><label>Pilar</label><select class="sel" id="g_p">${opts(SOC.PIL)}</select></div></div><div class="tools" style="margin-top:12px"><button class="btn pri" id="go">Buat ide</button></div><div id="out"></div></div>`;
-  $('#go').onclick=()=>{const t=$('#g_t').value.trim()||'produk kami',p=$('#g_p').value,tag='#'+t.replace(/[^\p{L}\p{N}]+/gu,'').toLowerCase();$('#out').innerHTML=tpl[p].map(x=>{const c=x.replace('{t}',t);return `<div class="card" style="margin-top:10px"><b>${esc(c)}</b><div style="color:var(--mute);margin:4px 0">${tag} #${p.replace(/\s/g,'').toLowerCase()} #bisnislokal #umkm</div><button class="btn sm" data-c="${esc(c)}">Simpan sebagai ide</button></div>`}).join('');
-   $$('#out button').forEach(b=>b.onclick=()=>{SOC.d.posts.push({id:'P-'+String(SOC.d.posts.length+1).padStart(3,'0'),d:SOC.d.today,jam:'09:00',p:SOC.d.acc[0].p,pil:p,fm:'Gambar',cap:b.dataset.c,st:'Ide',m:null});SOC.save();toast('Ide disimpan ke papan konten')})};
-};
+  if(DEMO())return lockPage(el,'Generator ide & hashtag','Pembuat ide konten, caption, dan hashtag per pilar tersedia di edisi lengkap.');};
 V.m_pengaturan=el=>{
   const d=SOC.d;
   el.innerHTML=`<div class="card"><h3>Nama bisnis</h3><div class="form"><div class="full"><label>Tampil di judul aplikasi dan slip</label><input class="inp" id="s_co" value="${esc(CO.get())}"></div></div></div>
@@ -69,9 +64,9 @@ V.m_pengaturan=el=>{
   $$('input[data-i]',el).forEach(i=>i.onchange=()=>{d.acc[+i.dataset.i].fol[+i.dataset.k]=Math.max(0,+i.value||0);SOC.save();toast('Disimpan')});
   $$('[data-del]',el).forEach(b=>b.onclick=()=>{if(!confirm('Hapus akun ini?'))return;d.acc.splice(+b.dataset.del,1);SOC.save();V.m_pengaturan(el)});
   $('#s_add').onclick=()=>{const p=$('#s_np').value;if(!p)return;if(DEMO()&&d.acc.length>=3)return lock('Akun lebih dari 3 platform');d.acc.push({p,fol:Array(10).fill(0)});SOC.save();V.m_pengaturan(el);toast(p+' ditambahkan')};
-  $('#rst').onclick=gate('Pulihkan cadangan',()=>pickBackup('Sosmed',j=>j&&Array.isArray(j.posts)&&Array.isArray(j.acc),j=>{SOC.d=j;SOC.save();App.render()}));
-  $('#bk').onclick=gate('Cadangan data',()=>download('sosmed-cadangan.json',JSON.stringify(SOC.d),'application/json'));
-  $('#cl').onclick=gate('Mulai dari data kosong',()=>{if(confirm('Semua konten dan angka contoh dihapus; akun tetap, pengikut diatur 0. Lanjutkan?')){d.posts=[];d.acc.forEach(a=>a.fol=Array(10).fill(0));SOC.save();App.render();toast('Data dikosongkan, silakan isi data Anda')}});
+  $('#rst').onclick=gate('Pulihkan cadangan',null);
+  $('#bk').onclick=gate('Cadangan data',null);
+  $('#cl').onclick=gate('Mulai dari data kosong',null);
   $('#rs').onclick=()=>{if(confirm('Semua perubahan akan hilang. Lanjutkan?')){SOC.reset();App.render();toast('Data contoh dikembalikan')}};
 };
 function editPost(p,done,toPublish){
@@ -125,8 +120,8 @@ V.m_studio=el=>{
    $$('[data-del]').forEach(b=>b.onclick=()=>{sets.splice(+b.dataset.del,1);SOC.save();dts()});$$('[data-ed]').forEach(i=>i.onchange=()=>{sets[+i.dataset.ed][1]=i.value;SOC.save();toast('Set hashtag disimpan')})};dts();
   $('#ta').onclick=()=>{if(DEMO()&&sets.length>=5)return lock('Lebih dari 5 set hashtag');modal('Set hashtag baru',`<div class="form"><div class="full"><label>Nama set</label><input class="inp" id="h_n"></div><div class="full"><label>Hashtag (pisahkan spasi)</label><input class="inp" id="h_t" placeholder="#contoh #hashtag"></div></div>`,{buttons:[{text:'Batal'},{text:'Simpan',cls:'pri',fn:()=>{const n=$('#h_n').value.trim();if(!n){toast('Nama wajib diisi');return false}sets.push([n,$('#h_t').value.trim()]);SOC.save();dts()}}]})};
   $('#cp').onclick=()=>{if(!C().value.trim())return toast('Caption masih kosong');copyText(C().value)};
-  $('#sv').onclick=gate('Simpan caption ke papan konten',()=>{const t=C().value.trim();if(!t)return toast('Caption masih kosong');d.posts.push({id:'P-'+String(d.posts.reduce((m,x)=>Math.max(m,+x.id.slice(2)||0),0)+1).padStart(3,'0'),d:$('#c_d').value,jam:$('#c_j').value,p:P(),pil:SOC.PIL[0],fm:'Gambar',cap:t,st:'Draft',m:null});SOC.save();toast('Disimpan sebagai Draft di Papan Konten')});
-  $('#sh').onclick=gate('Bagikan ke platform',()=>{const t=C().value.trim();if(!t)return toast('Caption masih kosong');const p=P(),q=encodeURIComponent(t),U={X:'https://twitter.com/intent/tweet?text='+q,LinkedIn:'https://www.linkedin.com/feed/?shareActive=true&text='+q,Facebook:'https://www.facebook.com/',Instagram:'https://www.instagram.com/',TikTok:'https://www.tiktok.com/upload',YouTube:'https://studio.youtube.com/'};copyText(t);window.open(U[p]||'https://www.google.com','_blank');if(['Instagram','TikTok','YouTube','Facebook'].includes(p))toast('Caption disalin. Tempel (Ctrl+V) saat membuat postingan di '+p)});
+  $('#sv').onclick=gate('Simpan caption ke papan konten',null);
+  $('#sh').onclick=gate('Bagikan ke platform',null);
 };
 V.m_alat=el=>{
   const d=SOC.d;SOC.tags();const pb=SOC.pub(),M=el._m||10,mk=(i)=>'2026-'+String(i).padStart(2,'0');
@@ -139,25 +134,16 @@ V.m_alat=el=>{
   const ul=()=>{$('#u_l').innerHTML=d.utm.length?`<div class="tbl"><table><tbody>${d.utm.map((x,i)=>`<tr><td style="word-break:break-all;font-size:12px">${esc(x)}</td><td style="white-space:nowrap"><button class="btn sm" data-uc="${i}">Salin</button> <button class="btn sm dng" data-ud="${i}">×</button></td></tr>`).join('')}</tbody></table></div>`:'';
    $$('[data-uc]').forEach(b=>b.onclick=()=>copyText(d.utm[+b.dataset.uc]));$$('[data-ud]').forEach(b=>b.onclick=()=>{d.utm.splice(+b.dataset.ud,1);SOC.save();ul()})};ul();
   $('#u_cp').onclick=()=>{const u=uo();u?copyText(u):toast('Isi alamat tujuan dulu')};
-  $('#u_sv').onclick=gate('Simpan tautan UTM',()=>{const u=uo();if(!u)return toast('Isi alamat tujuan dulu');d.utm.unshift(u);SOC.save();ul();toast('Tautan disimpan')});
+  $('#u_sv').onclick=gate('Simpan tautan UTM',null);
   const sch=()=>d.posts.filter(p=>['Terjadwal','Draft'].includes(p.st)&&p.d>=d.today).sort((a,b)=>(a.d+a.jam)<(b.d+b.jam)?-1:1);
   const blob=(n,t,m)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;document.body.appendChild(a);a.click();a.remove()};
-  $('#ics').onclick=gate('Ekspor kalender (.ics)',()=>{const L=sch();if(!L.length)return toast('Tidak ada konten terjadwal atau draft ke depan');const z=s=>s.replace(/[-:]/g,''),e=t=>String(t).replace(/\\/g,'\\\\').replace(/;/g,'\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n'),stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
-   const ev=L.map(p=>{const s=z(p.d)+'T'+p.jam.replace(':','')+'00',en=(()=>{const m=SOC_min(p.jam)+30;return z(p.d)+'T'+String(Math.floor(m/60)%24).padStart(2,'0')+String(m%60).padStart(2,'0')+'00'})();return ['BEGIN:VEVENT','UID:'+p.id+'@sosmed','DTSTAMP:'+stamp,'DTSTART:'+s,'DTEND:'+en,'SUMMARY:'+e('['+p.p+'] '+p.cap.slice(0,60)),'DESCRIPTION:'+e(p.cap+'\nStatus: '+p.st+' · '+p.fm),'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY','DESCRIPTION:Waktunya posting','END:VALARM','END:VEVENT'].join('\r\n')});
-   blob('jadwal-konten.ics',['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sosmed//ID','CALSCALE:GREGORIAN',...ev,'END:VCALENDAR'].join('\r\n'),'text/calendar');toast(L.length+' jadwal diekspor')});
-  $('#csv').onclick=gate('Ekspor jadwal CSV',()=>{const L=sch();download('jadwal-konten.csv',toCSV([['Tanggal','Jam','Platform','Format','Pilar','Status','Caption'],...L.map(p=>[p.d,p.jam,p.p,p.fm,p.pil,p.st,p.cap])]))});
+  $('#ics').onclick=gate('Ekspor kalender (.ics)',null);
+  $('#csv').onclick=gate('Ekspor jadwal CSV',null);
   const by=f=>{const g={};pb.forEach(p=>{const k=f(p);(g[k]=g[k]||[]).push(SOC.er(p.m))});return Object.entries(g).map(([k,v])=>[k,v.reduce((a,b)=>a+b,0)/v.length*100,v.length]).filter(x=>x[2]>=2)};
   const HR_=by(p=>p.jam).sort((a,b)=>b[1]-a[1]),DY=by(p=>['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][dt(p.d).getDay()]).sort((a,b)=>b[1]-a[1]);
   $('#bt').innerHTML=pb.length>=6?`<p style="margin:0 0 8px">Jam terbaik: <b>${HR_.slice(0,3).map(x=>x[0]).join(', ')||'-'}</b> · Hari terbaik: <b>${DY.slice(0,3).map(x=>x[0]).join(', ')||'-'}</b></p><div id="bh"></div>`:'<p style="color:var(--mute);margin:0">Butuh minimal 6 konten terbit dengan metrik untuk menghitung.</p>';
   if(pb.length>=6)hBars($('#bh'),HR_.map(x=>x[0]),HR_.map(x=>+x[1].toFixed(2)),{fmt:v=>String(v).replace('.',',')+'%'});
   $('#r_m').onchange=e=>{el._m=+e.target.value};
-  $('#rp').onclick=gate('Laporan bulanan PDF',()=>{const m=+$('#r_m').value,a=mk(m),L=pb.filter(p=>p.d.slice(0,7)===a),sm=k=>L.reduce((s,p)=>s+p.m[k],0),er=L.length?L.reduce((s,p)=>s+SOC.er(p.m),0)/L.length:0,fo1=d.acc.reduce((s,x)=>s+x.fol[m-1],0),fo0=m>1?d.acc.reduce((s,x)=>s+x.fol[m-2],0):fo1;
-   const pr=d.acc.map(x=>{const q=L.filter(p=>p.p===x.p);const r=k=>q.reduce((s,p)=>s+p.m[k],0);return `<tr><td>${x.p}</td><td class="n">${q.length}</td><td class="n">${fmt(r('reach'))}</td><td class="n">${fmt(r('like'))}</td><td class="n">${fmt(r('kom'))}</td><td class="n">${fmt(r('share'))}</td><td class="n">${fmt(r('klik'))}</td><td class="n">${fmt(x.fol[m-1])}</td></tr>`}).join('');
-   const top=[...L].sort((x,y)=>y.m.reach-x.m.reach).slice(0,5).map(p=>`<tr><td>${fdate(p.d)}</td><td>${esc(p.p)}</td><td>${esc(p.cap)}</td><td class="n">${fmt(p.m.reach)}</td><td class="n">${pct(SOC.er(p.m),2)}</td></tr>`).join('')||'<tr><td colspan="5">Belum ada konten terbit pada bulan ini</td></tr>';
-   const bf=SOC.FMT.map(f=>{const q=L.filter(p=>p.fm===f);return [f,q.length?q.reduce((s,p)=>s+SOC.er(p.m),0)/q.length:0,q.length]}).filter(x=>x[2]).sort((x,y)=>y[1]-x[1])[0],bp=SOC.PIL.map(f=>{const q=L.filter(p=>p.pil===f);return [f,q.length?q.reduce((s,p)=>s+SOC.er(p.m),0)/q.length:0,q.length]}).filter(x=>x[2]).sort((x,y)=>y[1]-x[1])[0];
-   const body=`<div class="pg">${docHead('Laporan Media Sosial',MN[m-1]+' 2026')}<table><tr><td>Konten terbit</td><td class="n"><b>${L.length}</b></td><td>Jangkauan</td><td class="n"><b>${fmt(sm('reach'))}</b></td></tr><tr><td>Rata-rata engagement</td><td class="n"><b>${pct(er,2)}</b></td><td>Klik tautan</td><td class="n"><b>${fmt(sm('klik'))}</b></td></tr><tr><td>Total pengikut</td><td class="n"><b>${fmt(fo1)}</b></td><td>Pertumbuhan bulan ini</td><td class="n"><b>${fo1>=fo0?'+':''}${fmt(fo1-fo0)} (${pct(fo0?(fo1-fo0)/fo0:0)})</b></td></tr></table>
-   <h2>Rekap per platform</h2><table><thead><tr><th>Platform</th><th class="n">Konten</th><th class="n">Jangkauan</th><th class="n">Suka</th><th class="n">Komentar</th><th class="n">Bagikan</th><th class="n">Klik</th><th class="n">Pengikut</th></tr></thead><tbody>${pr}</tbody></table>
-   <h2>5 konten teratas</h2><table><thead><tr><th>Tanggal</th><th>Platform</th><th>Konten</th><th class="n">Jangkauan</th><th class="n">Engagement</th></tr></thead><tbody>${top}</tbody></table>
-   <h2>Catatan</h2><p>${bf?`Format dengan engagement tertinggi bulan ini: <b>${bf[0]}</b> (${pct(bf[1],2)}). `:''}${bp?`Pilar konten terkuat: <b>${bp[0]}</b> (${pct(bp[1],2)}). `:''}${L.length?'Perbanyak format dan pilar tersebut, lalu uji jam posting berbeda pada menu Alat.':'Belum ada data konten terbit pada bulan ini.'}</p><p class="muted">Dokumen ini dibuat dari data yang Anda catat sendiri di aplikasi.</p></div>`;printDoc('Laporan sosial '+MN[m-1],body)});
+  $('#rp').onclick=gate('Laporan bulanan PDF',null);
 };
 function SOC_min(t){const [a,b]=t.split(':');return (+a||0)*60+(+b||0)}

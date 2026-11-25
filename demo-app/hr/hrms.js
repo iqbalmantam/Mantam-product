@@ -95,7 +95,7 @@ V.karyawan=el=>{
    dataTable($('#tb'),[{h:'Karyawan',v:r=>r.nama,r:r=>`<span class="av">${initials(r.nama)}</span><b>${esc(r.nama)}</b> <small style="color:var(--mute)">${r.id}</small>`},{h:'Departemen',k:'dept'},{h:'Jabatan',v:r=>r.jab,r:r=>`${esc(r.jab)} <small style="color:var(--mute)">${r.grade}</small>`},{h:'Status',k:'st',r:r=>pill(r.st,ST_C[r.st]||'mut')},{h:'Masuk',k:'masuk',f:fdate},{h:'Masa kerja',n:1,v:r=>HR.masa(r),f:null,r:r=>HR.masa(r).toFixed(1).replace('.',',')+' thn'},{h:'Gaji pokok',n:1,k:'gaji',r:r=>idr(r.gaji)},{h:'PTKP',k:'ptkp'}],rows,{click:r=>empForm(r)})};
   $('#fd').value=F.fd;$('#fs').value=F.fs;el._onSearch=draw;$('#fd').onchange=e=>{F.fd=e.target.value;draw()};$('#fs').onchange=e=>{F.fs=e.target.value;draw()};
   $('#ad').onclick=()=>{if(DEMO()&&HR.d.emps.length>=12)return lock('Karyawan lebih dari 12 orang');empForm(null)};
-  $('#ex').onclick=gate('Ekspor data karyawan',()=>download('karyawan.csv',toCSV([['ID','Nama','Departemen','Jabatan','Grade','Status','Masuk','PTKP','Gaji','Tunjangan'],...HR.d.emps.map(e=>[e.id,e.nama,e.dept,e.jab,e.grade,e.st,e.masuk,e.ptkp,e.gaji,e.tun])])));
+  $('#ex').onclick=gate('Ekspor data karyawan',null);
   $('#im').onclick=()=>importCSV('Karyawan',[{k:'nama',h:'Nama',req:1,ex:'Budi Santoso'},{k:'g',h:'Gender',ex:'L'},{k:'lahir',h:'Lahir',t:'date',ex:'1995-04-12'},{k:'dept',h:'Departemen',ex:'Keuangan'},{k:'jab',h:'Jabatan',ex:'Staf'},{k:'grade',h:'Grade',ex:'G2'},{k:'st',h:'Status',ex:'Tetap'},{k:'masuk',h:'Masuk',t:'date',req:1,ex:'2024-01-15'},{k:'ptkp',h:'PTKP',ex:'TK/0'},{k:'gaji',h:'Gaji',t:'num',req:1,ex:'7000000'},{k:'tun',h:'Tunjangan',t:'num',ex:'700000'}],rows=>{let id=HR.d.emps.reduce((m,e)=>Math.max(m,+e.id.slice(2)||0),0);rows.forEach(r=>{id++;if(r.dept&&!HR.d.depts.includes(r.dept))HR.d.depts.push(r.dept);HR.d.emps.push({id:'K-'+String(id).padStart(3,'0'),nama:r.nama,g:r.g==='P'?'P':'L',lahir:r.lahir||'1995-01-01',dept:r.dept||HR.d.depts[0],jab:r.jab||'Staf',grade:r.grade||'G2',st:r.st||'Tetap',masuk:r.masuk,ptkp:r.ptkp||'TK/0',gaji:r.gaji,tun:r.tun||0,atasan:'-',lok:'-',keluar:null,k1:null,abs:{hadir:HR.P.hariKerja,sakit:0,izin:0,cuti:0,alpa:0,lembur:0,bonus:0,lain:0},kpi:null,pot:null})});HR.save();App.render();return rows.length+' karyawan diimpor'},r=>HR.P.ptkp.some(p=>p[0]===(r.ptkp||'TK/0'))?'':'PTKP tidak dikenal: '+r.ptkp);
   draw();
 };
@@ -124,17 +124,11 @@ V.payroll=el=>{
   $('#pb').onchange=e=>{const b=+e.target.value;if(DEMO()&&b>=12){lock('PPh 21 progresif Desember');e.target.value=P.bulan;return}HR.setPeriod(b,P.tahun);App.render()};$('#pt').onchange=e=>{HR.setPeriod(P.bulan,+e.target.value);App.render()};
   const col=(h,k,o={})=>({h,n:1,v:r=>r.c[k],r:r=>(o.b?'<b>':'')+fmt(r.c[k])+(o.b?'</b>':''),sum:1});
   dataTable($('#tb'),[{h:'Karyawan',v:r=>r.e.nama,r:r=>`<span class="av">${initials(r.e.nama)}</span>${esc(r.e.nama)}`},{h:'PTKP',v:r=>r.e.ptkp,r:r=>`${r.e.ptkp} <small style="color:var(--mute)">${r.c.cat}</small>`},col('Gaji pokok','F'),col('Tunjangan','G'),{h:'Transport+makan',n:1,v:r=>r.c.H+r.c.I,r:r=>fmt(r.c.H+r.c.I),sum:1},col('Lembur','J'),col('Bonus','K'),col('Pot. alpa','L'),col('PPh 21','O'),col('BPJS karyawan','Pj',{}),col('THP','T',{b:1}),col('Biaya perusahaan','V')].map((c,i)=>i===9?{h:'BPJS karyawan',n:1,v:r=>r.c.Pj+r.c.Q+r.c.R,r:r=>fmt(r.c.Pj+r.c.Q+r.c.R),sum:1}:c),pay,{total:1,click:r=>slipView(r)});
-  $('#ex').onclick=gate('Ekspor payroll',()=>download(`payroll-${P.tahun}-${P.bulan}.csv`,toCSV([['ID','Nama','Gaji pokok','Tunjangan','Transport','Makan','Lembur','Bonus','Pot. alpa','PPh21','JHT','JP','Kes','Pot. lain','THP','BPJS perusahaan','Total biaya'],...pay.map(x=>[x.e.id,x.e.nama,x.c.F,x.c.G,x.c.H,x.c.I,x.c.J,x.c.K,x.c.L,x.c.O,x.c.Pj,x.c.Q,x.c.R,x.c.S,x.c.T,x.c.U,x.c.V])])));
+  $('#ex').onclick=gate('Ekspor payroll',null);
   $('#sl').onclick=()=>pay[0]&&slipView(pay.find(x=>x.e.st!=='Resign'));
 };
 function slipView(r){
-  if(DEMO())return lock('Slip gaji siap cetak');
-  const {e,c}=r,P=HR.P,row=(a,b)=>`<tr><td>${a}</td><td style="text-align:right">${fmt(b)}</td></tr>`;
-  const m=modal('Slip gaji',`<div class="slip" id="slipbox"><h2>${esc(CO.get())}</h2><div style="color:#64748b;margin-bottom:12px">SLIP GAJI · ${MN[P.bulan-1]} ${P.tahun}</div><table style="margin-bottom:14px"><tr><td><b>${esc(e.nama)}</b> (${e.id})</td><td>${esc(e.jab)} · ${e.grade}</td></tr><tr><td>${e.dept}</td><td>PTKP ${e.ptkp} · masa kerja ${HR.masa(e).toFixed(1).replace('.',',')} thn</td></tr></table>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px"><div><b>PENDAPATAN</b><table>${row('Gaji pokok',c.F)}${row('Tunjangan tetap',c.G)}${row('Transport',c.H)}${row('Makan',c.I)}${row('Lembur',c.J)}${row('Bonus',c.K)}<tr><td><b>Jumlah</b></td><td style="text-align:right"><b>${fmt(c.pend)}</b></td></tr></table></div>
-  <div><b>POTONGAN</b><table>${row('Alpa',c.L)}${row('PPh 21',c.O)}${row('BPJS JHT',c.Pj)}${row('BPJS JP',c.Q)}${row('BPJS Kesehatan',c.R)}${row('Potongan lain',c.S)}<tr><td><b>Jumlah</b></td><td style="text-align:right"><b>${fmt(c.L+c.O+c.Pj+c.Q+c.R+c.S)}</b></td></tr></table></div></div>
-  <div style="margin-top:16px;padding:12px 16px;background:#0b1a30;color:#fff;border-radius:10px;display:flex;justify-content:space-between"><b>GAJI BERSIH DITERIMA</b><b style="font-size:18px">${idr(c.T)}</b></div><p style="font-size:11px;color:#64748b;margin-top:12px">BPJS ditanggung perusahaan ${idr(c.U)} · Total biaya perusahaan ${idr(c.V)}. Dokumen ini dihasilkan otomatis.</p></div>`,{w:'780px',buttons:[{text:'Tutup'},{text:'Cetak / PDF',cls:'pri',fn:()=>{printSlip(r);return false}}]});
-}
+  if(DEMO())return lock('Slip gaji siap cetak');}
 const nmE=id=>(HR.d.emps.find(e=>e.id===id)||{}).nama||id;
 function cutiForm(c,done){
   const n=!c;c=c||{id:(HR.d.emps[0]||{}).id,jenis:'Tahunan',mulai:HR.P.rep,selesai:HR.P.rep,status:'Menunggu'};
@@ -215,12 +209,12 @@ V.pengaturan=el=>{
   <div class="card" style="margin-top:16px"><h3>Data & aplikasi</h3><h3 style="margin-top:16px">Departemen</h3><div class="form"><div class="full"><label>Daftar departemen (pisahkan dengan koma)</label><input class="inp" id="dp" value="${esc(HR.d.depts.join(', '))}"></div></div><div class="tools" style="margin-top:12px"><button class="btn" id="bk">${ico('down')} Cadangkan data (JSON)</button><button class="btn" id="rst">Pulihkan dari cadangan</button><button class="btn" id="bl">Mulai dari data kosong</button><button class="btn dng" id="rs">Kembalikan data contoh</button><span class="sp"></span><button class="btn" id="th">${ico('moon')} Tema gelap/terang</button></div><p style="color:var(--mute);margin:8px 0 0">Data tersimpan di komputer ini saja. Edisi: <b>${DEMO()?'Demo (terbatas)':'Lengkap · '+esc(CONFIG.buyer)}</b>. Produk diberikan sebagaimana adanya, tanpa layanan garansi, pembaruan, maupun dukungan.</p></div>`;
   $$('[data-p]',el).forEach(i=>i.onchange=()=>{const k=i.dataset.p;const raw=String(i.value).replace(/\./g,'').replace(',','.');let v=(i.type==='number'||i.dataset.num==='1')?(+raw||0):i.value;if((k==='hariKerja'||k==='jam')&&!(v>0)){v=k==='jam'?173:22;i.value=v;toast('Nilai harus lebih dari 0')}P[k]=v;HR.save();toast('Pengaturan disimpan')});
   $$('[data-b]',el).forEach(i=>i.onchange=()=>{const [a,b]=i.dataset.b.split('.').map(Number);P.bpjs[a][b]=+i.value;HR.save();toast('Tarif disimpan')});
-  $('#rst').onclick=gate('Pulihkan cadangan',()=>pickBackup('HRMS',j=>j&&Array.isArray(j.d&&j.d.emps)&&j.P&&j.P.bulan,j=>{HR.d=j.d;HR.P=j.P;HR.save();App.render()}));
-  $('#bk').onclick=gate('Cadangan data',()=>download('hrms-cadangan.json',JSON.stringify({d:HR.d,P:HR.P}),'application/json'));
+  $('#rst').onclick=gate('Pulihkan cadangan',null);
+  $('#bk').onclick=gate('Cadangan data',null);
   $('#rs').onclick=()=>{if(confirm('Semua perubahan akan hilang. Lanjutkan?')){HR.reset();App.render();toast('Data contoh dikembalikan')}};
   $('#th').onclick=()=>App.theme();
   $('#dp').onchange=e=>{const l=e.target.value.split(',').map(x=>x.trim()).filter(Boolean);if(!l.length){toast('Minimal satu departemen');return}HR.d.depts=l;HR.save();toast('Departemen disimpan')};
-  $('#bl').onclick=gate('Mulai dari data kosong',()=>{if(confirm('Semua karyawan, cuti, rekrutmen, dan pelatihan contoh dihapus; pengaturan tarif tetap. Lanjutkan?')){HR.blank();App.cur='karyawan';App.render();toast('Data dikosongkan. Tambahkan karyawan Anda.')}});
+  $('#bl').onclick=gate('Mulai dari data kosong',null);
 };
 
 V.harian=el=>{
@@ -239,7 +233,7 @@ V.harian=el=>{
   const drawRec=()=>{const R=HR.recap(P.bulan,P.tahun);
    $('#bd').innerHTML=`<div class="note" style="background:rgba(14,165,164,.08);border-color:rgba(14,165,164,.3);color:var(--brand)">Rekap kehadiran <b>${MN[P.bulan-1]} ${P.tahun}</b> dari catatan harian. Terapkan ke payroll untuk mengisi Hadir, Sakit, Izin, Cuti, Alpa, dan Lembur (bonus dan potongan lain tidak berubah). Kolom "Belum diisi" = hari kerja sampai tanggal laporan yang belum dicatat.</div><div class="tools"><span class="sp"></span><button class="btn pri ${DEMO()?'lk':''}" id="ap">Terapkan ke payroll</button></div><div class="tbl" id="tb"></div>`;
    dataTable($('#tb'),[{h:'Karyawan',v:e=>e.nama,r:e=>`<span class="av">${initials(e.nama)}</span>${esc(e.nama)}`},{h:'Hadir',n:1,v:e=>R[e.id].hadir},{h:'Sakit',n:1,v:e=>R[e.id].sakit},{h:'Izin',n:1,v:e=>R[e.id].izin},{h:'Cuti',n:1,v:e=>R[e.id].cuti},{h:'Alpa',n:1,v:e=>R[e.id].alpa},{h:'Terlambat (x)',n:1,v:e=>R[e.id].telat},{h:'Lembur (jam)',n:1,v:e=>R[e.id].lembur},{h:'Belum diisi',n:1,v:e=>R[e.id].kosong,r:e=>R[e.id].kosong?pill(R[e.id].kosong+' hari','warn'):'-'}],HR.active());
-   $('#ap').onclick=gate('Terapkan absensi harian ke payroll',()=>{HR.active().forEach(e=>{const r=R[e.id];Object.assign(e.abs,{hadir:r.hadir,sakit:r.sakit,izin:r.izin,cuti:r.cuti,alpa:r.alpa,lembur:r.lembur})});HR.save();toast('Rekap diterapkan ke payroll '+MN[P.bulan-1]+' '+P.tahun)})};
+   $('#ap').onclick=gate('Terapkan absensi harian ke payroll',null)};
   el.innerHTML=`<div class="tabs"><button data-t="hari" class="${tab==='hari'?'on':''}">Catat harian</button><button data-t="rekap" class="${tab==='rekap'?'on':''}">Rekap bulanan</button></div><div id="bd"></div>`;
   $$('.tabs button',el).forEach(b=>b.onclick=()=>{el._tab=b.dataset.t;V.harian(el)});tab==='hari'?drawDay():drawRec();
 };
@@ -283,8 +277,8 @@ V.thr=el=>{
  dataTable($('#tb'),[{h:'Karyawan',v:x=>x.e.nama,r:x=>`<span class="av">${initials(x.e.nama)}</span>${esc(x.e.nama)} <small style="color:var(--mute)">${x.e.id}</small>`},{h:'Status',v:x=>x.e.st,r:x=>pill(x.e.st,ST_C[x.e.st]||'info')},{h:'Tgl masuk',v:x=>x.e.masuk,r:x=>fdate(x.e.masuk)},{h:'Masa kerja',n:1,v:x=>x.t.m,r:x=>x.t.m+' bln'},{h:'Upah 1 bulan',n:1,v:x=>x.t.up,r:x=>fmt(x.t.up)},{h:'Dasar',v:x=>x.t.r},{h:'THR',n:1,v:x=>x.t.v,r:x=>`<b>${fmt(x.t.v)}</b>`,sum:1},{h:'Est. PPh 21',n:1,v:x=>x.p,r:x=>fmt(x.p),sum:1},{h:'Diterima',n:1,v:x=>x.t.v-x.p,r:x=>fmt(x.t.v-x.p),sum:1}],L,{total:1});
  $('#td').onchange=e=>{if(!e.target.value)return;P.thrTgl=e.target.value;HR.save();V.thr(el)};
  $('#pr').onclick=()=>pay.length?printDoc('Daftar THR',thrBody(pay,tgl)):toast('Tidak ada penerima THR');
- $('#ex').onclick=gate('Ekspor THR',()=>download('thr-'+tgl+'.csv',toCSV([['ID','Nama','Status','Tgl masuk','Masa kerja (bln)','Upah 1 bulan','Dasar','THR','Estimasi PPh 21','Diterima'],...L.map(x=>[x.e.id,x.e.nama,x.e.st,x.e.masuk,x.t.m,x.t.up,x.t.r,x.t.v,x.p,x.t.v-x.p])])));
- $('#ap').onclick=gate('THR ke payroll',()=>{if(!pay.length)return toast('Tidak ada penerima THR');if(!confirm('Tambahkan THR ke kolom Bonus payroll periode '+MN[P.bulan-1]+' '+P.tahun+' untuk '+pay.length+' karyawan? Jika sudah pernah dimasukkan, nilai lama diganti (tidak dobel).'))return;P.thrApplied=P.thrApplied||{};pay.forEach(x=>{const k=HR.key()+'|'+x.e.id,prev=P.thrApplied[k]||0;x.e.abs=x.e.abs||{};x.e.abs.bonus=Math.max(0,(x.e.abs.bonus||0)-prev)+x.t.v;P.thrApplied[k]=x.t.v});HR.save();V.thr(el);toast('THR ditambahkan ke bonus payroll')});
+ $('#ex').onclick=gate('Ekspor THR',null);
+ $('#ap').onclick=gate('THR ke payroll',null);
 };
 function pesBody(s,r){const e=s.e,rw=(a,b)=>`<tr><td>${a}</td><td class="n">${b}</td></tr>`;
  return `<div class="pg">${docHead('Perhitungan Kompensasi Pemutusan Hubungan Kerja','PP 35/2021')}<table style="margin-bottom:10px"><tr><td style="width:34%;color:#64748b">Karyawan</td><td>${esc(e.nama)} (${e.id}) · ${esc(e.jab)}</td></tr><tr><td style="color:#64748b">Tanggal masuk / berakhir</td><td>${fdate(e.masuk)} s.d. ${fdate(s.tgl)} · ${HRK.ym(r.m)}</td></tr><tr><td style="color:#64748b">Alasan</td><td>${esc(r.R.n)}</td></tr><tr><td style="color:#64748b">Upah sebulan (pokok + tunjangan tetap)</td><td>${idr(r.up)}</td></tr></table>
