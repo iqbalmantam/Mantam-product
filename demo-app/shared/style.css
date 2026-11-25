@@ -71,3 +71,6 @@ textarea.inp{width:100%;resize:vertical;font-family:inherit}
 /* mobile: label menu + tombol kembali ringkas */
 @media(max-width:900px){.app{grid-template-columns:72px 1fr}.side .nav{flex-direction:column;gap:3px;padding:8px 2px;width:100%}.side .nav span{display:block;font-size:9.5px;line-height:1.15;max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}}
 @media(max-width:640px){#homeback{font-size:0!important;width:40px;height:40px;padding:0!important;display:flex;align-items:center;justify-content:center;right:10px!important;bottom:10px!important;opacity:.75!important}#homeback::before{content:"←";font-size:18px}}
+/* sidebar bisa digeser di HP: tinggi mengikuti layar yang terlihat */
+.app{height:100vh;height:100dvh}.side{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+@media(max-width:900px){.side{padding-bottom:72px}}
